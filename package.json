@@ -1,0 +1,24 @@
+{
+  "name": "sparrow_lane_zoological_center",
+  "version": "1.0.0",
+  "description": "A database to manage the zoo's daily activities",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Gabes33/SparrowLaneZoologicalCenter.git"
+  },
+  "author": "Ashley Quarford and Tyler Gebel",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Gabes33/SparrowLaneZoologicalCenter/issues"
+  },
+  "homepage": "https://github.com/Gabes33/SparrowLaneZoologicalCenter#readme",
+  "dependencies": {
+    "express": "^4.18.2",
+    "forever": "^4.0.3",
+    "mysql": "^2.18.1"
+  }
+}
