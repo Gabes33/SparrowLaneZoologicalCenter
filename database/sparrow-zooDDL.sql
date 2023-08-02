@@ -1,12 +1,12 @@
 SET FOREIGN_KEY_CHECKS = 0;
 SET AUTOCOMMIT = 0;
 
-CREATE TABLE Employees (
+CREATE OR REPLACE TABLE Employees (
   employeeID INT AUTO_INCREMENT PRIMARY KEY,
   firstName VARCHAR(45) NOT NULL,
   lastName VARCHAR(45) NOT NULL,
   phoneNum VARCHAR(10) UNIQUE NOT NULL,
-  hourlyWage DECIMAL(3, 2) NOT NULL,
+  hourlyWage DECIMAL(5, 2) NOT NULL,
   workEmail VARCHAR(45) UNIQUE
 );
 
@@ -15,7 +15,7 @@ INSERT INTO Employees (employeeID, firstName, lastName, phoneNum, hourlyWage, wo
 (2, 'Tyler', 'Gebel', '987654321', 14.75, 'tyler.gebel@gmail.com'),
 (3, 'Michael', 'Johnson', '456789123', 16.25, 'michael.johnson@gmail.com');
 
-CREATE Table Habitat_enclosures (
+CREATE OR REPLACE TABLE Habitat_enclosures (
   habitatID INT AUTO_INCREMENT PRIMARY KEY,
   monthlyUpkeep INT NOT NULL,
   capacity INT NOT NULL,
@@ -27,7 +27,7 @@ INSERT INTO Habitat_enclosures (habitatID, monthlyUpkeep, capacity, description)
 (2, 4000, 6, 'Arctic Habitat'),
 (3, 3000, 20, 'Farm Habitat');
 
-CREATE TABLE Species (
+CREATE OR REPLACE TABLE Species (
   speciesID INT AUTO_INCREMENT PRIMARY KEY,
   speciesName VARCHAR(45) NOT NULL,
   description VARCHAR(100)
@@ -39,17 +39,15 @@ INSERT INTO Species (speciesID, speciesName, description) VALUES
 (3, 'Pygmy Goat', 'Eats grains');
 
 
-CREATE TABLE Animals (
+CREATE OR REPLACE TABLE Animals (
   animalID INT AUTO_INCREMENT PRIMARY KEY,
   animalName VARCHAR(45) NOT NULL,
   description VARCHAR(100),
   speciesID INT NOT NULL,
-  habitatID INT,
+  habitatID INT NOT NULL,
   FOREIGN KEY (speciesID) REFERENCES Species(speciesID),
   FOREIGN KEY (habitatID) REFERENCES Habitat_enclosures(habitatID)
-  ON DELETE CASCADE
-  ON UPDATE CASCADE
-  );
+  ON DELETE CASCADE);
 
 INSERT INTO Animals (animalID, animalName, description, speciesID, habitatID) VALUES
 (1, 'Alberto', 'Male Ringed Seal', 1, 2),
@@ -58,7 +56,7 @@ INSERT INTO Animals (animalID, animalName, description, speciesID, habitatID) VA
 
 
 
-CREATE TABLE Admissions (
+CREATE OR REPLACE TABLE Admissions (
   admissionID INT AUTO_INCREMENT PRIMARY KEY,
   admissionTotal INT(6) NOT NULL,
   ticketPrice INT NOT NULL,
@@ -70,7 +68,7 @@ INSERT INTO Admissions (admissionID, admissionTotal, ticketPrice, description) V
 (2, 250, 15, 'Children under 12 Admission'),
 (3, 350, 20, 'Senior Citizen Discount Admission');
 
-CREATE TABLE Budgets (
+CREATE OR REPLACE TABLE Budgets (
   budgetID INT AUTO_INCREMENT PRIMARY KEY,
   budgetAmount INT NOT NULL,
   employeeID INT NOT NULL,
@@ -80,7 +78,6 @@ CREATE TABLE Budgets (
   FOREIGN KEY (habitatID) REFERENCES Habitat_enclosures(habitatID),
   FOREIGN KEY (admissionID) REFERENCES Admissions(admissionID)
   ON DELETE CASCADE
-  ON UPDATE CASCADE
 );
 
 INSERT INTO Budgets (budgetID, budgetAmount, employeeID, habitatID, admissionID) VALUES
@@ -88,7 +85,7 @@ INSERT INTO Budgets (budgetID, budgetAmount, employeeID, habitatID, admissionID)
 (2, 15000, 2, 2, 2),
 (3, 20000, 3, 3, 3);
 
-CREATE TABLE Food_and_Supplies (
+CREATE OR REPLACE TABLE Food_and_Supplies (
   itemID INT AUTO_INCREMENT PRIMARY KEY,
   itemName VARCHAR(45) NOT NULL,
   Quantity INT(6) NOT NULL,
@@ -101,14 +98,13 @@ VALUES
 (2, 'Fish', 200, 8.75),
 (3, 'Apples', 50, 5.25);
 
-CREATE TABLE Food_and_supplies_per_animal (
+CREATE OR REPLACE TABLE Food_and_supplies_per_animal (
   animalItemListID INT AUTO_INCREMENT PRIMARY KEY,
   animalID INT NOT NULL,
   itemID INT NOT NULL,
   FOREIGN KEY (animalID) REFERENCES Animals(animalID),
   FOREIGN KEY (itemID) REFERENCES Food_and_Supplies(itemID)
   ON DELETE CASCADE
-  ON UPDATE CASCADE
 );
 
 INSERT INTO Food_and_supplies_per_animal (animalID, itemID) VALUES
