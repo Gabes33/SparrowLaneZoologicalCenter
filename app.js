@@ -133,6 +133,68 @@ app.delete('/delete-employee-ajax/', function (req, res, next) {
 });
 
 
+app.put('/put-employee-ajax', function(req,res,next){
+    let data = req.body;
+  
+    let hourlyWage = parseInt(data.hourlyWage);
+    let employee = parseInt(data.fullname);
+  
+    let queryUpdateWage= `UPDATE Employees SET hourlyWage = ? WHERE employeeID = ?`;
+    let selectWage = `SELECT * FROM Employees WHERE hourlyWage = ?`
+  
+          // Run the 1st query
+          db.pool.query(queryUpdateWage, [hourlyWage, employee], function(error, rows, fields){
+              if (error) {
+  
+              // Log the error to the terminal so we know what went wrong, and send the visitor an HTTP response 400 indicating it was a bad request.
+              console.log(error);
+              res.sendStatus(400);
+              }
+  
+              // If there was no error, we run our second query and return that data so we can use it to update the people's
+              // table on the front-end
+              else
+              {
+                  // Run the second query
+                  db.pool.query(selectWage, [hourlyWage], function(error, rows, fields) {
+  
+                      if (error) {
+                          console.log(error);
+                          res.sendStatus(400);
+                      } else {
+                          res.send(rows);
+                      }
+                  })
+              }
+  })});
+
+
+
+function deleteRow(employeeID){
+
+    let table = document.getElementById("employee-table");
+    for (let i = 0, row; row = table.rows[i]; i++) {
+       //iterate through rows
+       //rows would be accessed using the "row" variable assigned in the for loop
+       if (table.rows[i].getAttribute("data-value") == employeeID) {
+            table.deleteRow(i);
+            deleteDropDownMenu(employeeID);
+            break;
+       }
+    }
+}
+
+
+function deleteDropDownMenu(employeeID){
+  let selectMenu = document.getElementById("mySelect");
+  for (let i = 0; i < selectMenu.length; i++){
+    if (Number(selectMenu.options[i].value) === Number(employeeID)){
+      selectMenu[i].remove();
+      break;
+    } 
+
+  }
+}
 
 
 
