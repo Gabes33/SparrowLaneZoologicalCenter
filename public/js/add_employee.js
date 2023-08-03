@@ -88,7 +88,7 @@ addRowToTable = (data) => {
 
 
     // Fill the cells with correct data
-    employeeIDCell.innerText = newRow.id;
+    employeeIDCell.innerText = newRow.employeeID;
     firstNameCell.innerText = newRow.firstName;
     lastNameCell.innerText = newRow.lastName;
     phoneNumCell.innerText = newRow.phoneNum;
@@ -98,7 +98,7 @@ addRowToTable = (data) => {
     deleteCell = document.createElement("button");
     deleteCell.innerHTML = "Delete";
     deleteCell.onclick = function () {
-        deleteEmployee(newRow.id);
+        deleteEmployee(newRow.employeeID);
     };
 
     // Add the cells to the row 
@@ -109,7 +109,7 @@ addRowToTable = (data) => {
     row.appendChild(hourlyWageCell);
     row.appendChild(workEmailCell);
 
-    row.setAttribute('data-value', newRow.id);
+    row.setAttribute('data-value', newRow.employeeID);
 
 
 
