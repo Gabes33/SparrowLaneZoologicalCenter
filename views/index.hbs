@@ -1,6 +1,9 @@
-<!-- employee.hbs -->
+
+
 <h1>Employees</h1>
-<p>The table below describes the current employees at the zoo.</p>
+
+<p>The table below describes the current employees at the zoo.
+</p>
 {{!-- Create a table --}}
 <table id="employee-table">
 
@@ -97,7 +100,7 @@
     <select name="input-hourlyWage" id="input-hourlyWage-update">
         <input type="number" min="1" step=".01" name="input-hourlyWage" id="input-hourlyWage">
     </select>
-    <td><button onclick="updateEmployee({{this.hourlyWage}})">Submit</button></td>
+    <td><button onclick="updateEmployee">Submit</button></td>
 
 </form>
 

@@ -6,7 +6,7 @@ CREATE OR REPLACE TABLE Employees (
   firstName VARCHAR(45) NOT NULL,
   lastName VARCHAR(45) NOT NULL,
   phoneNum VARCHAR(10) UNIQUE NOT NULL,
-  hourlyWage DECIMAL(5, 2) NOT NULL,
+  hourlyWage INT 5,2) NOT NULL,
   workEmail VARCHAR(45) UNIQUE
 );
 
@@ -114,3 +114,128 @@ INSERT INTO Food_and_supplies_per_animal (animalID, itemID) VALUES
 
 SET FOREIGN_KEY_CHECKS = 1;
 COMMIT;
+
+
+
+-- Budgets Page
+----------------
+SELECT * FROM Budgets WHERE budgetAmount = budgetAmount;
+
+-- Create new budget
+INSERT INTO Budgets (budgetAmount, employeeID, habitatID, admissionsID) VALUES (budget_Amount_Input, employee_ID_input, habitat_ID_input, admissions_ID_input);
+
+-- Edit budget
+UPDATE Budgets SET budgetAmount = budget_Amount_Input, employeeID = employee_ID_input, habitatID = habitat_ID_input, admissionsID = admissions_ID_input WHERE budgetID = budget_ID_Input;
+
+-- Delete budget
+DELETE FROM Budgets WHERE budgetID = budget_ID_Input;
+
+------------------
+-- Admissions Page
+------------------
+SELECT * FROM Admissions WHERE admissionID = admissionID;
+
+-- Create new admission
+INSERT INTO Admissions (admissionTotal, ticketPrice, description) VALUES (admission_Total_Input, ticket_Price_Input, description_Input);
+
+-- Edit admission
+UPDATE Admissions SET admissionTotal = admission_Total_Input, ticketPrice = ticket_Price_Input, description = description_Input WHERE admissionID = admission_ID_Input;
+
+-- Delete admission
+DELETE FROM Admissions WHERE admissionID = admission_ID_Input;
+
+------------
+-- Employees Page
+------------
+SELECT * FROM Employees WHERE lastName = lastName;
+
+-- Create new Employee
+INSERT INTO Employees (firstName, lastName, phoneNum, hourlyWage, workEmail) VALUES (first_name_input, last_name_input, phone_num_input, hourly_wage_input, work_email_input);
+
+-- Edit Employee
+UPDATE Employees SET firstName = first_name_input, lastName = last_name_input, phoneNum = phone_num_input, hourlyWage = hourly_wage_input, workEmail = work_email_input WHERE employeeID = employee_ID_input;
+
+-- Delete Employee
+DELETE FROM Employees WHERE employeeID = employee_ID_input;
+
+
+------------
+-- Species Page
+------------
+SELECT * FROM Species WHERE speciesName = speciesName;
+
+-- Create new species
+INSERT INTO Species (speciesName, `description`) VALUES (species_name_input, description_input);
+
+-- Edit Species
+UPDATE Speceis SET speciesName = species_name_input, `description` = description_input WHERE speciesID = species_ID_input;
+
+-- Delete Species
+DELETE FROM Species WHERE speciesID = species_ID_input;
+
+------------
+-- Animals Page
+------------
+-- Search query for 
+SELECT * FROM Animals WHERE animalName = animalName;
+
+-- Create new Animal
+INSERT INTO Animals (animalName, `description`, speciesID, habitatID) VALUES (animal_name_input, description_input, species_ID_input, habitat_ID_input);
+
+-- Edit Animal
+UPDATE Animals SET animalName = animal_name_input, `description` = description_input, speciesID = species_ID_input, habitatID = habitat_ID_input WHERE animalID = animal_ID_input;
+
+-- Delete Animal
+DELETE FROM Animals WHERE animalID = animal_ID_input;
+
+
+-------------------------
+-- Habitat Enclosures Page
+-------------------------
+SELECT * from Habitat_enclosures WHERE habitatID = habitatID;
+
+-- Create new habitat
+INSERT INTO Habitat_enclosures (habitatID, monthlyUpkeep, capacity, description) VALUES (habitat_ID_Input, monthly_Upkeep_Input, capacity_Input, description_Input);
+
+-- Edit habitat
+UPDATE Habitat_enclosures SET monthlyUpkeep = monthly_Upkeep_Input, capacity = capacity_Input, description = description_Input WHERE habitatID = habitat_ID_Input;
+
+-- Delete habitat
+DELETE FROM Habitat_enclosures WHERE habitatID = habitat_ID_Input;
+
+
+-------------------------
+-- Food and Supplies Page
+------------------------
+SELECT * from Food_and_supplies WHERE itemName = itemName;
+
+-- Create new item
+INSERT INTO Food_and_supplies (itemID, itemName, quantity, price) VALUES (item_ID_Input, item_Name_Input, quantity_Input, price_Input);
+
+-- Edit item 
+UPDATE Food_and_supplies SET itemName = item_Name_Input, quantity = quantity_Input, price = price_Input WHERE itemID = item_ID_Input;
+
+
+-- Delete item
+DELETE FROM Food_and_supplies WHERE itemID = item_ID_Input;
+
+
+-----------------------------------
+-- Food and Supplies Per Animal page
+------------------------------------
+SELECT Animals.animalName AS "Animal Name", Food_and_Supplies.itemName AS "Food Name"
+FROM Food_and_supplies_per_animal
+INNER JOIN Animals ON Food_and_supplies_per_animal.animalID = Animals.animalID
+INNER JOIN Food_and_Supplies ON Food_and_Supplies.itemID = Food_and_supplies_per_animal.itemID
+GROUP BY (Animals.animalID);
+
+-- Create new item per animal
+INSERT INTO Food_and_supplies_per_animal (animalItemListID, itemID, animalID) VALUES (animal_Item_List_ID_Input, item_ID_Input, animal_ID_Input);
+
+
+-- Edit item per animal
+UPDATE Food_and_supplies_per_animal SET itemID = item_ID_Input, animalID = animal_ID_Input WHERE animalItemListID = animal_Item_List_ID_Input;
+
+
+-- Delete item per animal
+DELETE FROM Food_and_supplies_per_animal  WHERE itemID = item_ID_Input AND animalID = animal_ID_Input;

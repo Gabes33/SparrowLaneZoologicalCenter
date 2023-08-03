@@ -27,6 +27,9 @@ app.set('view engine', '.hbs');                 // Tell express to use the handl
     ROUTES
 */
 
+
+
+
 app.get('/', function (req, res) {
     // Declare Query 1
     let query1;
