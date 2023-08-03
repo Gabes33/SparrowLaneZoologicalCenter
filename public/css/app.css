@@ -1,0 +1,55 @@
+:root {
+    background-color: skyblue;
+}
+  body { 
+    color: darkblue;
+    font-family: 'Times New Roman', Times, serif; /* Define with at least one font name and its related generic family name.*/
+    margin: 1%;
+    padding: 2%;
+    border-color: black;
+  }
+  
+  header {
+    text-align: center;
+  }
+  main {
+    background-color: skyblue;
+    color: darkblue;
+    text-align: center;
+    margin-inline: center;
+  }
+  footer {
+    text-align: center;
+  }
+  
+  nav {
+    text-align: center;
+    color: darkblue;
+    border: black;
+    margin: 2%;
+    padding: 1%;
+  }
+  
+  
+  h1, h2, h3, h4, h5, h6 {
+    text-align: center;
+    background-color: lavenderblush;
+  } 
+  h1 {
+    text-align: center;
+  }
+
+  
+  table {
+    position: center;
+    table-layout: center;
+    background-color: lavenderblush;
+    margin: auto;
+  }
+
+  form {
+    margin: center;
+    text-align: center;
+    align-items: center;
+  }
+  
