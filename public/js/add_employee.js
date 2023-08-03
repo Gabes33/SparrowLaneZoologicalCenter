@@ -3,7 +3,7 @@ let addEmployeeForm = document.getElementById('add-employee-form-ajax');
 
 // Modify the objects we need
 addEmployeeForm.addEventListener("submit", function (e) {
-    
+
     // Prevent the form from submitting
     e.preventDefault();
 
@@ -30,7 +30,7 @@ addEmployeeForm.addEventListener("submit", function (e) {
         hourlyWage: hourlyWageValue,
         workEmail: workEmailValue
     }
-    
+
     // Setup our AJAX request
     var xhttp = new XMLHttpRequest();
     xhttp.open("POST", "/add-employee-ajax", true);
@@ -84,6 +84,8 @@ addRowToTable = (data) => {
     let hourlyWageCell = document.createElement("TD");
     let workEmailCell = document.createElement("TD");
 
+    let deleteCell = document.createElement("TD");
+
 
     // Fill the cells with correct data
     employeeIDCell.innerText = newRow.id;
@@ -93,6 +95,12 @@ addRowToTable = (data) => {
     hourlyWageCell.innerText = newRow.hourlyWage;
     workEmailCell.innerText = newRow.workEmail;
 
+    deleteCell = document.createElement("button");
+    deleteCell.innerHTML = "Delete";
+    deleteCell.onclick = function () {
+        deletePerson(newRow.id);
+    };
+
     // Add the cells to the row 
     row.appendChild(employeeIDCell);
     row.appendChild(firstNameCell);
@@ -100,8 +108,10 @@ addRowToTable = (data) => {
     row.appendChild(phoneNumCell);
     row.appendChild(hourlyWageCell);
     row.appendChild(workEmailCell);
-    
-    
+
+    row.setAttribute('data-value', newRow.id);
+
+
     // Add the row to the table
     currentTable.appendChild(row);
 }
