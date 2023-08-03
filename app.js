@@ -101,35 +101,19 @@ app.post('/add-employee-ajax', function (req, res) {
         }
     })
 });
-app.delete('/delete-employee-ajax/', function (req, res, next) {
-    let data = req.body;
-    let employeeID = parseInt(data.employeeID);
-    let deleteBudgets = `DELETE FROM Budgets WHERE employeeID = ?`;
-    let deleteEmployees = `DELETE FROM Employees WHERE employeeID = ?`;
+app.delete('/delete-employee-ajax/', function (req, res) {
+    let employeeID = req.params.id;
 
+    let deleteQuery = `DELETE FROM Employees WHERE employeeID = ?`;
 
-    // Run the 1st query
-    db.pool.query(deleteBudgets, [employeeID], function (error, rows, fields) {
+    db.pool.query(deleteQuery, [employeeID], function (error, result) {
         if (error) {
-
-            // Log the error to the terminal so we know what went wrong, and send the visitor an HTTP response 400 indicating it was a bad request.
             console.log(error);
             res.sendStatus(400);
+        } else {
+            res.sendStatus(204);
         }
-
-        else {
-            // Run the second query
-            db.pool.query(deleteEmployees, [employeeID], function (error, rows, fields) {
-
-                if (error) {
-                    console.log(error);
-                    res.sendStatus(400);
-                } else {
-                    res.sendStatus(204);
-                }
-            })
-        }
-    })
+    });
 });
 
 
@@ -195,8 +179,6 @@ function deleteDropDownMenu(employeeID){
 
   }
 }
-
-
 
 /*
     LISTENER
