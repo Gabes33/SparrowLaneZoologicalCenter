@@ -68,7 +68,7 @@
     <input type="number" name="input-phoneNum" id="input-phoneNum">
 
     <label for="input-hourlyWage">Hourly Wage: </label>
-    <input type="money" name="input-hourlyWage" id="input-hourlyWage">
+    <input type="number" min="1" step="any" name="input-hourlyWage" id="input-hourlyWage">
 
     <label for="input-workEmail">Work Email: </label>
     <input type="text" name="input-workEmail" id="input-workEmail">
@@ -97,10 +97,7 @@
 
     <label for="input-hourlyWage">Hourly Wage: </label>
     <select name="input-hourlyWage" id="input-hourlyWage-update">
-        <option>Select an Hourly Pay Option</option>
-        {{#each hourlyWage}}
-        <option value="{{this.EmployeeID}}">{{this.hourlyWage}}</option>
-        {{/each}}
+        <input type="number" min="1" step="any" name="input-hourlyWage" id="input-hourlyWage">
     </select>
     <input type="submit">
 

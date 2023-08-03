@@ -140,8 +140,7 @@ app.put('/put-employee-ajax', function(req,res,next){
     let employee = parseInt(data.fullname);
   
     let queryUpdateWage= `UPDATE Employees SET hourlyWage = ? WHERE employeeID = ?`;
-    let selectWage = `SELECT * FROM Employees WHERE hourlyWage = ?`
-  
+
           // Run the 1st query
           db.pool.query(queryUpdateWage, [hourlyWage, employee], function(error, rows, fields){
               if (error) {
@@ -155,18 +154,11 @@ app.put('/put-employee-ajax', function(req,res,next){
               // table on the front-end
               else
               {
-                  // Run the second query
-                  db.pool.query(selectWage, [hourlyWage], function(error, rows, fields) {
-  
-                      if (error) {
-                          console.log(error);
-                          res.sendStatus(400);
-                      } else {
-                          res.send(rows);
+                res.send(rows);
                       }
                   })
               }
-  })});
+  );
 
 
 
