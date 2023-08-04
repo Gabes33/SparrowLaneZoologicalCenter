@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sparrow Lane Zoological Center</title>
+  <link rel="stylesheet" type="text/css" media="screen" href="main.css" />
+  <script src="main.js"></script>
+</head>
+
+<body>
+  <header>
+    <h1>Sparrow Lane Zoological Center</h1>
+  </header>
+  <nav>
+    [
+    <a href="index.hbs">Home</a>
+    |
+    <a href="employees.hbs">Employees</a>
+    |
+    <a href="animals.hbs">Animals</a>
+    |
+    <a href="species.hbs">Species</a>
+    |
+    <a href="budgets.hbs">Budgets</a>
+    |
+    <a href="admissions.hbs">Admissions</a>
+    |
+    <a href="habitat.hbs">Habitat Enclosures</a>
+    |
+    <a href="foodsupplies.hbs">Food and Supplies</a>
+    |
+    <a href="foodsuppliesperanimal.hbs">Food and Supplies Per Animal</a>
+    ]
+  </nav>
+  <main>
+    <h2>Animals</h2>
+    <p>Manage Animals for Sparrow Lane Zoological Center</p>
+    <table id="animals-table" border=".5" cellpadding="5">
+      <thread>
+        <tr>
+          <th>
+            Animal ID</th>
+          <th>Animal Name</th>
+          <th>Description</th>
+          <th>Species ID</th>
+          <th>Habitat ID</th>
+        </tr>
+      </thread>
+      <tbody>
+
+        {{#each data}}
+        <tr>
+          <td>{{this.animalID}}</td>
+          <td>{{this.animalName}}</td>
+          <td>{{this.description}}</td>
+          <td>{{this.speciesID}}</td>
+          <td>{{this.habitatID}}</td>
+          <td><button onclick="deleteStaff({{this.animalName}})">Delete</button></td>
+        </tr>
+        {{/each}}
+      </tbody>
+    </table>
+    <script src="./js/delete_animal.js"></script>
+    </div>
+
+
+
+
+    <div>
+      <h3>Search Animals</h3>
+      <form id="search-animal-html" method="GET" action="/animals.html">
+        <table class="sub-table">
+          <tbody>
+            <tr>
+              <td>
+                <p><label for="input-animal_name">Name: </label></p>
+              </td>
+              <td><input type="text" name="animal_name" id="input-animal_name-html-search" required="">
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <div class="form-btns">
+          <input type="submit" value="Search">
+        </div>
+      </form>
+    </div>
+    <div>
+      <h3>Create New Animal </h3>
+      <form method="POST" id="createAnimal">
+        <table>
+          <tbody>
+            <tr>
+              <td><label for="animalName">Animal Name:</label></td>
+              <td><input type="text" name="animalName" id="animalName" /></td>
+            </tr>
+            <tr>
+              <td><label for="animalDesc">Animal Description:</label></td>
+              <td><input type="text" name="animalDesc" id="animalDesc" /></td>
+            </tr>
+            <tr>
+              <td><input type="submit" value="Create" /></td>
+            </tr>
+          </tbody>
+        </table>
+      </form>
+    </div>
+    <div>
+      <h3>Edit an Animal</h3>
+      <form method="POST" id="editAnimal">
+        <table>
+          <tbody>
+            <tr>
+              <td><label for="animalID">Animal ID:</label></td>
+              <td><select name="animalID">
+                  <option value="1">1</option>
+                  <option value="2">2</option>
+                  <option value="3">3</option>
+                </select></td>
+            </tr>
+            <tr>
+              <td><label for="animalName">Animal Name:</label></td>
+              <td><input type="text" name="animalName" id="animalName" /></td>
+            </tr>
+            <tr>
+              <td><label for="animalDesc">Animal Description:</label></td>
+              <td><input type="text" name="animalDesc" id="animalDesc" /></td>
+            </tr>
+            <tr>
+              <td><label for="speciesID">Species ID:</label></td>
+              <td><select name="speciesID">
+                  <option value="1">1</option>
+                  <option value="2">2</option>
+                  <option value="3">3</option>
+                </select></td>
+            </tr>
+            <tr>
+              <td><label for="habiatId">Habitat ID:</label></td>
+              <td><select name="habitatID">
+                  <option value="1">1</option>
+                  <option value="2">2</option>
+                  <option value="3">3</option>
+                </select></td>
+            </tr>
+            <tr>
+              <td><input type="submit" value="Edit" /></td>
+            </tr>
+          </tbody>
+        </table>
+      </form>
+    </div>
+  </main>
+  <footer>
+    <p>&copy; 2023 Ashley Quarford and Tyler Gebel</p>
+  </footer>
+</body>
+
+</html>

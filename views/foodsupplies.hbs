@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sparrow Lane Zoological Center</title>
+    <link rel="stylesheet" type="text/css" media="screen" href="main.css" />
+    <script src="main.js"></script>
+</head>
+
+<body>
+    <header>
+        <h1>Sparrow Lane Zoological Center</h1>
+    </header>
+  <nav>
+    [
+    <a href="index.hbs">Home</a>
+    |
+    <a href="employees.hbs">Employees</a>
+    |
+    <a href="animals.hbs">Animals</a>
+    |
+    <a href="species.hbs">Species</a>
+    |
+    <a href="budgets.hbs">Budgets</a>
+    |
+    <a href="admissions.hbs">Admissions</a>
+    |
+    <a href="habitat.hbs">Habitat Enclosures</a>
+    |
+    <a href="foodsupplies.hbs">Food and Supplies</a>
+    |
+    <a href="foodsuppliesperanimal.hbs">Food and Supplies Per Animal</a>
+    ]
+  </nav>
+    <main>
+        <section>
+            <h2>Food and Supplies</h2>
+            <p>Manage food and supplies for Sparrow Lane Zoological Center</p>
+            <table border=".5" cellpadding="5">
+                <tbody>
+                    <tr>
+                        <th>Item ID</th>
+                        <th>Item Name</th>
+                        <th>Quantity</th>
+                        <th>Price</th>
+                    </tr>
+                    <tr>
+                        <td>1</td>
+                        <td>Hay</td>
+                        <td>100</td>
+                        <td>10.5</td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td>Fish</td>
+                        <td>200</td>
+                        <td>8.75</td>
+                    </tr>
+                    <tr>
+                        <td>3</td>
+                        <td>Apples</td>
+                        <td>50</td>
+                        <td>5.25</td>
+                    </tr>
+                </tbody>
+            </table>
+            <div>
+                <h3>Search Food and Supplies</h3>
+                <form id="search-item-html" method="GET" action="/items.html">
+                    <table class="sub-table">
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <p><label for="input-item_name">Item Name: </label></p>
+                                </td>
+                                <td><input type="text" name="item_name" id="input-item_name-html-search" required="">
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div class="form-btns">
+                        <input type="submit" value="Search">
+                    </div>
+                </form>
+            </div>
+            <div>
+                <h3>Create Food and Supplies</h3>
+                <form method="POST" id="createFoodSupplies">
+                    <table>
+                        <tbody>
+                            <tr>
+                                <td>Item Name:</td>
+                                <td><input type="text" name="itemName" /></td>
+                            </tr>
+                            <tr>
+                                <td>Quantity:</td>
+                                <td><input type="text" name="quantity" /></td>
+                            </tr>
+                            <tr>
+                                <td>Price:</td>
+                                <td><input type="text" name="price" /></td>
+                            </tr>
+                            <tr>
+                                <td><input type="submit" value="Create" /></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </form>
+            </div>
+            <div>
+                <h3>Edit Food and Supplies</h3>
+                <form>
+                    <table>
+                        <tbody>
+                            <tr>
+                                <td>Item ID:</td>
+                                <td> <select name="itemID">
+                                        <option value="1">1</option>
+                                        <option value="2">2</option>
+                                        <option value="3" selected>3</option>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Item Name:</td>
+                                <td><input type="text" name="itemName" /></td>
+                            </tr>
+                            <tr>
+                                <td>Quantity:</td>
+                                <td><input type="text" name="quantity" /></td>
+                            </tr>
+                            <tr>
+                                <td>Price:</td>
+                                <td><input type="text" name="price" /></td>
+                            </tr>
+                            <tr>
+                                <td><input type="submit" value="Edit" /></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </form>
+            </div>
+        </section>
+    </main>
+    <footer>
+        <p>&copy; 2023 Ashley Quarford and Tyler Gebel</p>
+    </footer>
+</body>
+
+</html>

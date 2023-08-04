@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sparrow Lane Zoological Center</title>
+  <link rel="stylesheet" type="text/css" media="screen" href="main.css" />
+  <script src="main.js"></script>
+</head>
+
+<body>
+  <header>
+    <h1>Sparrow Lane Zoological Center</h1>
+  </header>
+  <nav>
+    [
+    <a href="index.hbs">Home</a>
+    |
+    <a href="employees.hbs">Employees</a>
+    |
+    <a href="animals.hbs">Animals</a>
+    |
+    <a href="species.hbs">Species</a>
+    |
+    <a href="budgets.hbs">Budgets</a>
+    |
+    <a href="admissions.hbs">Admissions</a>
+    |
+    <a href="habitat.hbs">Habitat Enclosures</a>
+    |
+    <a href="foodsupplies.hbs">Food and Supplies</a>
+    |
+    <a href="foodsuppliesperanimal.hbs">Food and Supplies Per Animal</a>
+    ]
+  </nav>
+  <main>
+    <section>
+      <h2>Species</h2>
+      <p>Manage the Species for Sparrow Lane Zoological Center</p>
+      <table id="species-table" border=".5" cellpadding="5">
+        <thead>
+          <tr>
+            <th>Species ID</th>
+            <th>Species Name</th>
+            <th>Description</th>
+          </tr>
+        </thead>
+        <tbody>
+
+          {{#each data}}
+          <tr>
+            <td>{{this.speciesID}}</td>
+            <td>{{this.speciesName}}</td>
+            <td>{{this.description}}</td>
+            <td><button onclick="deleteSpecies({{this.speciesID}})">Delete</button></td>
+          </tr>
+          {{/each}}
+        </tbody>
+      </table>
+      <script src="./js/delete_species.js"></script>
+
+
+
+
+      <div>
+        <h3>Search Species</h3>
+        <form id="search-species-html" method="GET" action="/">
+          <label for="input-species_name">Species Name: </label>
+          <input type="text" name="species_name" id="input-species_name-html-search" required="">
+
+          <input type="submit" value="Search">
+          <a href='/'><button>Reset</button></a>
+        </form>
+      </div>
+
+
+
+
+
+
+      <div>
+        <h3>Create a Species </h3>
+        <form method="POST" id="createspecies">
+          <table>
+            <tbody>
+              <tr>
+                <td><label for="speciesname">Species Name:</label></td>
+                <td><input type="text" name="speciesname" id="speciesname" /></td>
+              </tr>
+              <tr>
+                <td><label for="speciesdesc">Species Description:</label></td>
+                <td><input type="text" name="speciesdesc" id="speciesdesc" /></td>
+              </tr>
+              <tr>
+                <td><input type="submit" value="Create" /></td>
+              </tr>
+            </tbody>
+          </table>
+        </form>
+      </div>
+      <div>
+        <h3>Edit a Species</h3>
+        <form method="POST" id="editspecies">
+          <table>
+            <tbody>
+              <tr>
+                <td><label for="speciesid">Species ID:</label></td>
+                <td><select name="speciesid">
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                  </select></td>
+              </tr>
+              <tr>
+                <td><label for="speciesname">Species Name:</label></td>
+                <td><input type="text" name="speciesname" id="speciesname" /></td>
+              </tr>
+              <tr>
+                <td><label for="speciesdesc">Species Description:</label></td>
+                <td><input type="text" name="speciesdesc" id="speciesdesc" /></td>
+              </tr>
+              <tr>
+                <td><input type="submit" value="Edit" /></td>
+              </tr>
+            </tbody>
+          </table>
+        </form>
+      </div>
+
+  </main>
+  <footer>
+    <p>&copy; 2023 Ashley Quarford and Tyler Gebel</p>
+  </footer>
+</body>
+
+</html>
