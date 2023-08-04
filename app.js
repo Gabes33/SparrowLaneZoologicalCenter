@@ -26,8 +26,14 @@ app.set('view engine', '.hbs');                 // Tell express to use the handl
 /*
     ROUTES
 */
+///// Display home page
+app.get('/index.hbs', function (req, res) {
+    res.render('index.hbs');                    // Note the call to render() and not send(). Using render() ensures the templating engine
+});                                         // will process this file, before sending the finished HTML to the client.
 
-app.get('/', function (req, res) {
+
+///// Display and Search Employee page
+app.get('/employees.hbs', function (req, res) {
     // Declare Query 1
     let query1;
 
@@ -49,11 +55,9 @@ app.get('/', function (req, res) {
         let people = rows;
 
 
-        return res.render('index', { data: people });
+        return res.render('employees.hbs', { data: people });
     })
-})
-    ;
-// app.js - ROUTES section
+});
 
 app.post('/add-employee-ajax', function (req, res) {
     // Capture the incoming data and parse it back to a JS object
@@ -117,69 +121,148 @@ app.delete('/delete-employee-ajax/', function (req, res) {
 });
 
 
-app.put('/put-employee-ajax', function(req,res,next){
+app.put('/put-employee-ajax', function (req, res, next) {
     let data = req.body;
-  
+
     let hourlyWage = parseInt(data.hourlyWage);
     let employee = parseInt(data.fullname);
-  
-    let queryUpdateWage= `UPDATE Employees SET hourlyWage = ? WHERE employeeID = ?`;
+
+    let queryUpdateWage = `UPDATE Employees SET hourlyWage = ? WHERE employeeID = ?`;
     let selectWage = `SELECT * FROM Employees WHERE hourlyWage = ?`
-  
-          // Run the 1st query
-          db.pool.query(queryUpdateWage, [hourlyWage, employee], function(error, rows, fields){
-              if (error) {
-  
-              // Log the error to the terminal so we know what went wrong, and send the visitor an HTTP response 400 indicating it was a bad request.
-              console.log(error);
-              res.sendStatus(400);
-              }
-  
-              // If there was no error, we run our second query and return that data so we can use it to update the people's
-              // table on the front-end
-              else
-              {
-                  // Run the second query
-                  db.pool.query(selectWage, [hourlyWage], function(error, rows, fields) {
-  
-                      if (error) {
-                          console.log(error);
-                          res.sendStatus(400);
-                      } else {
-                          res.send(rows);
-                      }
-                  })
-              }
-  })});
+
+    // Run the 1st query
+    db.pool.query(queryUpdateWage, [hourlyWage, employee], function (error, rows, fields) {
+        if (error) {
+
+            // Log the error to the terminal so we know what went wrong, and send the visitor an HTTP response 400 indicating it was a bad request.
+            console.log(error);
+            res.sendStatus(400);
+        }
+
+        // If there was no error, we run our second query and return that data so we can use it to update the people's
+        // table on the front-end
+        else {
+            // Run the second query
+            db.pool.query(selectWage, [hourlyWage], function (error, rows, fields) {
+
+                if (error) {
+                    console.log(error);
+                    res.sendStatus(400);
+                } else {
+                    res.send(rows);
+                }
+            })
+        }
+    })
+});
 
 
 
-function deleteRow(employeeID){
+function deleteRow(employeeID) {
 
     let table = document.getElementById("employee-table");
     for (let i = 0, row; row = table.rows[i]; i++) {
-       //iterate through rows
-       //rows would be accessed using the "row" variable assigned in the for loop
-       if (table.rows[i].getAttribute("data-value") == employeeID) {
+        //iterate through rows
+        //rows would be accessed using the "row" variable assigned in the for loop
+        if (table.rows[i].getAttribute("data-value") == employeeID) {
             table.deleteRow(i);
             deleteDropDownMenu(employeeID);
             break;
-       }
+        }
     }
 }
 
 
-function deleteDropDownMenu(employeeID){
-  let selectMenu = document.getElementById("mySelect");
-  for (let i = 0; i < selectMenu.length; i++){
-    if (Number(selectMenu.options[i].value) === Number(employeeID)){
-      selectMenu[i].remove();
-      break;
-    } 
+function deleteDropDownMenu(employeeID) {
+    let selectMenu = document.getElementById("mySelect");
+    for (let i = 0; i < selectMenu.length; i++) {
+        if (Number(selectMenu.options[i].value) === Number(employeeID)) {
+            selectMenu[i].remove();
+            break;
+        }
 
-  }
+    }
 }
 
+
+/////// Admissions
+app.get('/admissions.hbs', function (req, res) {
+    // Declare Query 1
+    let query1;
+
+    // If there is no query string, we just perform a basic SELECT
+    if (req.query.admissionID === undefined) {
+        query1 = "SELECT * FROM Admissions;";
+    }
+
+    // If there is a query string, we assume this is a search, and return desired results
+    else {
+        query1 = `SELECT * FROM Admissions WHERE admissionID LIKE "${req.query.admissionID}%"`
+    }
+
+
+    // Run the 1st query
+    db.pool.query(query1, function (error, rows, fields) {
+
+        // Save the people
+        let admission = rows;
+
+
+        return res.render('admissions', { data: admission });
+    })
+});
+
+/////// Species
+app.get('/species.hbs', function (req, res) {
+    // Declare Query 1
+    let query1;
+
+    // If there is no query string, we just perform a basic SELECT
+    if (req.query.speciesID === undefined) {
+        query1 = "SELECT * FROM Species;";
+    }
+
+    // If there is a query string, we assume this is a search, and return desired results
+    else {
+        query1 = `SELECT * FROM Species WHERE speciesName LIKE "${req.query.speciesName}%"`
+    }
+
+
+    // Run the 1st query
+    db.pool.query(query1, function (error, rows, fields) {
+
+        // Save the people
+        let species = rows;
+
+
+        return res.render('species', { data: species });
+    })
+})
+    ;
+
+////// Display Animals
+app.get('/animals.hbs', function (req, res) {
+    res.render('animals');
+});
+
+////// Display Budgets
+app.get('/budgets.hbs', function (req, res) {
+    res.render('budgets');
+});
+
+////// Display Food and Supplies
+app.get('/foodsupplies.hbs', function (req, res) {
+    res.render('foodsupplies');
+});
+
+////// Display food and supplies per animal
+app.get('/foodsuppliesperanimal.hbs', function (req, res) {
+    res.render('foodsuppliesperanimal');
+});
+////// Display Habitat
+app.get('/habitat.hbs', function (req, res) {
+    res.render('habitat');
+});
 /*
     LISTENER
 */

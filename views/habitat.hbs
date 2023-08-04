@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sparrow Lane Zoological Center</title>
+    <link rel="stylesheet" type="text/css" media="screen" href="main.css" />
+    <script src="main.js"></script>
+</head>
+
+<body>
+    <header>
+        <h1>Sparrow Lane Zoological Center</h1>
+    </header>
+  <nav>
+    [
+    <a href="index.hbs">Home</a>
+    |
+    <a href="employees.hbs">Employees</a>
+    |
+    <a href="animals.hbs">Animals</a>
+    |
+    <a href="species.hbs">Species</a>
+    |
+    <a href="budgets.hbs">Budgets</a>
+    |
+    <a href="admissions.hbs">Admissions</a>
+    |
+    <a href="habitat.hbs">Habitat Enclosures</a>
+    |
+    <a href="foodsupplies.hbs">Food and Supplies</a>
+    |
+    <a href="foodsuppliesperanimal.hbs">Food and Supplies Per Animal</a>
+    ]
+  </nav>
+    <main>
+        <section>
+            <h2>Habitat Enclosures</h2>
+            <p>Manage habitat enclosures for Sparrow Lane Zoological Center</p>
+            <table border=".5" cellpadding="5">
+                <tbody>
+                    <tr>
+                        <th>Habitat ID</th>
+                        <th>Monthly Upkeep</th>
+                        <th>Capacity</th>
+                        <th>Description</th>
+                    </tr>
+                    <tr>
+                        <td>1</td>
+                        <td>5000</td>
+                        <td>10</td>
+                        <td>Treetop Habitat</td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td>4000</td>
+                        <td>6</td>
+                        <td>Arctic Habitat</td>
+                    </tr>
+                    <tr>
+                        <td>3</td>
+                        <td>3000</td>
+                        <td>20</td>
+                        <td>Farm Habitat</td>
+                    </tr>
+                </tbody>
+            </table>
+            <div>
+                <h3>Search Habitat Enclosures</h3>
+                <form id="search-habitat-html" method="GET" action="/habitats.html">
+                    <table>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <p><label for="input-habitat_name">Habitat ID: </label></p>
+                                </td>
+                                <td><input type="text" name="habitat_name" id="input-habitat_name-html-search"
+                                        required="">
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div class="form-btns">
+                        <input type="submit" value="Search">
+                    </div>
+                </form>
+            </div>
+            <div>
+                <h3>Create a Habitat Enclosure</h3>
+                <form>
+                    <table>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <label for="monthlyUpkeep">Monthly Upkeep:</label>
+                                </td>
+                                <td>
+                                    <input type="text" name="monthlyUpkeep" id="monthlyUpkeep" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <label for="capacity">Capacity:</label>
+                                </td>
+                                <td>
+                                    <input type="text" name="capacity" id="capacity" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <label for="description">Description:</label>
+                                </td>
+                                <td>
+                                    <input type="text" name="description" id="description" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <input type="submit" value="Create" />
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </form>
+            </div>
+            <div>
+                <h3>Edit a Habitat Enclosure</h3>
+                <form>
+                    <table>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <label for="habitatID">Habitat ID:</label>
+                                </td>
+                                <td>
+                                    <select name="habitatID">
+                                        <option value="1">1</option>
+                                        <option value="2">2</option>
+                                        <option value="3" selected>3</option>
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <label for="monthlyUpkeep">Monthly Upkeep:</label>
+                                </td>
+                                <td>
+                                    <input type="text" name="monthlyUpkeep" id="monthlyUpkeep" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <label for="capacity">Capacity:</label>
+                                </td>
+                                <td>
+                                    <input type="text" name="capacity" id="capacity" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <label for="description">Description:</label>
+                                </td>
+                                <td>
+                                    <input type="text" name="description" id="description" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <input type="submit" value="Edit" />
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </form>
+            </div>
+            
+        </section>
+    </main>
+    <footer>
+        <p>&copy; 2023 Ashley Quarford and Tyler Gebel</p>
+    </footer>
+</body>
+
+</html>

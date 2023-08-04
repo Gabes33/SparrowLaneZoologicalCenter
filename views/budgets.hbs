@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sparrow Lane Zoological Center</title>
+  <link rel="stylesheet" type="text/css" media="screen" href="main.css" />
+  <script src="main.js"></script>
+</head>
+
+<body>
+  <header>
+    <h1>Sparrow Lane Zoological Center</h1>
+  </header>
+  <nav>
+    [
+    <a href="index.hbs">Home</a>
+    |
+    <a href="employees.hbs">Employees</a>
+    |
+    <a href="animals.hbs">Animals</a>
+    |
+    <a href="species.hbs">Species</a>
+    |
+    <a href="budgets.hbs">Budgets</a>
+    |
+    <a href="admissions.hbs">Admissions</a>
+    |
+    <a href="habitat.hbs">Habitat Enclosures</a>
+    |
+    <a href="foodsupplies.hbs">Food and Supplies</a>
+    |
+    <a href="foodsuppliesperanimal.hbs">Food and Supplies Per Animal</a>
+    ]
+  </nav>
+  <main>
+    <h2>Budgets</h2>
+    <p>Manage budgets for Sparrow Lane Zoological Center</p>
+    <table border=".5" cellpadding="5">
+      <tbody>
+        <tr>
+          <th>Budget ID</th>
+          <th>Amount</th>
+          <th>Employee ID</th>
+          <th>Habitat ID</th>
+          <th>Admission ID</th>
+        </tr>
+        <tr>
+          <td>1</td>
+          <td>10000</td>
+          <td>1</td>
+          <td>1</td>
+          <td>1</td>
+        </tr>
+        <tr>
+          <td>2</td>
+          <td>15000</td>
+          <td>2</td>
+          <td>2</td>
+          <td>2</td>
+        </tr>
+        <tr>
+          <td>3</td>
+          <td>20000</td>
+          <td>3</td>
+          <td>3</td>
+          <td>3</td>
+        </tr>
+      </tbody>
+    </table>
+    <div>
+      <h3>Search Budgets </h3>
+      <form id="search-budget-html" method="GET" action="/budgets.html">
+        <table class="sub-table">
+          <tbody>
+            <tr>
+              <td>
+                <p><label for="input-budget_amount">Amount: </label></p>
+              </td>
+              <td><input type="text" amount="budget_amount" id="input-budget_amount-html-search" required="">
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <div class="form-btns">
+          <input type="submit" value="Search">
+        </div>
+      </form>
+    </div>
+    <div>
+      <h3>Create a Budget </h3>
+      <form method="POST" id="createBudget">
+        <table>
+          <tbody>
+            <tr>
+              <td><label for="budgetAmount">Budget Amount:</label></td>
+              <td><input type="text" name="budgetAmount" id="budgetAmount" /></td>
+            </tr>
+            <tr>
+              <td><input type="submit" value="Create" /></td>
+            </tr>
+          </tbody>
+        </table>
+      </form>
+    </div>
+    <div>
+      <h3>Edit a Budget</h3>
+      <form method="POST" id="editBudget">
+        <table>
+          <tbody>
+            <tr>
+              <td><label for="budgetID">Budget ID:</label></td>
+              <td><select name="budgetID">
+                  <option value="1">1</option>
+                  <option value="2">2</option>
+                  <option value="3">3</option>
+                </select></td>
+            </tr>
+            <tr>
+              <td><label for="budgetAmount">Budget Amount:</label></td>
+              <td><input type="text" name="budgetAmount" id="budgetAmount" /></td>
+            </tr>
+            <tr>
+              <td><input type="submit" value="Edit" /></td>
+            </tr>
+          </tbody>
+        </table>
+      </form>
+    </div>
+    <div>
+  </main>
+  <footer>
+    <p>&copy; 2023 Ashley Quarford and Tyler Gebel</p>
+  </footer>
+</body>
+
+</html>

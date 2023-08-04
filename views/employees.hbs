@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sparrow Lane Zoological Center</title>
+    <link rel="stylesheet" type="text/css" media="screen" href="main.css" />
+    <script src="main.js"></script>
+</head>
+
+<body>
+    <header>
+        <h1>Sparrow Lane Zoological Center</h1>
+    </header>
+    <nav>
+        [
+        <a href="index.hbs">Home</a>
+        |
+        <a href="employees.hbs">Employees</a>
+        |
+        <a href="animals.hbs">Animals</a>
+        |
+        <a href="species.hbs">Species</a>
+        |
+        <a href="budgets.hbs">Budgets</a>
+        |
+        <a href="admissions.hbs">Admissions</a>
+        |
+        <a href="habitat.hbs">Habitat Enclosures</a>
+        |
+        <a href="foodsupplies.hbs">Food and Supplies</a>
+        |
+        <a href="foodsuppliesperanimal.hbs">Food and Supplies Per Animal</a>
+        ]
+    </nav>
+    <main>
+        <section>
+            <h2>Employees</h2>
+            <p>Manage the Employees for Sparrow Lane Zoological Center</p>
+            <table id="employee-table" border=".5" cellpadding="5">
+                <thread>
+                    <tr>
+                        <th>Employee ID</th>
+                        <th>First Name</th>
+                        <th>Last Name</th>
+                        <th>Phone Number</th>
+                        <th>Hourly Wage</th>
+                        <th>Work Email</th>
+                    </tr>
+                </thread>
+                <tbody>
+                    {{#each data}}
+                    <tr data-value={{this.employeeID}}>
+                        <td>{{this.employeeID}}</td>
+                        <td>{{this.firstName}}</td>
+                        <td>{{this.lastName}}</td>
+                        <td>{{this.phoneNum}}</td>
+                        <td>{{this.hourlyWage}}</td>
+                        <td>{{this.workEmail}}</td>
+                        <td><button onclick="deleteEmployee({{this.employeeID}})">Delete</button></td>
+                    </tr>
+                    {{/each}}
+                </tbody>
+            </table>
+            <script src="./js/delete_employee.js"></script>
+
+
+            <div>
+                <h3>Search Employees</h3>
+                <form id="search-employee-html" method='GET' action='/'>
+                    <label for="input-lname">Search by Last Name: </label>
+                    <input type="text" name="lastName" id="input-lastName-html-search">
+
+                    <input type="submit">
+                    <a href='/'><button>Reset</button></a>
+                </form>
+            </div>
+
+
+            <div>
+                <h3>Add Employee</h3>
+                <p>To add a new employee, please enter their information below and click 'Submit'!</p>
+                <form id="add-employee-form-ajax">
+                    <label for="input-firstName">First Name: </label>
+                    <input type="text" name="input-firstName" id="input-firstName">
+
+                    <label for="input-lastName">Last Name: </label>
+                    <input type="text" name="input-lastName" id="input-lastName">
+
+                    <label for="input-phoneNum">Phone Number: </label>
+                    <input type="number" name="input-phoneNum" id="input-phoneNum">
+
+                    <label for="input-hourlyWage">Hourly Wage: </label>
+                    <input type="money" name="input-hourlyWage" id="input-hourlyWage">
+
+                    <label for="input-workEmail">Work Email: </label>
+                    <input type="text" name="input-workEmail" id="input-workEmail">
+
+
+                    <input type="submit">
+                </form>
+                {{!-- Embed our javascript to handle the DOM manipulation and AJAX request --}}
+                <script src="./js/add_employee.js"></script>
+            </div>
+
+
+            <div>
+                <h3>Edit an Employee</h3>
+                <p>To update a specific user's Hourly Wage, select their name from the drop-down menu on the left and
+                    their desired
+                    hourly wage from the drop down menu on the right</p>
+                <form id="update-person-form-ajax">
+
+                    <label for="input-fullname">Full name: </label>
+                    <select name="input-fullname" id="mySelect">
+                        <option value="test">Select an Employee</option>
+                        {{#each data}}
+                        <option value="{{this.EmployeeID}}">{{this.firstName}} {{this.lastName}}</option>
+                        {{/each}}
+                    </select>
+
+                    <label for="input-hourlyWage">Hourly Wage: </label>
+                    <select name="input-hourlyWage" id="input-hourlyWage-update">
+                        <option>Select an Hourly Pay Option</option>
+                        {{#each hourlyWage}}
+                        <option value="{{this.EmployeeID}}">{{this.hourlyWage}}</option>
+                        {{/each}}
+                    </select>
+                    <input type="submit">
+
+                </form>
+
+                <script src="./js/update_employee.js"></script>
+            </div>
+
+        </section>
+    </main>
+    <footer>
+        <p>&copy; 2023 Ashley Quarford and Tyler Gebel</p>
+    </footer>
+</body>
+
+</html>
