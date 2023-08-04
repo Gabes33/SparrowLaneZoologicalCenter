@@ -1,53 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
 
-    {{!-- Header section --}}
-    <thead>
-
-        {{!-- For just the first row, we print each key of the row object as a header cell so we
-        know what each column means when the page renders --}}
-        <tr>
-            {{#each data.[0]}}
-            <th>
-                {{@key}}
-            </th>
-            {{/each}}
-            <th>delete</th>
-        </tr>
-    </thead>
-
-    {{!-- Body section --}}
-    <tbody>
-
-        {{!-- For each row, print the id, fname, lname, homeworld and age, in order --}}
-        {{#each data}}
-        <tr data-value={{this.employeeID}}>
-            <td>{{this.employeeID}}</td>
-            <td>{{this.firstName}}</td>
-            <td>{{this.lastName}}</td>
-            <td>{{this.phoneNum}}</td>
-            <td>{{this.hourlyWage}}</td>
-            <td>{{this.workEmail}}</td>
-            <td><button onclick="deleteEmployee({{this.employeeID}})">Delete</button></td>
-        </tr>
-        {{/each}}
-    </tbody>
-</table>
-<script src="./js/delete_employee.js"></script>
-
-<!-- /views/index.hbs -->
-
-<h2>Search Employees</h2>
-<p>Search by last name using the field below. Partial last names are OK too!</p>
-<form id="search-employee-html" method='GET' action='/'>
-    <label for="input-lname">Search by Last Name: </label>
-    <input type="text" name="lastName" id="input-lastName-html-search">
-
-    <input type="submit">
-    <a href='/'><button>Reset</button></a>
-</form>
-
- 
 <body>
   <header>
     <h1>Sparrow Lane Zoological Center</h1>
