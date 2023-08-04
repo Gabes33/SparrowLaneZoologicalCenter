@@ -61,6 +61,7 @@ app.get('/', function (req, res) {
 app.post('/add-employee-ajax', function (req, res) {
     // Capture the incoming data and parse it back to a JS object
     let data = req.body;
+        console.log(data);
 
     // Capture NULL values
     let phoneNum = parseInt(data.phoneNum);
@@ -69,6 +70,8 @@ app.post('/add-employee-ajax', function (req, res) {
     }
 
     let hourlyWage = parseInt(data.hourlyWage);
+        console.log(data);
+
     if (isNaN(hourlyWage)) {
         hourlyWage = 'NULL'
     }
@@ -120,7 +123,7 @@ app.delete('/delete-employee-ajax/', function (req, res) {
 });
 
 
-app.put('/put-employee-ajax/', function (req, res) {
+app.put('/update-employee-ajax/', function (req, res) {
     let hourlyWage = req.params.id;
 
     let updateQuery = `UPDATE FROM Employees SET hourlyWage = ? WHERE employeeID = ?`;

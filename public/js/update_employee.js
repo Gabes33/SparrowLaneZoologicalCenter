@@ -7,7 +7,7 @@ function updateEmployee(hourlyWage) {
 
     // Setup our AJAX request
     var xhttp = new XMLHttpRequest();
-    xhttp.open("DELETE", "/delete-employee-ajax", true);
+    xhttp.open("PUT", "/update-employee-ajax", true);
     xhttp.setRequestHeader("Content-type", "application/json");
 
     // Tell our AJAX request how to resolve
@@ -15,7 +15,7 @@ function updateEmployee(hourlyWage) {
         if (xhttp.readyState == 4 && xhttp.status == 204) {
 
             // Add the new data to the table
-            deleteRow(employeeID);
+            updateRow(employeeID);
 
         }
         else if (xhttp.readyState == 4 && xhttp.status != 204) {
