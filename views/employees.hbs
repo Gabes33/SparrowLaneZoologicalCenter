@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Sparrow Lane Zoological Center</title>
-    <link rel="stylesheet" type="text/css" media="screen" href="app.css" />
+    <link rel="stylesheet" type="text/css" media="screen" href="public/css/app.css" />
     <script src="main.js"></script>
 </head>
 
@@ -99,7 +99,7 @@
                     <input type="text" name="input-workEmail" id="input-workEmail">
 
 
-                    <input type="submit">
+                    <Button type="submit">Submit</Button>
                 </form>
                 {{!-- Embed our javascript to handle the DOM manipulation and AJAX request --}}
                 <script src="./js/add_employee.js"></script>
@@ -125,7 +125,7 @@
                 <select name="input-hourlyWage" id="input-hourlyWage-update">
             <input type="number" min="1" step=".01" name="input-hourlyWage" id="input-hourlyWage">
         </select>
-    <td><input onclick="updateEmployee">Submit</td></input></td>
+    <td><Button onclick="updateEmployee">Submit</td></Button></td>
 
 
                 </form>
