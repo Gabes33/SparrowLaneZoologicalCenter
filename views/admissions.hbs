@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sparrow Lane Zoological Center</title>
+    <link rel="stylesheet" type="text/css" media="screen" href="main.css" />
+    <script src="main.js"></script>
+</head>
+
+<body>
+    <header>
+        <h1>Sparrow Lane Zoological Center</h1>
+    </header>
+  <nav>
+    [
+    <a href="index.hbs">Home</a>
+    |
+    <a href="employees.hbs">Employees</a>
+    |
+    <a href="animals.hbs">Animals</a>
+    |
+    <a href="species.hbs">Species</a>
+    |
+    <a href="budgets.hbs">Budgets</a>
+    |
+    <a href="admissions.hbs">Admissions</a>
+    |
+    <a href="habitat.hbs">Habitat Enclosures</a>
+    |
+    <a href="foodsupplies.hbs">Food and Supplies</a>
+    |
+    <a href="foodsuppliesperanimal.hbs">Food and Supplies Per Animal</a>
+    ]
+  </nav>
+    <main>
+        <section>
+            <h2>Admissions</h2>
+            <p>Manage admissions for Sparrow Lane Zoological Center</p>
+            <table id="admissions-table" border=".5" cellpadding="5">
+                <thead>
+                    <tr>
+                        <th>Admission ID</th>
+                        <th>Total</th>
+                        <th>Ticket Price</th>
+                        <th>Description</th>
+                    </tr>
+
+                </thead>
+
+                <tbody>
+
+                    {{!-- For each row, print the id, fname, lname, homeworld and age, in order --}}
+                    {{#each data}}
+                    <tr>
+                        <td>{{this.admissionID}}</td>
+                        <td>{{this.admissionTotal}}</td>
+                        <td>{{this.ticketPrice}}</td>
+                        <td>{{this.description}}</td>
+                        <td><button onclick="deleteAdmission({{this.admissionID}})">Delete</button></td>
+                    </tr>
+                    {{/each}}
+                </tbody>
+            </table>
+            <script src="./js/delete_admission.js"></script>
+
+
+            <!-- Searching Admissions-->
+            <div>
+                <h3>Search Admissions </h3>
+                <form id="search-admission-html" method="GET" action='/'>
+                    <label for="input-admissionID">Admission ID: </label>
+                    <input type="text" name="admissionID" id="input-admissionID-html-search" required="">
+                    <input type="submit">
+                    <a href='/'><button>Reset</button></a>
+
+                </form>
+            </div>
+
+
+
+            <div>
+                <h3>Create Admissions</h3>
+                <form method="POST" id="createAdmissions">
+                    <table>
+                        <tbody>
+                            <tr>
+                                <td><label for="admissionTotal">Admission Total:</label></td>
+                                <td><input type="number" name="admissionTotal" id="admissionTotal" /></td>
+                            </tr>
+                            <tr>
+                                <td><label for="ticketPrice">Ticket Price:</label></td>
+                                <td><input type="number" name="ticketPrice" id="ticketPrice" /></td>
+                            </tr>
+                            <tr>
+                                <td><label for="description">Description:</label></td>
+                                <td><input type="text" name="description" id="description" /></td>
+                            <tr>
+                                <td><input type="submit" value="Create" /></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </form>
+            </div>
+            <div>
+                <h3>Edit Admissions</h3>
+                <form>
+                    <table>
+                        <tbody>
+                            <tr>
+                                <td><label for="admissionID">Admission ID:</label></td>
+                                <td><select name="admissionID">
+                                        <option value="1">1</option>
+                                        <option value="2">2</option>
+                                        <option value="3">3</option>
+                                    </select></td>
+                            </tr>
+                            <tr>
+                                <td><label for="admissionTotal">Admission Total:</label></td>
+                                <td><input type="number" name="admissionTotal" id="admissionTotal" /></td>
+                            </tr>
+                            <tr>
+                                <td><label for="ticketPrice">Ticket Price:</label></td>
+                                <td><input type="number" name="ticketPrice" id="ticketPrice" /></td>
+                            </tr>
+                            <tr>
+                                <td><label for="description">Description:</label></td>
+                                <td><input type="text" name="description" id="description" /></td>
+                            </tr>
+                            <tr>
+                                <td><input type="submit" value="Edit" /></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </form>
+            </div>
+
+        </section>
+    </main>
+    <footer>
+        <p>&copy; 2023 Ashley Quarford and Tyler Gebel</p>
+    </footer>
+</body>
+
+</html>
