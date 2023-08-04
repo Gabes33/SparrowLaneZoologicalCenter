@@ -122,13 +122,11 @@
                     </select>
 
                     <label for="input-hourlyWage">Hourly Wage: </label>
-                    <select name="input-hourlyWage" id="input-hourlyWage-update">
-                        <option>Select an Hourly Pay Option</option>
-                        {{#each hourlyWage}}
-                        <option value="{{this.EmployeeID}}">{{this.hourlyWage}}</option>
-                        {{/each}}
-                    </select>
-                    <input type="submit">
+                <select name="input-hourlyWage" id="input-hourlyWage-update">
+            <input type="number" min="1" step=".01" name="input-hourlyWage" id="input-hourlyWage">
+        </select>
+    <td><input onclick="updateEmployee">Submit</td></input></td>
+
 
                 </form>
 

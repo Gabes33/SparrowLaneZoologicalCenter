@@ -16,6 +16,7 @@ function updateEmployee(hourlyWage) {
 
             // Add the new data to the table
             updateRow(employeeID);
+            console.log(data);
 
         }
         else if (xhttp.readyState == 4 && xhttp.status != 204) {
