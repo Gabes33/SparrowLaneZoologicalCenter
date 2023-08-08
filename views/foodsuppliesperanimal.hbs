@@ -14,75 +14,69 @@
     <header>
         <h1>Sparrow Lane Zoological Center</h1>
     </header>
-  <nav>
-    [
-    <a href="index.hbs">Home</a>
-    |
-    <a href="employees.hbs">Employees</a>
-    |
-    <a href="animals.hbs">Animals</a>
-    |
-    <a href="species.hbs">Species</a>
-    |
-    <a href="budgets.hbs">Budgets</a>
-    |
-    <a href="admissions.hbs">Admissions</a>
-    |
-    <a href="habitat.hbs">Habitat Enclosures</a>
-    |
-    <a href="foodsupplies.hbs">Food and Supplies</a>
-    |
-    <a href="foodsuppliesperanimal.hbs">Food and Supplies Per Animal</a>
-    ]
-  </nav>
+    <nav>
+        [
+        <a href="index.hbs">Home</a>
+        |
+        <a href="employees.hbs">Employees</a>
+        |
+        <a href="animals.hbs">Animals</a>
+        |
+        <a href="species.hbs">Species</a>
+        |
+        <a href="budgets.hbs">Budgets</a>
+        |
+        <a href="admissions.hbs">Admissions</a>
+        |
+        <a href="habitat.hbs">Habitat Enclosures</a>
+        |
+        <a href="foodsupplies.hbs">Food and Supplies</a>
+        |
+        <a href="foodsuppliesperanimal.hbs">Food and Supplies Per Animal</a>
+        ]
+    </nav>
     <main>
         <section>
             <h2>Food and Supplies Per Animal</h2>
             <p>Manage Food and Supplies Per Animal for Sparrow Lane Zoological Center</p>
-            <table border=".5" cellpadding="5">
-                <tbody>
+            <table id="foodsuppliesperanimal-table" border=".5" cellpadding="5">
+                <thread>
                     <tr>
                         <th>Animal Item ID</th>
                         <th>Animal ID</th>
                         <th>Item ID</th>
                     </tr>
+
+                </thread>
+                <tbody>
+                    {{#each data}}
                     <tr>
-                        <td>1</td>
-                        <td>1</td>
-                        <td>1</td>
+                        <td>{{this.animalItemListID}}</td>
+                        <td>{{this.animalID}}</td>
+                        <td>{{this.itemID}}</td>
+
+                        <td><button onclick="deleteFoodsuppliesperanimal({{this.animalItemListID}})">Delete</button>
+                        </td>
                     </tr>
-                    <tr>
-                        <td>2</td>
-                        <td>1</td>
-                        <td>2</td>
-                    </tr>
-                    <tr>
-                        <td>3</td>
-                        <td>2</td>
-                        <td>3</td>
-                    </tr>
+                    {{/each}}
                 </tbody>
             </table>
+            <script src="./js/delete_foodsuppliesperanimal.js"></script>
+
+
+            <!-- Searching Food and Supplies per Animal-->
             <div>
-                <h3>Search Food and Supplies per Animal</h3>
-                <form id="search-foodsuppliesperanimal-html" method="GET" action="/foodsuppliesperanimals.html">
-                    <table class="sub-table">
-                        <tbody>
-                            <tr>
-                                <td>
-                                    <p><label for="input-animal-item-ID">Animal Item ID: </label></p>
-                                </td>
-                                <td><input type="text" name="animal-item-ID" id="input-animal-item-ID-html-search"
-                                        required="">
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                    <div class="form-btns">
-                        <input type="submit" value="Search">
-                    </div>
+                <h3>Search </h3>
+                <form id="search-admission-html" method="GET">
+                    <label for="input-admissionID">Animal Item ID: </label>
+                    <input type="text" name="animalItemListID" id="input-animalItemListID-html-search">
+                    <input type="submit">
+                    <a href='/foodsuppliesperanimal.hbs'><button>Reset</button></a>
+
                 </form>
             </div>
+
+
             <div>
                 <h3>Create a Food and Supplies per Animal</h3>
                 <form method="POST" id="createFoodandSuppliesperAnimal">

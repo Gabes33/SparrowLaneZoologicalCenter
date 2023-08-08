@@ -190,12 +190,12 @@ app.get('/foodsuppliesperanimal.hbs', function (req, res) {
     let query1;
 
 
-    if (req.query.habitatID === undefined) {
+    if (req.query.animalItemListID === undefined) {
         query1 = "SELECT * FROM Food_and_supplies_per_animal;";
     }
 
     else {
-        query1 = `SELECT * FROM Food_and_supplies_per_animal WHERE Food_and_supplies_per_animal LIKE "${req.query.Food_and_supplies_per_animal}%"`
+        query1 = `SELECT * FROM Food_and_supplies_per_animal WHERE animalItemListID LIKE "${req.query.animalItemListID}%"`
     }
 
 
