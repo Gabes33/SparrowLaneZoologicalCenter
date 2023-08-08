@@ -41,8 +41,7 @@
     <table id="animals-table" border=".5" cellpadding="5">
       <thread>
         <tr>
-          <th>
-            Animal ID</th>
+          <th>Animal ID</th>
           <th>Animal Name</th>
           <th>Description</th>
           <th>Species ID</th>
@@ -52,13 +51,13 @@
       <tbody>
 
         {{#each data}}
-        <tr>
+        <tr data-value={{this.animalID}}>
           <td>{{this.animalID}}</td>
           <td>{{this.animalName}}</td>
           <td>{{this.description}}</td>
           <td>{{this.speciesID}}</td>
           <td>{{this.habitatID}}</td>
-          <td><button onclick="deleteStaff({{this.animalName}})">Delete</button></td>
+          <td><button onclick="deleteStaff({{this.animalID}})">Delete</button></td>
         </tr>
         {{/each}}
       </tbody>
@@ -69,25 +68,21 @@
 
 
 
+    <!-- Searching Animals-->
     <div>
-      <h3>Search Animals</h3>
-      <form id="search-animal-html" method="GET" action="/animals.html">
-        <table class="sub-table">
-          <tbody>
-            <tr>
-              <td>
-                <p><label for="input-animal_name">Name: </label></p>
-              </td>
-              <td><input type="text" name="animal_name" id="input-animal_name-html-search" required="">
-              </td>
-            </tr>
-          </tbody>
-        </table>
-        <div class="form-btns">
-          <input type="submit" value="Search">
-        </div>
+      <h3>Search Animals </h3>
+      <form id="search-animal-html" method="GET">
+        <label for="input-animalID">Name: </label>
+        <input type="text" name="animalName" id="input-animalName-html-search" required="">
+        <input type="submit">
+        <a href='/animals.hbs'><button>Reset</button></a>
+
       </form>
     </div>
+
+
+
+
     <div>
       <h3>Create New Animal </h3>
       <form method="POST" id="createAnimal">

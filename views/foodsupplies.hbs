@@ -14,78 +14,69 @@
     <header>
         <h1>Sparrow Lane Zoological Center</h1>
     </header>
-  <nav>
-    [
-    <a href="index.hbs">Home</a>
-    |
-    <a href="employees.hbs">Employees</a>
-    |
-    <a href="animals.hbs">Animals</a>
-    |
-    <a href="species.hbs">Species</a>
-    |
-    <a href="budgets.hbs">Budgets</a>
-    |
-    <a href="admissions.hbs">Admissions</a>
-    |
-    <a href="habitat.hbs">Habitat Enclosures</a>
-    |
-    <a href="foodsupplies.hbs">Food and Supplies</a>
-    |
-    <a href="foodsuppliesperanimal.hbs">Food and Supplies Per Animal</a>
-    ]
-  </nav>
+    <nav>
+        [
+        <a href="index.hbs">Home</a>
+        |
+        <a href="employees.hbs">Employees</a>
+        |
+        <a href="animals.hbs">Animals</a>
+        |
+        <a href="species.hbs">Species</a>
+        |
+        <a href="budgets.hbs">Budgets</a>
+        |
+        <a href="admissions.hbs">Admissions</a>
+        |
+        <a href="habitat.hbs">Habitat Enclosures</a>
+        |
+        <a href="foodsupplies.hbs">Food and Supplies</a>
+        |
+        <a href="foodsuppliesperanimal.hbs">Food and Supplies Per Animal</a>
+        ]
+    </nav>
     <main>
         <section>
             <h2>Food and Supplies</h2>
             <p>Manage food and supplies for Sparrow Lane Zoological Center</p>
-            <table border=".5" cellpadding="5">
-                <tbody>
+            <table id="foodsupplies-table" border=".5" cellpadding="5">
+                <thread>
                     <tr>
                         <th>Item ID</th>
                         <th>Item Name</th>
                         <th>Quantity</th>
                         <th>Price</th>
                     </tr>
+                </thread>
+                <tbody>
+
+                    {{!-- For each row, print the id, fname, lname, homeworld and age, in order --}}
+                    {{#each data}}
                     <tr>
-                        <td>1</td>
-                        <td>Hay</td>
-                        <td>100</td>
-                        <td>10.5</td>
+                        <td>{{this.itemID}}</td>
+                        <td>{{this.itemName}}</td>
+                        <td>{{this.quantity}}</td>
+                        <td>{{this.price}}</td>
+                        <td><button onclick="deleteFoodsupplies({{this.itemID}})">Delete</button></td>
                     </tr>
-                    <tr>
-                        <td>2</td>
-                        <td>Fish</td>
-                        <td>200</td>
-                        <td>8.75</td>
-                    </tr>
-                    <tr>
-                        <td>3</td>
-                        <td>Apples</td>
-                        <td>50</td>
-                        <td>5.25</td>
-                    </tr>
+                    {{/each}}
                 </tbody>
             </table>
+            <script src="./js/delete_foodsupplies.js"></script>
+
+
             <div>
                 <h3>Search Food and Supplies</h3>
-                <form id="search-item-html" method="GET" action="/items.html">
-                    <table class="sub-table">
-                        <tbody>
-                            <tr>
-                                <td>
-                                    <p><label for="input-item_name">Item Name: </label></p>
-                                </td>
-                                <td><input type="text" name="item_name" id="input-item_name-html-search" required="">
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                    <div class="form-btns">
-                        <input type="submit" value="Search">
-                    </div>
+                <form id="search-foodsupplies-html" method='GET'>
+                    <label for="input-itemName">Search by Item Name: </label>
+                    <input type="text" name="itemName" id="input-itemName-html-search">
+
+                    <input type="submit">
+                    <a href='/foodsupplies.hbs'><button>Reset</button></a>
                 </form>
             </div>
+
+
             <div>
                 <h3>Create Food and Supplies</h3>
                 <form method="POST" id="createFoodSupplies">

@@ -50,7 +50,7 @@
         <tbody>
 
           {{#each data}}
-          <tr>
+          <tr data-value={{this.speciesID}}>
             <td>{{this.speciesID}}</td>
             <td>{{this.speciesName}}</td>
             <td>{{this.description}}</td>
@@ -66,12 +66,12 @@
 
       <div>
         <h3>Search Species</h3>
-        <form id="search-species-html" method="GET" action="/">
-          <label for="input-species_name">Species Name: </label>
-          <input type="text" name="species_name" id="input-species_name-html-search" required="">
+        <form id="search-species-html" method='GET'>
+          <label for="input-speciesName">Search by Name: </label>
+          <input type="text" name="speciesName" id="input-speciesName-html-search">
 
-          <input type="submit" value="Search">
-          <a href='/'><button>Reset</button></a>
+          <input type="submit">
+          <a href='/species.hbs'><button>Reset</button></a>
         </form>
       </div>
 
