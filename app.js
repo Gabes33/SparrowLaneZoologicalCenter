@@ -7,7 +7,7 @@ var app = express();            // We need to instantiate an express object to i
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 app.use(express.static('public'))
-PORT = 9446                // Set a port number at the top so it's easy to change in the future
+PORT = 9447                // Set a port number at the top so it's easy to change in the future
 
 // app.js
 
@@ -384,13 +384,14 @@ app.post('/add-admission-ajax', function (req, res) {
     });
 });
 
+
 //-------------------------------------------------------------------------------------------------
 // DELETE
 //-------------------------------------------------------------------------------------------------
 app.delete('/delete-employee-ajax/', function (req, res) {
     let employeeID = req.params.id;
 
-    let deleteQuery = `DELETE FROM Employees WHERE employeeID = ?`;
+    let deleteQuery = `DELETE FROM Employees WHERE employeeID = ? `;
 
     db.pool.query(deleteQuery, [employeeID], function (error, result) {
         if (error) {
