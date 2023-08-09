@@ -343,6 +343,46 @@ app.post('/add-species-ajax', function (req, res) {
         }
     })
 });
+app.post('/add-admission-ajax', function (req, res) {
+    // Capture the incoming data and parse it back to a JS object
+    let data = req.body;
+
+    // Capture the admissionTotal and ticketPrice values and ensure they are not null
+    let admissionTotal = parseFloat(data.admissionTotal);
+    if (isNaN(admissionTotal) || admissionTotal < 0) {
+        admissionTotal = 0; // Set a default value or any other desired behavior
+    }
+
+    let ticketPrice = parseFloat(data.ticketPrice);
+    if (isNaN(ticketPrice) || ticketPrice < 0) {
+        ticketPrice = 0; // Set a default value or any other desired behavior
+    }
+
+    // Create the query and run it on the database
+    query1 = `INSERT INTO Admissions (admissionTotal, ticketPrice, description) VALUES (${admissionTotal}, ${ticketPrice}, '${data.description}')`;
+    db.pool.query(query1, function (error, rows, fields) {
+        // Check to see if there was an error
+        if (error) {
+            // Log the error to the terminal so we know what went wrong, and send the visitor an HTTP response 400 indicating it was a bad request.
+            console.log(error);
+            res.sendStatus(400);
+        } else {
+            // If there was no error, perform a SELECT * from Admissions
+            query2 = `SELECT * FROM Admissions;`;
+            db.pool.query(query2, function (error, rows, fields) {
+                // If there was an error on the second query, send a 400
+                if (error) {
+                    // Log the error to the terminal so we know what went wrong, and send the visitor an HTTP response 400 indicating it was a bad request.
+                    console.log(error);
+                    res.sendStatus(400);
+                } else {
+                    // If all went well, send the results of the query back.
+                    res.send(rows);
+                }
+            });
+        }
+    });
+});
 
 //-------------------------------------------------------------------------------------------------
 // DELETE
