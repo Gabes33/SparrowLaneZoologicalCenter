@@ -81,22 +81,25 @@
 
 
 
-    <div>
-      <h3>Create a Budget </h3>
-      <form method="POST" id="createBudget">
-        <table>
-          <tbody>
-            <tr>
-              <td><label for="budgetAmount">Budget Amount:</label></td>
-              <td><input type="text" name="budgetAmount" id="budgetAmount" /></td>
-            </tr>
-            <tr>
-              <td><input type="submit" value="Create" /></td>
-            </tr>
-          </tbody>
-        </table>
-      </form>
-    </div>
+<div>
+  <h3>Create a Budget</h3>
+  <form method="POST" id="createBudget">
+    <label for="input-budgetAmount">Budget Amount: </label>
+    <input type="text" name="input-budgetAmount" id="input-budgetAmount">
+    <label for="input-employeeWages">Employee Wages: </label>
+    <input type="text" name="input-employeeWages" id="input-employeeWages">
+    <label for="input-habitatUpkeep">Habitat Monthly Upkeep: </label>
+    <input type="text" name="input-habitatUpkeep" id="input-habitatUpkeep">
+    <label for="input-admissionPrice">Admission Price: </label>
+    <input type="text" name="input-admissionPrice" id="input-admissionPrice">
+    <input type="submit">
+  </form>
+  <script src="./js/create_budget.js"></script>
+</div>
+
+
+
+
     <div>
       <h3>Edit a Budget</h3>
       <form method="POST" id="editBudget">

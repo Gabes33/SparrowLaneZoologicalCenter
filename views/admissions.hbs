@@ -81,29 +81,21 @@
 
 
 
-            <div>
-                <h3>Create Admissions</h3>
-                <form method="POST" id="createAdmissions">
-                    <table>
-                        <tbody>
-                            <tr>
-                                <td><label for="admissionTotal">Admission Total:</label></td>
-                                <td><input type="number" name="admissionTotal" id="admissionTotal" /></td>
-                            </tr>
-                            <tr>
-                                <td><label for="ticketPrice">Ticket Price:</label></td>
-                                <td><input type="number" name="ticketPrice" id="ticketPrice" /></td>
-                            </tr>
-                            <tr>
-                                <td><label for="description">Description:</label></td>
-                                <td><input type="text" name="description" id="description" /></td>
-                            <tr>
-                                <td><input type="submit" value="Create" /></td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </form>
-            </div>
+<div>
+  <h3>Create Admissions</h3>
+  <form method="POST" id="createAdmissions">
+    <label for="input-admissionTotal">Admission Total: </label>
+    <input type="number" name="input-admissionTotal" id="input-admissionTotal">
+    <label for="input-ticketPrice">Ticket Price: </label>
+    <input type="number" name="input-ticketPrice" id="input-ticketPrice">
+    <label for="input-description">Description: </label>
+    <input type="text" name="input-description" id="input-description">
+    <input type="submit">
+  </form>
+  <script src="./js/create_admissions.js"></script>
+</div>
+
+
             <div>
                 <h3>Edit Admissions</h3>
                 <form>

@@ -309,24 +309,6 @@ app.post('/add-employee-ajax', function (req, res) {
 
 
 //-------------------------------------------------------------------------------------------------
-// UPDATE
-//-------------------------------------------------------------------------------------------------
-app.put('/update-employee-ajax/', function (req, res) {
-    let hourlyWage = req.params.id;
-
-    let updateQuery = `UPDATE FROM Employees SET hourlyWage = ? WHERE employeeID = ?`;
-
-    db.pool.query(updateQuery, [hourlyWage], function (error, result) {
-        if (error) {
-            console.log(error);
-            res.sendStatus(400);
-        } else {
-            res.sendStatus(204);
-        }
-    });
-});
-
-//-------------------------------------------------------------------------------------------------
 // DELETE
 //-------------------------------------------------------------------------------------------------
 app.delete('/delete-employee-ajax/', function (req, res) {

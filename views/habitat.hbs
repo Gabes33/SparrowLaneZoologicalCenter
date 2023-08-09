@@ -78,42 +78,18 @@
 
             <div>
                 <h3>Create a Habitat Enclosure</h3>
-                <form>
-                    <table>
-                        <tbody>
-                            <tr>
-                                <td>
-                                    <label for="monthlyUpkeep">Monthly Upkeep:</label>
-                                </td>
-                                <td>
-                                    <input type="text" name="monthlyUpkeep" id="monthlyUpkeep" />
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <label for="capacity">Capacity:</label>
-                                </td>
-                                <td>
-                                    <input type="text" name="capacity" id="capacity" />
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <label for="description">Description:</label>
-                                </td>
-                                <td>
-                                    <input type="text" name="description" id="description" />
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <input type="submit" value="Create" />
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
+                <form method="POST" id="createHabitat">
+                    <label for="input-monthlyUpkeep">Monthly Upkeep: </label>
+                    <input type="text" name="input-monthlyUpkeep" id="input-monthlyUpkeep">
+                    <label for="input-capacity">Capacity: </label>
+                    <input type="text" name="input-capacity" id="input-capacity">
+                    <label for="input-description">Description: </label>
+                    <input type="text" name="input-description" id="input-description">
+                    <input type="submit">
                 </form>
+                <script src="./js/create_habitat.js"></script>
             </div>
+
             <div>
                 <h3>Edit a Habitat Enclosure</h3>
                 <form>

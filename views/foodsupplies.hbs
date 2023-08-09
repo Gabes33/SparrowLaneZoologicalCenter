@@ -78,29 +78,19 @@
 
 
             <div>
-                <h3>Create Food and Supplies</h3>
-                <form method="POST" id="createFoodSupplies">
-                    <table>
-                        <tbody>
-                            <tr>
-                                <td>Item Name:</td>
-                                <td><input type="text" name="itemName" /></td>
-                            </tr>
-                            <tr>
-                                <td>Quantity:</td>
-                                <td><input type="text" name="quantity" /></td>
-                            </tr>
-                            <tr>
-                                <td>Price:</td>
-                                <td><input type="text" name="price" /></td>
-                            </tr>
-                            <tr>
-                                <td><input type="submit" value="Create" /></td>
-                            </tr>
-                        </tbody>
-                    </table>
+                <h3>Add Food and Supplies</h3>
+                <form method="POST" id="addFoodSupplies">
+                    <label for="input-itemName">Item Name: </label>
+                    <input type="text" name="input-itemName" id="input-itemName">
+                    <label for="input-quantity">Quantity: </label>
+                    <input type="text" name="input-quantity" id="input-quantity">
+                    <label for="input-price">Price: </label>
+                    <input type="text" name="input-price" id="input-price">
+                    <input type="submit">
                 </form>
+                <script src="./js/create_food_supplies.js"></script>
             </div>
+
             <div>
                 <h3>Edit Food and Supplies</h3>
                 <form>
