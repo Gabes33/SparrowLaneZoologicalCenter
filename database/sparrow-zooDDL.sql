@@ -117,5 +117,3 @@ INSERT INTO Food_and_supplies_per_animal (animalID, itemID) VALUES
 SET FOREIGN_KEY_CHECKS = 1;
 COMMIT;
 
-
-

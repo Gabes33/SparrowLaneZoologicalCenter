@@ -107,30 +107,28 @@ app.get('/species.hbs', function (req, res) {
     ;
 
 ////// Display Animals
+
 app.get('/animals.hbs', function (req, res) {
     // Declare Query 1
     let query1;
 
-
     if (req.query.animalName === undefined) {
-        query1 = "SELECT * FROM Animals;";
+        query1 = "SELECT Animals.*, Species.speciesName FROM Animals JOIN Species ON Animals.speciesID = Species.speciesID;";
+    } else {
+        query1 = `SELECT Animals.*, Species.speciesName FROM Animals JOIN Species ON Animals.speciesID = Species.speciesID WHERE animalName LIKE "${req.query.animalName}%"`;
     }
-
-    else {
-        query1 = `SELECT * FROM Animals WHERE animalName LIKE "${req.query.animalName}%"`
-    }
-
 
     // Run the 1st query
     db.pool.query(query1, function (error, rows, fields) {
+        if (error) throw error;
 
-        // Save the people
+        // Save the animals
         let animals = rows;
 
-
         return res.render('animals.hbs', { data: animals });
-    })
+    });
 });
+
 
 ////// Display Budgets
 app.get('/budgets.hbs', function (req, res) {
