@@ -43,9 +43,9 @@
         <tr>
           <th>Budget ID</th>
           <th>Amount</th>
-          <th>Employee ID</th>
-          <th>Habitat ID</th>
-          <th>Admission ID</th>
+          <th>Employee Wages</th>
+          <th>Habitat Monthly Upkeep</th>
+          <th>Admission Price</th>
         </tr>
       </thread>
       <tbody>
@@ -53,9 +53,9 @@
         <tr data-value={{this.budgetID}}>
           <td>{{this.budgetID}}</td>
           <td>{{this.budgetAmount}}</td>
-          <td>{{this.employeeID}}</td>
-          <td>{{this.habitatID}}</td>
-          <td>{{this.admissionID}}</td>
+          <td>{{this.hourlyWage}}</td>
+          <td>{{this.monthlyUpkeep}}</td>
+          <td>{{this.ticketPrice}}</td>
           <td><button onclick="deleteBudget({{this.budgetID}})">Delete</button></td>
         </tr>
         {{/each}}
@@ -71,7 +71,7 @@
       <h3>Search Budgets </h3>
       <form id="search-budgets-html" method="GET">
         <label for="input-budgetAmount">Budget Amount: </label>
-        <input type="text" name="budgetAmount" id="input-budgetAmount-html-search" >
+        <input type="text" name="budgetAmount" id="input-budgetAmount-html-search">
         <input type="submit">
         <a href='/budgets.hbs'><button>Reset</button></a>
 

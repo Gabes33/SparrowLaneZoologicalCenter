@@ -147,27 +147,36 @@ app.get('/budgets.hbs', function (req, res) {
 
     let query1;
 
-
     if (req.query.budgetAmount === undefined) {
-        query1 = "SELECT * FROM Budgets;";
+        query1 = `
+            SELECT Budgets.*, Employees.hourlyWage, Habitat_enclosures.monthlyUpkeep, Admissions.ticketPrice
+            FROM Budgets
+            JOIN Employees ON Budgets.employeeID = Employees.employeeID
+            JOIN Habitat_enclosures ON Budgets.habitatID = Habitat_enclosures.habitatID
+            JOIN Admissions ON Budgets.admissionID = Admissions.admissionID;
+        `;
+    } else {
+        query1 = `
+            SELECT Budgets.*, Employees.hourlyWage, Habitat_enclosures.monthlyUpkeep, Admissions.ticketPrice
+            FROM Budgets
+            JOIN Employees ON Budgets.employeeID = Employees.employeeID
+            JOIN Habitat_enclosures ON Budgets.habitatID = Habitat_enclosures.habitatID
+            JOIN Admissions ON Budgets.admissionID = Admissions.admissionID
+            WHERE Budgets.budgetAmount LIKE "${req.query.budgetAmount}%";
+        `;
     }
 
-
-    else {
-        query1 = `SELECT * FROM Budgets WHERE budgetAmount LIKE "${req.query.budgetAmount}%"`
-    }
-
-
-    // Run the 1st query
+    // Run the query
     db.pool.query(query1, function (error, rows, fields) {
-
-        // Save the people
+        // Save the budget data
         let budget = rows;
 
-
         return res.render('budgets.hbs', { data: budget });
-    })
+    });
 });
+
+
+
 
 ////// Display Food and Supplies
 app.get('/foodsupplies.hbs', function (req, res) {
