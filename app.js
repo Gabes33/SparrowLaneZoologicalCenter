@@ -109,17 +109,28 @@ app.get('/species.hbs', function (req, res) {
 ////// Display Animals
 
 app.get('/animals.hbs', function (req, res) {
-    // Declare Query 1
-    let query1;
+    // Declare Query
+    let query;
 
     if (req.query.animalName === undefined) {
-        query1 = "SELECT Animals.*, Species.speciesName FROM Animals JOIN Species ON Animals.speciesID = Species.speciesID;";
+        query = `
+        SELECT Animals.*, Species.speciesName, Habitat_enclosures.description AS habitatDescription
+        FROM Animals
+        JOIN Species ON Animals.speciesID = Species.speciesID
+        JOIN Habitat_enclosures ON Animals.habitatID = Habitat_enclosures.habitatID;
+        `;
     } else {
-        query1 = `SELECT Animals.*, Species.speciesName FROM Animals JOIN Species ON Animals.speciesID = Species.speciesID WHERE animalName LIKE "${req.query.animalName}%"`;
+        query = `
+        SELECT Animals.*, Species.speciesName, Habitat_enclosures.description AS habitatDescription
+        FROM Animals
+        JOIN Species ON Animals.speciesID = Species.speciesID
+        JOIN Habitat_enclosures ON Animals.habitatID = Habitat_enclosures.habitatID
+        WHERE animalName LIKE "${req.query.animalName}%";
+        `;
     }
 
-    // Run the 1st query
-    db.pool.query(query1, function (error, rows, fields) {
+    // Run the query
+    db.pool.query(query, function (error, rows, fields) {
         if (error) throw error;
 
         // Save the animals
@@ -128,6 +139,7 @@ app.get('/animals.hbs', function (req, res) {
         return res.render('animals.hbs', { data: animals });
     });
 });
+
 
 
 ////// Display Budgets
