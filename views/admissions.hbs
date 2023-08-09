@@ -81,53 +81,49 @@
 
 
 
-<div>
-  <h3>Create Admissions</h3>
-  <form method="POST" id="createAdmissions">
-    <label for="input-admissionTotal">Admission Total: </label>
-    <input type="number" name="input-admissionTotal" id="input-admissionTotal">
-    <label for="input-ticketPrice">Ticket Price: </label>
-    <input type="number" name="input-ticketPrice" id="input-ticketPrice">
-    <label for="input-description">Description: </label>
-    <input type="text" name="input-description" id="input-description">
-    <input type="submit">
-  </form>
-  <script src="./js/create_admissions.js"></script>
-</div>
-
-
             <div>
-                <h3>Edit Admissions</h3>
-                <form>
-                    <table>
-                        <tbody>
-                            <tr>
-                                <td><label for="admissionID">Admission ID:</label></td>
-                                <td><select name="admissionID">
-                                        <option value="1">1</option>
-                                        <option value="2">2</option>
-                                        <option value="3">3</option>
-                                    </select></td>
-                            </tr>
-                            <tr>
-                                <td><label for="admissionTotal">Admission Total:</label></td>
-                                <td><input type="number" name="admissionTotal" id="admissionTotal" /></td>
-                            </tr>
-                            <tr>
-                                <td><label for="ticketPrice">Ticket Price:</label></td>
-                                <td><input type="number" name="ticketPrice" id="ticketPrice" /></td>
-                            </tr>
-                            <tr>
-                                <td><label for="description">Description:</label></td>
-                                <td><input type="text" name="description" id="description" /></td>
-                            </tr>
-                            <tr>
-                                <td><input type="submit" value="Edit" /></td>
-                            </tr>
-                        </tbody>
-                    </table>
+                <h3>Create Admissions</h3>
+                <form method="POST" id="createAdmissions">
+                    <label for="input-admissionTotal">Admission Total: </label>
+                    <input type="number" name="input-admissionTotal" id="input-admissionTotal">
+                    <label for="input-ticketPrice">Ticket Price: </label>
+                    <input type="number" name="input-ticketPrice" id="input-ticketPrice">
+                    <label for="input-description">Description: </label>
+                    <input type="text" name="input-description" id="input-description">
+                    <input type="submit">
                 </form>
+                <script src="./js/create_admissions.js"></script>
             </div>
+
+
+            <h2>Updating Admissions</h2>
+            <p>To update admission details, select the admission ID from the drop-down menu and provide the new values
+                in the fields</p>
+            <form id="update-admissions-form-ajax">
+
+                <label for="admissionID">Admission ID: </label>
+                <select name="admissionID" id="admissionID">
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+
+                </select>
+
+                <label for="admissionTotal">Admission Total: </label>
+                <input type="number" name="admissionTotal" id="admissionTotal">
+
+                <label for="ticketPrice">Ticket Price: </label>
+                <input type="number" name="ticketPrice" id="ticketPrice">
+
+                <label for="description">Description: </label>
+                <input type="text" name="description" id="description">
+
+                <input type="submit" value="Update">
+
+            </form>
+
+            <script src="./js/update_admissions.js"></script>
+
 
         </section>
     </main>
