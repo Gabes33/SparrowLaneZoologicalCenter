@@ -14,79 +14,68 @@
     <header>
         <h1>Sparrow Lane Zoological Center</h1>
     </header>
-  <nav>
-    [
-    <a href="index.hbs">Home</a>
-    |
-    <a href="employees.hbs">Employees</a>
-    |
-    <a href="animals.hbs">Animals</a>
-    |
-    <a href="species.hbs">Species</a>
-    |
-    <a href="budgets.hbs">Budgets</a>
-    |
-    <a href="admissions.hbs">Admissions</a>
-    |
-    <a href="habitat.hbs">Habitat Enclosures</a>
-    |
-    <a href="foodsupplies.hbs">Food and Supplies</a>
-    |
-    <a href="foodsuppliesperanimal.hbs">Food and Supplies Per Animal</a>
-    ]
-  </nav>
+    <nav>
+        [
+        <a href="index.hbs">Home</a>
+        |
+        <a href="employees.hbs">Employees</a>
+        |
+        <a href="animals.hbs">Animals</a>
+        |
+        <a href="species.hbs">Species</a>
+        |
+        <a href="budgets.hbs">Budgets</a>
+        |
+        <a href="admissions.hbs">Admissions</a>
+        |
+        <a href="habitat.hbs">Habitat Enclosures</a>
+        |
+        <a href="foodsupplies.hbs">Food and Supplies</a>
+        |
+        <a href="foodsuppliesperanimal.hbs">Food and Supplies Per Animal</a>
+        ]
+    </nav>
     <main>
         <section>
             <h2>Habitat Enclosures</h2>
             <p>Manage habitat enclosures for Sparrow Lane Zoological Center</p>
-            <table border=".5" cellpadding="5">
-                <tbody>
+            <table id="habitat-table" border=".5" cellpadding="5">
+                <thread>
                     <tr>
                         <th>Habitat ID</th>
                         <th>Monthly Upkeep</th>
                         <th>Capacity</th>
                         <th>Description</th>
                     </tr>
-                    <tr>
-                        <td>1</td>
-                        <td>5000</td>
-                        <td>10</td>
-                        <td>Treetop Habitat</td>
+
+                </thread>
+                <tbody>
+                    {{#each data}}
+                    <tr data-value={{this.habitatID}}>
+                        <td>{{this.habitatID}}</td>
+                        <td>{{this.monthlyUpkeep}}</td>
+                        <td>{{this.capacity}}</td>
+                        <td>{{this.description}}</td>
+                        <td><button onclick="deleteHabitat({{this.habitatID}})">Delete</button></td>
                     </tr>
-                    <tr>
-                        <td>2</td>
-                        <td>4000</td>
-                        <td>6</td>
-                        <td>Arctic Habitat</td>
-                    </tr>
-                    <tr>
-                        <td>3</td>
-                        <td>3000</td>
-                        <td>20</td>
-                        <td>Farm Habitat</td>
-                    </tr>
+                    {{/each}}
                 </tbody>
             </table>
+            <script src="./js/delete_habitat.js"></script>
+
+
+
             <div>
-                <h3>Search Habitat Enclosures</h3>
-                <form id="search-habitat-html" method="GET" action="/habitats.html">
-                    <table>
-                        <tbody>
-                            <tr>
-                                <td>
-                                    <p><label for="input-habitat_name">Habitat ID: </label></p>
-                                </td>
-                                <td><input type="text" name="habitat_name" id="input-habitat_name-html-search"
-                                        required="">
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                    <div class="form-btns">
-                        <input type="submit" value="Search">
-                    </div>
+                <h3>Search Habitat</h3>
+                <form id="search-habitat-html" method='GET'>
+                    <label for="input-description">Search by Description: </label>
+                    <input type="text" name="description" id="input-description-html-search">
+
+                    <input type="submit">
+                    <a href='/habitat.hbs'><button>Reset</button></a>
                 </form>
             </div>
+
             <div>
                 <h3>Create a Habitat Enclosure</h3>
                 <form>
@@ -175,7 +164,7 @@
                     </table>
                 </form>
             </div>
-            
+
         </section>
     </main>
     <footer>

@@ -87,14 +87,14 @@ INSERT INTO Budgets (budgetID, budgetAmount, employeeID, habitatID, admissionID)
 (2, 15000, 2, 2, 2),
 (3, 20000, 3, 3, 3);
 
-CREATE OR REPLACE TABLE Food_and_Supplies (
+CREATE OR REPLACE TABLE Food_and_supplies (
   itemID INT AUTO_INCREMENT PRIMARY KEY,
   itemName VARCHAR(45) NOT NULL,
-  Quantity INT(6) NOT NULL,
+  quantity INT(6) NOT NULL,
   price DECIMAL(6, 2) NOT NULL
 );
 
-INSERT INTO Food_and_Supplies (itemID, itemName, Quantity, price) 
+INSERT INTO Food_and_supplies (itemID, itemName, quantity, price) 
 VALUES
 (1, 'Hay', 100, 10.5),
 (2, 'Fish', 200, 8.75),
@@ -105,7 +105,7 @@ CREATE OR REPLACE TABLE Food_and_supplies_per_animal (
   animalID INT NOT NULL,
   itemID INT NOT NULL,
   FOREIGN KEY (animalID) REFERENCES Animals(animalID),
-  FOREIGN KEY (itemID) REFERENCES Food_and_Supplies(itemID)
+  FOREIGN KEY (itemID) REFERENCES Food_and_supplies(itemID)
   ON DELETE CASCADE
 );
 
@@ -116,6 +116,4 @@ INSERT INTO Food_and_supplies_per_animal (animalID, itemID) VALUES
 
 SET FOREIGN_KEY_CHECKS = 1;
 COMMIT;
-
-
 

@@ -38,8 +38,8 @@
   <main>
     <h2>Budgets</h2>
     <p>Manage budgets for Sparrow Lane Zoological Center</p>
-    <table border=".5" cellpadding="5">
-      <tbody>
+    <table id="budget-table" border=".5" cellpadding="5">
+      <thread>
         <tr>
           <th>Budget ID</th>
           <th>Amount</th>
@@ -47,48 +47,40 @@
           <th>Habitat ID</th>
           <th>Admission ID</th>
         </tr>
-        <tr>
-          <td>1</td>
-          <td>10000</td>
-          <td>1</td>
-          <td>1</td>
-          <td>1</td>
+      </thread>
+      <tbody>
+        {{#each data}}
+        <tr data-value={{this.budgetID}}>
+          <td>{{this.budgetID}}</td>
+          <td>{{this.budgetAmount}}</td>
+          <td>{{this.employeeID}}</td>
+          <td>{{this.habitatID}}</td>
+          <td>{{this.admissionID}}</td>
+          <td><button onclick="deleteBudget({{this.budgetID}})">Delete</button></td>
         </tr>
-        <tr>
-          <td>2</td>
-          <td>15000</td>
-          <td>2</td>
-          <td>2</td>
-          <td>2</td>
-        </tr>
-        <tr>
-          <td>3</td>
-          <td>20000</td>
-          <td>3</td>
-          <td>3</td>
-          <td>3</td>
-        </tr>
+        {{/each}}
       </tbody>
     </table>
+    <script src="./js/delete_budget.js"></script>
+
+
+
+
+    <!-- Searching Budgets-->
     <div>
       <h3>Search Budgets </h3>
-      <form id="search-budget-html" method="GET" action="/budgets.html">
-        <table class="sub-table">
-          <tbody>
-            <tr>
-              <td>
-                <p><label for="input-budget_amount">Amount: </label></p>
-              </td>
-              <td><input type="text" amount="budget_amount" id="input-budget_amount-html-search" required="">
-              </td>
-            </tr>
-          </tbody>
-        </table>
-        <div class="form-btns">
-          <input type="submit" value="Search">
-        </div>
+      <form id="search-budgets-html" method="GET">
+        <label for="input-budgetAmount">Budget Amount: </label>
+        <input type="text" name="budgetAmount" id="input-budgetAmount-html-search" >
+        <input type="submit">
+        <a href='/budgets.hbs'><button>Reset</button></a>
+
       </form>
     </div>
+
+
+
+
     <div>
       <h3>Create a Budget </h3>
       <form method="POST" id="createBudget">

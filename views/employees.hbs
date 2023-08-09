@@ -69,12 +69,12 @@
 
             <div>
                 <h3>Search Employees</h3>
-                <form id="search-employee-html" method='GET' action='/'>
+                <form id="search-employee-html" method='GET'>
                     <label for="input-lname">Search by Last Name: </label>
                     <input type="text" name="lastName" id="input-lastName-html-search">
 
                     <input type="submit">
-                    <a href='/'><button>Reset</button></a>
+                    <a href='/employee.hbs'><button>Reset</button></a>
                 </form>
             </div>
 
@@ -122,10 +122,10 @@
                     </select>
 
                     <label for="input-hourlyWage">Hourly Wage: </label>
-                <select name="input-hourlyWage" id="input-hourlyWage-update">
-            <input type="number" min="1" step=".01" name="input-hourlyWage" id="input-hourlyWage">
-        </select>
-    <td><Button onclick="updateEmployee">Submit</td></Button></td>
+                    <select name="input-hourlyWage" id="input-hourlyWage-update">
+                        <input type="number" min="1" step=".01" name="input-hourlyWage" id="input-hourlyWage">
+                    </select>
+                    <td><Button onclick="updateEmployee">Submit</td></Button></td>
 
 
                 </form>

@@ -1,15 +1,13 @@
-// App.js
-
-/*
-    SETUP
-*/
+//-------------------------------------------------------------------------------------------------
+// SETUP
+//-------------------------------------------------------------------------------------------------
 var express = require('express');   // We are using the express library for the web server
 var app = express();            // We need to instantiate an express object to interact with the server in our code
 
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 app.use(express.static('public'))
-PORT = 9445                 // Set a port number at the top so it's easy to change in the future
+PORT = 9446                // Set a port number at the top so it's easy to change in the future
 
 // app.js
 
@@ -23,15 +21,13 @@ var exphbs = require('express-handlebars');     // Import express-handlebars
 app.engine('.hbs', engine({ extname: ".hbs" }));  // Create an instance of the handlebars engine to process templates
 app.set('view engine', '.hbs');                 // Tell express to use the handlebars engine whenever it encounters a *.hbs file.
 
-/*
-    ROUTES
-*/
+//-------------------------------------------------------------------------------------------------
+// GET
+//-----------------------------------------------------------------------------------------------
 ///// Display home page
 app.get('/index.hbs', function (req, res) {
     res.render('index.hbs');                    // Note the call to render() and not send(). Using render() ensures the templating engine
 });                                         // will process this file, before sending the finished HTML to the client.
-
-
 
 
 
@@ -55,17 +51,195 @@ app.get('/employees.hbs', function (req, res) {
     db.pool.query(query1, function (error, rows, fields) {
 
         // Save the people
-        let people = rows;
+        let employee = rows;
 
 
-        return res.render('employees.hbs', { data: people });
+        return res.render('employees.hbs', { data: employee });
     })
 });
+/////// Admissions
+app.get('/admissions.hbs', function (req, res) {
+
+    let query1;
+
+
+    if (req.query.admissionID === undefined) {
+        query1 = "SELECT * FROM Admissions;";
+    }
+
+
+    else {
+        query1 = `SELECT * FROM Admissions WHERE admissionID LIKE "${req.query.admissionID}%"`
+    }
+
+
+
+    db.pool.query(query1, function (error, rows, fields) {
+
+
+        let admission = rows;
+
+
+        return res.render('admissions', { data: admission });
+    })
+});
+
+/////// Species
+app.get('/species.hbs', function (req, res) {
+
+    let query1;
+
+    if (req.query.speciesName === undefined) {
+        query1 = "SELECT * FROM Species;";
+    }
+
+    else {
+        query1 = `SELECT * FROM Species WHERE speciesName LIKE "${req.query.speciesName}%"`
+    }
+
+    db.pool.query(query1, function (error, rows, fields) {
+
+        let species = rows;
+
+        return res.render('species.hbs', { data: species });
+    })
+})
+    ;
+
+////// Display Animals
+
+app.get('/animals.hbs', function (req, res) {
+    // Declare Query 1
+    let query1;
+
+    if (req.query.animalName === undefined) {
+        query1 = "SELECT Animals.*, Species.speciesName FROM Animals JOIN Species ON Animals.speciesID = Species.speciesID;";
+    } else {
+        query1 = `SELECT Animals.*, Species.speciesName FROM Animals JOIN Species ON Animals.speciesID = Species.speciesID WHERE animalName LIKE "${req.query.animalName}%"`;
+    }
+
+    // Run the 1st query
+    db.pool.query(query1, function (error, rows, fields) {
+        if (error) throw error;
+
+        // Save the animals
+        let animals = rows;
+
+        return res.render('animals.hbs', { data: animals });
+    });
+});
+
+
+////// Display Budgets
+app.get('/budgets.hbs', function (req, res) {
+
+    let query1;
+
+
+    if (req.query.budgetAmount === undefined) {
+        query1 = "SELECT * FROM Budgets;";
+    }
+
+
+    else {
+        query1 = `SELECT * FROM Budgets WHERE budgetAmount LIKE "${req.query.budgetAmount}%"`
+    }
+
+
+    // Run the 1st query
+    db.pool.query(query1, function (error, rows, fields) {
+
+        // Save the people
+        let budget = rows;
+
+
+        return res.render('budgets.hbs', { data: budget });
+    })
+});
+
+////// Display Food and Supplies
+app.get('/foodsupplies.hbs', function (req, res) {
+
+    let query1;
+
+
+    if (req.query.itemName === undefined) {
+        query1 = "SELECT * FROM Food_and_supplies;";
+    }
+
+    else {
+        query1 = `SELECT * FROM Food_and_supplies WHERE itemName LIKE "${req.query.itemName}%"`
+    }
+
+
+    db.pool.query(query1, function (error, rows, fields) {
+
+
+        let foodsupplies = rows;
+
+
+        return res.render('foodsupplies', { data: foodsupplies });
+    })
+});
+
+////// Display food and supplies per animal
+app.get('/foodsuppliesperanimal.hbs', function (req, res) {
+
+    let query1;
+
+
+    if (req.query.animalItemListID === undefined) {
+        query1 = "SELECT * FROM Food_and_supplies_per_animal;";
+    }
+
+    else {
+        query1 = `SELECT * FROM Food_and_supplies_per_animal WHERE animalItemListID LIKE "${req.query.animalItemListID}%"`
+    }
+
+
+    db.pool.query(query1, function (error, rows, fields) {
+
+
+        let foodsuppliesperanimal = rows;
+
+
+        return res.render('foodsuppliesperanimal', { data: foodsuppliesperanimal });
+    })
+});
+
+////// Display Habitat
+app.get('/habitat.hbs', function (req, res) {
+
+    let query1;
+
+
+    if (req.query.description === undefined) {
+        query1 = "SELECT * FROM Habitat_enclosures;";
+    }
+
+    else {
+        query1 = `SELECT * FROM Habitat_enclosures WHERE description LIKE "${req.query.description}%"`
+    }
+
+
+    db.pool.query(query1, function (error, rows, fields) {
+
+
+        let habitat = rows;
+
+
+        return res.render('habitat', { data: habitat });
+    })
+});
+
+//-------------------------------------------------------------------------------------------------
+// INSERT
+//-------------------------------------------------------------------------------------------------
 
 app.post('/add-employee-ajax', function (req, res) {
     // Capture the incoming data and parse it back to a JS object
     let data = req.body;
-        console.log(data);
+    console.log(data);
 
     // Capture NULL values
     let phoneNum = parseInt(data.phoneNum);
@@ -74,7 +248,7 @@ app.post('/add-employee-ajax', function (req, res) {
     }
 
     let hourlyWage = parseInt(data.hourlyWage);
-        console.log(data);
+    console.log(data);
 
     if (isNaN(hourlyWage)) {
         hourlyWage = 'NULL'
@@ -111,22 +285,11 @@ app.post('/add-employee-ajax', function (req, res) {
         }
     })
 });
-app.delete('/delete-employee-ajax/', function (req, res) {
-    let employeeID = req.params.id;
-
-    let deleteQuery = `DELETE FROM Employees WHERE employeeID = ?`;
-
-    db.pool.query(deleteQuery, [employeeID], function (error, result) {
-        if (error) {
-            console.log(error);
-            res.sendStatus(400);
-        } else {
-            res.sendStatus(204);
-        }
-    });
-});
 
 
+//-------------------------------------------------------------------------------------------------
+// UPDATE
+//-------------------------------------------------------------------------------------------------
 app.put('/update-employee-ajax/', function (req, res) {
     let hourlyWage = req.params.id;
 
@@ -142,6 +305,23 @@ app.put('/update-employee-ajax/', function (req, res) {
     });
 });
 
+//-------------------------------------------------------------------------------------------------
+// DELETE
+//-------------------------------------------------------------------------------------------------
+app.delete('/delete-employee-ajax/', function (req, res) {
+    let employeeID = req.params.id;
+
+    let deleteQuery = `DELETE FROM Employees WHERE employeeID = ?`;
+
+    db.pool.query(deleteQuery, [employeeID], function (error, result) {
+        if (error) {
+            console.log(error);
+            res.sendStatus(400);
+        } else {
+            res.sendStatus(204);
+        }
+    });
+});
 
 function deleteRow(employeeID) {
 
@@ -170,87 +350,10 @@ function deleteDropDownMenu(employeeID) {
 }
 
 
-/////// Admissions
-app.get('/admissions.hbs', function (req, res) {
-    // Declare Query 1
-    let query1;
 
-    // If there is no query string, we just perform a basic SELECT
-    if (req.query.admissionID === undefined) {
-        query1 = "SELECT * FROM Admissions;";
-    }
-
-    // If there is a query string, we assume this is a search, and return desired results
-    else {
-        query1 = `SELECT * FROM Admissions WHERE admissionID LIKE "${req.query.admissionID}%"`
-    }
-
-
-    // Run the 1st query
-    db.pool.query(query1, function (error, rows, fields) {
-
-        // Save the people
-        let admission = rows;
-
-
-        return res.render('admissions', { data: admission });
-    })
-});
-
-/////// Species
-app.get('/species.hbs', function (req, res) {
-    // Declare Query 1
-    let query1;
-
-    // If there is no query string, we just perform a basic SELECT
-    if (req.query.speciesID === undefined) {
-        query1 = "SELECT * FROM Species;";
-    }
-
-    // If there is a query string, we assume this is a search, and return desired results
-    else {
-        query1 = `SELECT * FROM Species WHERE speciesName LIKE "${req.query.speciesName}%"`
-    }
-
-
-    // Run the 1st query
-    db.pool.query(query1, function (error, rows, fields) {
-
-        // Save the people
-        let species = rows;
-
-
-        return res.render('species', { data: species });
-    })
-})
-    ;
-
-////// Display Animals
-app.get('/animals.hbs', function (req, res) {
-    res.render('animals');
-});
-
-////// Display Budgets
-app.get('/budgets.hbs', function (req, res) {
-    res.render('budgets');
-});
-
-////// Display Food and Supplies
-app.get('/foodsupplies.hbs', function (req, res) {
-    res.render('foodsupplies');
-});
-
-////// Display food and supplies per animal
-app.get('/foodsuppliesperanimal.hbs', function (req, res) {
-    res.render('foodsuppliesperanimal');
-});
-////// Display Habitat
-app.get('/habitat.hbs', function (req, res) {
-    res.render('habitat');
-});
-/*
-    LISTENER
-*/
+//-------------------------------------------------------------------------------------------------
+// LISTENER
+//-------------------------------------------------------------------------------------------------
 app.listen(PORT, function () {
     console.log('Express started on http://localhost:' + PORT + '; press Ctrl-C to terminate.')
 });
