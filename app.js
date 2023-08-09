@@ -340,7 +340,7 @@ app.post('/add-species-ajax', function (req, res) {
                     res.send(rows);
                 }
             })
-        }
+        } 
     })
 });
 app.post('/add-admission-ajax', function (req, res) {
@@ -389,7 +389,7 @@ app.post('/add-admission-ajax', function (req, res) {
 // DELETE
 //-------------------------------------------------------------------------------------------------
 app.delete('/delete-employee-ajax/', function (req, res) {
-    let employeeID = req.params.id;
+    let employeeID = req.body.id;
 
     let deleteQuery = `DELETE FROM Employees WHERE employeeID = ? `;
 
