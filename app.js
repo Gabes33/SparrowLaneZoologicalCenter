@@ -384,6 +384,43 @@ app.post('/add-admission-ajax', function (req, res) {
     });
 });
 
+// Add the following route to handle adding habitat enclosures
+app.post('/add-habitat-ajax', function (req, res) {
+    let data = req.body;
+
+    // Capture NULL values
+    let monthlyUpkeep = parseFloat(data.monthlyUpkeep);
+    if (isNaN(monthlyUpkeep)) {
+        monthlyUpkeep = null;
+    }
+
+    let capacity = parseInt(data.capacity);
+    if (isNaN(capacity)) {
+        capacity = null;
+    }
+
+    // Create the query and run it on the database
+    query = `INSERT INTO habitat_enclosures (monthly_upkeep, capacity, description) VALUES ('${monthlyUpkeep}', '${capacity}', '${data.description}')`;
+
+
+    db.pool.query(query, values, function (error, results) {
+        if (error) {
+            console.log(error);
+            res.sendStatus(400);
+        } else {
+            // If the insertion was successful, you can fetch the updated list of habitat enclosures
+            const selectQuery = `SELECT * FROM habitat_enclosures`;
+            db.pool.query(selectQuery, function (error, rows) {
+                if (error) {
+                    console.log(error);
+                    res.sendStatus(400);
+                } else {
+                    res.send(rows);
+                }
+            });
+        }
+    });
+});
 
 //-------------------------------------------------------------------------------------------------
 // DELETE
