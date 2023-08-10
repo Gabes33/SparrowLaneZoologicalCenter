@@ -21,6 +21,7 @@ var exphbs = require('express-handlebars');     // Import express-handlebars
 app.engine('.hbs', engine({ extname: ".hbs" }));  // Create an instance of the handlebars engine to process templates
 app.set('view engine', '.hbs');                 // Tell express to use the handlebars engine whenever it encounters a *.hbs file.
 
+
 //-------------------------------------------------------------------------------------------------
 // GET
 //-----------------------------------------------------------------------------------------------
@@ -144,7 +145,6 @@ app.get('/animals.hbs', function (req, res) {
 
 ////// Display Budgets
 app.get('/budgets.hbs', function (req, res) {
-
     let query1;
 
     if (req.query.budgetAmount === undefined) {
@@ -166,14 +166,38 @@ app.get('/budgets.hbs', function (req, res) {
         `;
     }
 
-    // Run the query
+    let query2 = "SELECT * FROM Employees;";
+    let query3 = "SELECT * FROM Habitat_enclosures;";
+    let query4 = "SELECT * FROM Admissions;";
+
+    // Run the queries
     db.pool.query(query1, function (error, rows, fields) {
         // Save the budget data
         let budget = rows;
 
-        return res.render('budgets.hbs', { data: budget });
+        db.pool.query(query2, (error, rows, fields) => {
+            // Save the employees
+            let employee = rows;
+            employee.sort((a, b) => a.hourlyWage - b.hourlyWage);   //Puts drop downs in order
+
+            db.pool.query(query3, (error, rows, fields) => {
+                // Save the habitat enclosures
+                let habitat = rows;
+                habitat.sort((a, b) => a.monthlyUpkeep - b.monthlyUpkeep);
+
+
+                db.pool.query(query4, (error, rows, fields) => {
+                    // Save the admissions
+                    let admission = rows;
+                    admission.sort((a, b) => a.ticketPrice - b.ticketPrice);
+
+                    return res.render('budgets.hbs', { data: budget, employee: employee, habitat: habitat, admission: admission });
+                });
+            });
+        });
     });
 });
+
 
 
 
@@ -426,7 +450,7 @@ app.post('/add-habitat-ajax', function (req, res) {
 // DELETE
 //-------------------------------------------------------------------------------------------------
 app.delete('/delete-employee-ajax/', function (req, res) {
-    let employeeID = req.params.id;
+    let employeeID = req.body.id;
 
     let deleteQuery = `DELETE FROM Employees WHERE employeeID = ? `;
 

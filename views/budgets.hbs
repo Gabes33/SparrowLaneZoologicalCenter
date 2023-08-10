@@ -86,12 +86,30 @@
       <form method="POST" id="createBudget">
         <label for="input-budgetAmount">Budget Amount: </label>
         <input type="text" name="input-budgetAmount" id="input-budgetAmount" required>
+
         <label for="input-employeeWages">Employee Wages: </label>
-        <input type="text" name="input-employeeWages" id="input-employeeWages" required>
+        <select name="input-employeeWages" id="input-employeeWages-ajax">
+          <option value="">Select Wage:</option>
+          {{#each employee}}
+          <option value="{{this.employeeID}}">{{this.hourlyWage}}</option>
+          {{/each}}
+        </select>
+
         <label for="input-habitatUpkeep">Habitat Monthly Upkeep: </label>
-        <input type="text" name="input-habitatUpkeep" id="input-habitatUpkeep" required>
+        <select name="input-habitatUpkeep" id="input-habitatUpkeep-ajax">
+          <option value="">Select:</option>
+          {{#each habitat}}
+          <option value="{{this.habitatID}}">{{this.monthlyUpkeep}}</option>
+          {{/each}}
+        </select>
+
         <label for="input-admissionPrice">Admission Price: </label>
-        <input type="text" name="input-admissionPrice" id="input-admissionPrice" required>
+        <select name="input-admissionPrice" id="input-admissionPrice-ajax">
+          <option value="">Select:</option>
+          {{#each admission}}
+          <option value="{{this.admissionID}}">{{this.ticketPrice}}</option>
+          {{/each}}
+        </select>
         <input type="submit">
       </form>
       <script src="./js/add_budget.js"></script>
