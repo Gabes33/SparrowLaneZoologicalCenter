@@ -60,7 +60,7 @@
                         <td>{{this.phoneNum}}</td>
                         <td>{{this.hourlyWage}}</td>
                         <td>{{this.workEmail}}</td>
-                        <td><button onclick="deleteEmployee({{this.employeeID}})">Delete</button></td>
+                        <td><button mehthod=onclick="deleteEmployee({{this.employeeID}})">Delete</button></td>
                     </tr>
                     {{/each}}
                 </tbody>
@@ -99,7 +99,6 @@
                     <label for="input-workEmail">Work Email: </label>
                     <input type="text" name="input-workEmail" id="input-workEmail">
 
-                    <input type="submit">
                     <a href='/employee.hbs'><button>Submit</button></a>
                 </form>
                 {{!-- Embed our javascript to handle the DOM manipulation and AJAX request --}}
