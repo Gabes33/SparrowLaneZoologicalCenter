@@ -108,6 +108,7 @@ addRowToTable = (data) => {
     row.appendChild(phoneNumCell);
     row.appendChild(hourlyWageCell);
     row.appendChild(workEmailCell);
+    row.appendChild(deleteCell);
 
     row.setAttribute('data-value', newRow.employeeID);
 

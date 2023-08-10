@@ -1,3 +1,5 @@
+
+
 //-------------------------------------------------------------------------------------------------
 // SETUP
 //-------------------------------------------------------------------------------------------------
@@ -7,7 +9,7 @@ var app = express();            // We need to instantiate an express object to i
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 app.use(express.static('public'))
-PORT = 9447                // Set a port number at the top so it's easy to change in the future
+PORT = 9450               // Set a port number at the top so it's easy to change in the future
 
 // app.js
 
@@ -428,6 +430,53 @@ function deleteDropDownMenu(employeeID) {
 
     }
 }
+
+//-------------------------------------------------------------------------------------------------
+// UPDATE
+//-------------------------------------------------------------------------------------------------
+
+app.put('/update-employee-ajax/', function (req, res) {
+    let employeeID = req.body.id;
+
+    let updateQuery = 'UPDATE Employees SET hourlyWage = ? WHERE employeeID = ?'
+    
+    db.pool.query(updateQuery, [employeeID], function (error, result) {
+        if (error) {
+            console.log(error);
+            res.sendStatus(400);
+        } else {
+            res.sendStatus(204);
+        }
+    });
+});
+
+function updateRow(hourlyWage) {
+
+    let table = document.getElementById("employee-table");
+    for (let i = 0, row; row = table.rows[i]; i++) {
+        //iterate through rows
+        //rows would be accessed using the "row" variable assigned in the for loop
+        if (table.rows[i].getAttribute("data-value") == employeeID) {
+            table.updateWage(i);
+            updateWage(hourlyWage);
+            break;
+        }
+    }
+}
+
+
+function updateWage(hourlyWage) {
+    let selectMenu = document.getElementById("mySelect");
+    for (let i = 0; i < selectMenu.length; i++) {
+        if (Number(selectMenu.options[i].value) === Number(hourlyWage)) {
+            selectMenu[i].updateRow();
+            break;
+        }
+
+    }
+}
+
+
 
 
 

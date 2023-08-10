@@ -48,6 +48,7 @@
                         <th>Phone Number</th>
                         <th>Hourly Wage</th>
                         <th>Work Email</th>
+                        <th>Delete Employee</th>
                     </tr>
                 </thread>
                 <tbody>
@@ -123,7 +124,7 @@
 
                     <label for="input-hourlyWage">Hourly Wage: </label>
                         <input type="number" min="1" step=".01" name="input-hourlyWage" id="input-hourlyWage">
-                    <td><Button onclick="updateEmployee">Submit</td></Button></td>
+                    <td><Button onclick="updateEmployee({{input-hourlyWage}})">Submit</td></Button></td>
 
 
                 </form>
