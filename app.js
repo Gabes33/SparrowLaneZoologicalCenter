@@ -390,6 +390,8 @@ app.post('/add-admission-ajax', function (req, res) {
 //-------------------------------------------------------------------------------------------------
 // DELETE
 //-------------------------------------------------------------------------------------------------
+
+
 app.delete('/delete-employee-ajax/', function (req, res) {
     let employeeID = req.body.id;
 
@@ -431,9 +433,11 @@ function deleteDropDownMenu(employeeID) {
     }
 }
 
+
 //-------------------------------------------------------------------------------------------------
 // UPDATE
 //-------------------------------------------------------------------------------------------------
+
 
 app.put('/update-employee-ajax/', function (req, res) {
     let employeeID = req.body.id;
@@ -475,7 +479,6 @@ function updateWage(hourlyWage) {
 
     }
 }
-
 
 
 
