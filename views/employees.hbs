@@ -1,4 +1,4 @@
-
+<!DOCTYPE html>
 <html lang="en">
 
 
@@ -61,7 +61,7 @@
                         <td>{{this.phoneNum}}</td>
                         <td>{{this.hourlyWage}}</td>
                         <td>{{this.workEmail}}</td>
-                        <td><a href='/employee.hbs'><button onclick="deleteEmployee({{this.employeeID}})">Delete</button></a></td>
+                        <td><button onclick="deleteEmployee({{this.employeeID}})" href='/employees.hbs'>Delete</button></td>
                     </tr>
                     {{/each}}
                 </tbody>
