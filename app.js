@@ -394,20 +394,36 @@ app.post('/add-admission-ajax', function (req, res) {
 //-------------------------------------------------------------------------------------------------
 
 
-app.delete('/delete-employee-ajax/', function (req, res) {
-    let employeeID = req.body.id;
-
-    let deleteQuery = `DELETE FROM Employees WHERE employeeID = ? `;
-
-    db.pool.query(deleteQuery, [employeeID], function (error, result) {
-        if (error) {
-            console.log(error);
-            res.sendStatus(400);
-        } else {
-            res.sendStatus(204);
-        }
-    });
-});
+app.delete('/delete-employee-ajax/', function(req,res,next){
+    let data = req.body;
+    let employeeID = parseInt(data.id);
+    let deleteBudget = `DELETE FROM Budgets WHERE employeeID = ?`;
+    let deleteEmployee = `DELETE FROM Employees WHERE employeeID = ?`;
+  
+  
+          // Run the 1st query
+          db.pool.query(deleteBudget, [employeeID], function(error, rows, fields){
+              if (error) {
+  
+              // Log the error to the terminal so we know what went wrong, and send the visitor an HTTP response 400 indicating it was a bad request.
+              console.log(error);
+              res.sendStatus(400);
+              }
+  
+              else
+              {
+                  // Run the second query
+                  db.pool.query(deleteEmployee, [employeeID], function(error, rows, fields) {
+  
+                      if (error) {
+                          console.log(error);
+                          res.sendStatus(400);
+                      } else {
+                          res.sendStatus(204);
+                      }
+                  })
+              }
+  })});
 
 function deleteRow(employeeID) {
 
@@ -441,47 +457,39 @@ function deleteDropDownMenu(employeeID) {
 //-------------------------------------------------------------------------------------------------
 
 
-app.put('/update-employee-ajax/', function (req, res) {
-    let employeeID = req.body.id;
-
-    let updateQuery = 'UPDATE Employees SET hourlyWage = ? WHERE employeeID = ?'
-    
-    db.pool.query(updateQuery, [employeeID], function (error, result) {
-        if (error) {
-            console.log(error);
-            res.sendStatus(400);
-        } else {
-            res.sendStatus(204);
-        }
-    });
-});
-
-function updateRow(hourlyWage) {
-
-    let table = document.getElementById("employee-table");
-    for (let i = 0, row; row = table.rows[i]; i++) {
-        //iterate through rows
-        //rows would be accessed using the "row" variable assigned in the for loop
-        if (table.rows[i].getAttribute("data-value") == employeeID) {
-            table.updateWage(i);
-            updateWage(hourlyWage);
-            break;
-        }
-    }
-}
-
-
-function updateWage(hourlyWage) {
-    let selectMenu = document.getElementById("mySelect");
-    for (let i = 0; i < selectMenu.length; i++) {
-        if (Number(selectMenu.options[i].value) === Number(hourlyWage)) {
-            selectMenu[i].updateRow();
-            break;
-        }
-
-    }
-}
-
+app.put('/put-employee-ajax', function(req,res,next){
+    let data = req.body;
+  
+    let hourlyWage = parseInt(data.hourlyWage);
+    let employee = parseInt(data.fullname);
+  
+    let queryUpdateHourlyWage = `UPDATE Employees Set hourlywage = ? WHERE employeeID = ?`;
+    let selectHourlyWage = `SELECT hourlyWage FROM Employees WHERE id = ?`
+  
+          // Run the 1st query
+          db.pool.query(queryUpdateHourlyWage, [hourlyWage, employee], function(error, rows, fields){
+              if (error) {
+  
+              // Log the error to the terminal so we know what went wrong, and send the visitor an HTTP response 400 indicating it was a bad request.
+              console.log(error);
+              res.sendStatus(400);
+              }
+  
+              // If there was no error, we run our second query and return that data so we can use it to update the people's
+              // table on the front-end
+              else
+              {
+                  // Run the second query
+                  db.pool.query(selectHourlyWage, [employee], function(error, rows, fields) {
+  
+                      if (error) {
+                          console.log(error);
+                          res.sendStatus(400);
+                      } else {
+                    res.send(rows);
+                      }
+                  }
+              )}})});
 
 
 

@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+
 <html lang="en">
 
 
@@ -7,8 +7,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Sparrow Lane Zoological Center</title>
-    <link rel="stylesheet" type="text/css" href="/public/css/app.css" />
-    <script src="/app.js" type ="text/javascript"></script>
+   <link rel="stylesheet" type="text/css" href="/css/app.css" />
+    <script src="/app.js" id="data" type ="application/json"></script>
 </head>
 
 <body>
@@ -112,7 +112,7 @@
                 <p>To update a specific user's Hourly Wage, select their name from the drop-down menu on the left and
                     their desired
                     hourly wage from the drop down menu on the right</p>
-                <form id="update-person-form-ajax" method="PUT">
+                <form id="update-employee-form-ajax" method="PUT">
 
                     <label for="input-fullname">Full name: </label>
                     <select name="input-fullname" id="mySelect">
@@ -124,7 +124,7 @@
 
                     <label for="input-hourlyWage">Hourly Wage: </label>
                         <input type="number" min="1" step=".01" name="input-hourlyWage" id="input-hourlyWage">
-                    <td><Button onclick="updateEmployee({{this.hourlyWage}})">Submit</td></Button></td>
+                     <input type="submit">
 
 
                 </form>
