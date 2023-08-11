@@ -24,7 +24,7 @@ function deleteEmployee(employeeID) {
     // Send the request and wait for the response
     xhttp.send(JSON.stringify(data));
 }
-
+        
 
 function deleteRow(employeeID) {
 
