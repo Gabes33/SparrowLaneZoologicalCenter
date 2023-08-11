@@ -459,12 +459,12 @@ function deleteDropDownMenu(employeeID) {
 
 app.put('/put-employee-ajax', function(req,res,next){
     let data = req.body;
-  
+    
     let hourlyWage = parseInt(data.hourlyWage);
-    let employee = parseInt(data.fullname);
+    let employee = parseInt(data.employeeID);
   
     let queryUpdateHourlyWage = `UPDATE Employees Set hourlywage = ? WHERE employeeID = ?`;
-    let selectHourlyWage = `SELECT hourlyWage FROM Employees WHERE id = ?`
+    let selectEmployee = `SELECT * FROM Employees WHERE employeeID = ?`
   
           // Run the 1st query
           db.pool.query(queryUpdateHourlyWage, [hourlyWage, employee], function(error, rows, fields){
@@ -480,7 +480,7 @@ app.put('/put-employee-ajax', function(req,res,next){
               else
               {
                   // Run the second query
-                  db.pool.query(selectHourlyWage, [employee], function(error, rows, fields) {
+                  db.pool.query(selectEmployee, [employee], function(error, rows, fields) {
   
                       if (error) {
                           console.log(error);

@@ -11,11 +11,11 @@ updateEmployeeForm.addEventListener("Submit", function (e) {
 
     // Get form fields we need to get data from
     let inputFullName = document.getElementById("mySelect");
-    let inputhourlyWage = document.getElementById("input-hourlyWage-update");
+    let inputHourlyWage = document.getElementById("input-hourlyWage-update");
 
     // Get the values from the form fields
     let fullNameValue = inputFullName.value;
-    let hourlyWageValue = inputhourlyWage.value;
+    let hourlyWageValue = inputHourlyWage.value;
     
     // currently the database table for bsg_people does not allow updating values to NULL
     // so we must abort if being bassed NULL for homeworld
@@ -42,7 +42,7 @@ updateEmployeeForm.addEventListener("Submit", function (e) {
         if (xhttp.readyState == 4 && xhttp.status == 200) {
 
             // Add the new data to the table
-            updateRow(xhttp.response, fullNameValue);
+            updateRow(xhttp.response, hourlyWageValue);
 
         }
         else if (xhttp.readyState == 4 && xhttp.status != 200) {
@@ -57,7 +57,9 @@ updateEmployeeForm.addEventListener("Submit", function (e) {
 
 
 function updateRow(data, employeeID){
+    console.log(data)
     let parsedData = JSON.parse(data);
+    console.log(parsedData)
     
     let table = document.getElementById("employee-table");
 
@@ -70,7 +72,7 @@ function updateRow(data, employeeID){
             let updateRowIndex = table.getElementsByTagName("tr")[i];
 
             // Get td of homeworld value
-            let td = updateRowIndex.getElementsByTagName("td")[3];
+            let td = updateRowIndex.getElementsByTagName("td")[4];
 
             // Reassign homeworld to our value we updated to
             td.innerHTML = parsedData[0].name; 
