@@ -9,7 +9,7 @@ var app = express();            // We need to instantiate an express object to i
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 app.use(express.static('public'))
-PORT = 9450               // Set a port number at the top so it's easy to change in the future
+PORT = 9447                // Set a port number at the top so it's easy to change in the future
 
 // app.js
 
@@ -22,6 +22,7 @@ const { engine } = require('express-handlebars');
 var exphbs = require('express-handlebars');     // Import express-handlebars
 app.engine('.hbs', engine({ extname: ".hbs" }));  // Create an instance of the handlebars engine to process templates
 app.set('view engine', '.hbs');                 // Tell express to use the handlebars engine whenever it encounters a *.hbs file.
+
 
 //-------------------------------------------------------------------------------------------------
 // GET
@@ -146,7 +147,6 @@ app.get('/animals.hbs', function (req, res) {
 
 ////// Display Budgets
 app.get('/budgets.hbs', function (req, res) {
-
     let query1;
 
     if (req.query.budgetAmount === undefined) {
@@ -168,14 +168,38 @@ app.get('/budgets.hbs', function (req, res) {
         `;
     }
 
-    // Run the query
+    let query2 = "SELECT * FROM Employees;";
+    let query3 = "SELECT * FROM Habitat_enclosures;";
+    let query4 = "SELECT * FROM Admissions;";
+
+    // Run the queries
     db.pool.query(query1, function (error, rows, fields) {
         // Save the budget data
         let budget = rows;
 
-        return res.render('budgets.hbs', { data: budget });
+        db.pool.query(query2, (error, rows, fields) => {
+            // Save the employees
+            let employee = rows;
+            employee.sort((a, b) => a.hourlyWage - b.hourlyWage);   //Puts drop downs in order
+
+            db.pool.query(query3, (error, rows, fields) => {
+                // Save the habitat enclosures
+                let habitat = rows;
+                habitat.sort((a, b) => a.monthlyUpkeep - b.monthlyUpkeep);
+
+
+                db.pool.query(query4, (error, rows, fields) => {
+                    // Save the admissions
+                    let admission = rows;
+                    admission.sort((a, b) => a.ticketPrice - b.ticketPrice);
+
+                    return res.render('budgets.hbs', { data: budget, employee: employee, habitat: habitat, admission: admission });
+                });
+            });
+        });
     });
 });
+
 
 
 
@@ -342,7 +366,7 @@ app.post('/add-species-ajax', function (req, res) {
                     res.send(rows);
                 }
             })
-        } 
+        }
     })
 });
 app.post('/add-admission-ajax', function (req, res) {
@@ -386,6 +410,43 @@ app.post('/add-admission-ajax', function (req, res) {
     });
 });
 
+// Add the following route to handle adding habitat enclosures
+app.post('/add-habitat-ajax', function (req, res) {
+    let data = req.body;
+
+    // Capture NULL values
+    let monthlyUpkeep = parseFloat(data.monthlyUpkeep);
+    if (isNaN(monthlyUpkeep)) {
+        monthlyUpkeep = null;
+    }
+
+    let capacity = parseInt(data.capacity);
+    if (isNaN(capacity)) {
+        capacity = null;
+    }
+
+    // Create the query and run it on the database
+    query = `INSERT INTO habitat_enclosures (monthly_upkeep, capacity, description) VALUES ('${monthlyUpkeep}', '${capacity}', '${data.description}')`;
+
+
+    db.pool.query(query, values, function (error, results) {
+        if (error) {
+            console.log(error);
+            res.sendStatus(400);
+        } else {
+            // If the insertion was successful, you can fetch the updated list of habitat enclosures
+            const selectQuery = `SELECT * FROM habitat_enclosures`;
+            db.pool.query(selectQuery, function (error, rows) {
+                if (error) {
+                    console.log(error);
+                    res.sendStatus(400);
+                } else {
+                    res.send(rows);
+                }
+            });
+        }
+    });
+});
 
 //-------------------------------------------------------------------------------------------------
 // DELETE
@@ -443,7 +504,7 @@ app.put('/update-employee-ajax/', function (req, res) {
     let employeeID = req.body.id;
 
     let updateQuery = 'UPDATE Employees SET hourlyWage = ? WHERE employeeID = ?'
-    
+
     db.pool.query(updateQuery, [employeeID], function (error, result) {
         if (error) {
             console.log(error);
