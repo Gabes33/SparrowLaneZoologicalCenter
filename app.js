@@ -459,11 +459,11 @@ app.delete('/delete-species-ajax/', function(req,res,next){
     let data = req.body;
     let speciesID = parseInt(data.id);
     let updateAnimalSpecies = `UPDATE Animals SET speciesID = NULL WHERE speciesID = ?`;
-    let deleteEmployee = `DELETE FROM Species WHERE speciesID = ?`;
+    let deleteSpecies = `DELETE FROM Species WHERE speciesID = ?`;
   
   
           // Run the 1st query
-          db.pool.query(deleteBudget, [employeeID], function(error, rows, fields){
+          db.pool.query(updateAnimalSpecies, [speciesID], function(error, rows, fields){
               if (error) {
   
               // Log the error to the terminal so we know what went wrong, and send the visitor an HTTP response 400 indicating it was a bad request.
@@ -474,7 +474,7 @@ app.delete('/delete-species-ajax/', function(req,res,next){
               else
               {
                   // Run the second query
-                  db.pool.query(deleteEmployee, [employeeID], function(error, rows, fields) {
+                  db.pool.query(deleteSpecies, [speciesID], function(error, rows, fields) {
   
                       if (error) {
                           console.log(error);
@@ -486,25 +486,25 @@ app.delete('/delete-species-ajax/', function(req,res,next){
               }
   })});
 
-function deleteRow(employeeID) {
+function deleteRow(speciesID) {
 
-    let table = document.getElementById("employee-table");
+    let table = document.getElementById("species-table");
     for (let i = 0, row; row = table.rows[i]; i++) {
         //iterate through rows
         //rows would be accessed using the "row" variable assigned in the for loop
-        if (table.rows[i].getAttribute("data-value") == employeeID) {
+        if (table.rows[i].getAttribute("data-value") == speciesID) {
             table.deleteRow(i);
-            deleteDropDownMenu(employeeID);
+            deleteDropDownMenu(speciesID);
             break;
         }
     }
 }
 
 
-function deleteDropDownMenu(employeeID) {
-    let selectMenu = document.getElementById("mySelect");
+function deleteDropDownMenu(speciesID) {
+    let selectMenu = document.getElementById("speciesid");
     for (let i = 0; i < selectMenu.length; i++) {
-        if (Number(selectMenu.options[i].value) === Number(employeeID)) {
+        if (Number(selectMenu.options[i].value) === Number(speciesID)) {
             selectMenu[i].remove();
             break;
         }
