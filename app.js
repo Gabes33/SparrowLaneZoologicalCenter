@@ -136,7 +136,8 @@ app.get('/animals.hbs', function (req, res) {
         WHERE animalName LIKE "${req.query.animalName}%";
         `;
     }
-
+    let query2 = "SELECT * FROM Species;";
+    let query3 = "SELECT * FROM Habitat_enclosures;";
     // Run the query
     db.pool.query(query, function (error, rows, fields) {
         if (error) throw error;
@@ -144,9 +145,22 @@ app.get('/animals.hbs', function (req, res) {
         // Save the animals
         let animals = rows;
 
-        return res.render('animals.hbs', { data: animals });
+        db.pool.query(query2, (error, rows, fields) => {
+
+            let species = rows;
+            species.sort((a, b) => a.speciesName - b.speciesName);   //Puts drop downs in order
+
+            db.pool.query(query3, (error, rows, fields) => {
+                // Save the habitat enclosures
+                let habitat = rows;
+                habitat.sort((a, b) => a.description - b.description);
+
+                return res.render('animals.hbs', { data: animals, species: species, habitat: habitat });
+            });
+        });
     });
 });
+
 
 
 

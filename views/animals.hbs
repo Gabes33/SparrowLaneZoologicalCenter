@@ -7,7 +7,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Sparrow Lane Zoological Center</title>
   <link rel="stylesheet" type="text/css" href="/css/app.css" />
-  <script src="/app.js" id="data" type ="application/json"></script>
+  <script src="/app.js" id="data" type="application/json"></script>
 </head>
 
 <body>
@@ -93,11 +93,20 @@
         <input type="text" name="input-description" id="input-description">
 
         <label for="input-species">Species: </label>
-        <input type="text" name="input-species" id="input-species" required>
+        <select name="input-species" id="input-species" required>
+          <option value="">Select</option>
+          {{#each species}}
+          <option value="{{this.speciesID}}">{{this.speciesName}}</option>
+          {{/each}}
+        </select>
 
         <label for="input-habitat">Habitat: </label>
-        <input type="text" name="input-habitat" id="input-habitat" required>
-
+        <select name="input-habitat" id="input-habitat" required>
+          <option value="">Select</option>
+          {{#each habitat}}
+          <option value="{{this.habitatID}}">{{this.description}}</option>
+          {{/each}}
+        </select>
         <input type="submit">
       </form>
       <script src="./js/add_animal.js"></script>
