@@ -1,5 +1,3 @@
-
-
 // Get the objects we need to modify
 let updateEmployeeForm = document.getElementById('update-employee-form-ajax');
 
