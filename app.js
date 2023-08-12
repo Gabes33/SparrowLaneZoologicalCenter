@@ -53,17 +53,21 @@ app.get('/employees.hbs', function (req, res) {
     else {
         query1 = `SELECT * FROM Employees WHERE lastName LIKE "${req.query.lastName}%"`
     }
-
+    let query2 = "SELECT employeeID FROM Employees;";
 
     // Run the 1st query
     db.pool.query(query1, function (error, rows, fields) {
 
         // Save the people
-        let employee = rows;
+        let employees = rows;
 
+        db.pool.query(query2, function (error, rows, fields) {
+            // Save the employee IDs
+            let employeeIDs = rows.map(row => row.employeeID);
 
-        return res.render('employees.hbs', { data: employee });
-    })
+            return res.render('employees.hbs', { data: employees, employeeIDs: employeeIDs });
+        });
+    });
 });
 /////// Admissions
 app.get('/admissions.hbs', function (req, res) {
@@ -272,6 +276,7 @@ app.get('/foodsuppliesperanimal.hbs', function (req, res) {
         return res.render('foodsuppliesperanimal', { data: foodsuppliesperanimal });
     })
 });
+
 
 ////// Display Habitat
 app.get('/habitat.hbs', function (req, res) {
