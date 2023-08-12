@@ -1,3 +1,10 @@
+/*
+    Citation for the following functions:
+    Date: 08/05/2023
+    Adapted from the code in the following GitHub repository (nodejs-starter-app) step 7
+    Source URL: https://github.com/osu-cs340-ecampus/nodejs-starter-app/tree/main/Step%207%20-%20Dynamically%20Deleting%20Data
+*/
+
 function deleteSpecies(speciesID) {
     // Put our data we want to send in a javascript object
     let data = {
@@ -24,7 +31,7 @@ function deleteSpecies(speciesID) {
     // Send the request and wait for the response
     xhttp.send(JSON.stringify(data));
 }
-        
+
 
 function deleteRow(speciesID) {
 

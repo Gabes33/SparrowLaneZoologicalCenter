@@ -1,4 +1,9 @@
-
+/*
+    Citation for the following source code:
+    Date: 08/05/2023
+    Adapted from the code in the following GitHub repository (nodejs-starter-app)
+    Source URL - https://github.com/osu-cs340-ecampus/nodejs-starter-app/tree/main
+*/
 
 //-------------------------------------------------------------------------------------------------
 // SETUP
