@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Sparrow Lane Zoological Center</title>
     <link rel="stylesheet" type="text/css" href="/css/app.css" />
-    <script src="/app.js" id="data" type ="application/json"></script>
+    <script src="/app.js" id="data" type="application/json"></script>
 </head>
 
 <body>
@@ -94,51 +94,20 @@
             <div>
                 <h3>Edit a Habitat Enclosure</h3>
                 <form>
-                    <table>
-                        <tbody>
-                            <tr>
-                                <td>
-                                    <label for="habitatID">Habitat ID:</label>
-                                </td>
-                                <td>
-                                    <select name="habitatID">
-                                        <option value="1">1</option>
-                                        <option value="2">2</option>
-                                        <option value="3" selected>3</option>
-                                    </select>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <label for="monthlyUpkeep">Monthly Upkeep:</label>
-                                </td>
-                                <td>
-                                    <input type="text" name="monthlyUpkeep" id="monthlyUpkeep" />
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <label for="capacity">Capacity:</label>
-                                </td>
-                                <td>
-                                    <input type="text" name="capacity" id="capacity" />
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <label for="description">Description:</label>
-                                </td>
-                                <td>
-                                    <input type="text" name="description" id="description" />
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <input type="submit" value="Edit" />
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
+                    <label for="input-habitatID">Habitat ID: </label>
+                    <select name="input-habitatID" id="input-habitatID-ajax">
+                        <option value="">Select</option>
+                        {{#each habitatIDs}}
+                        <option value="{{this}}">{{this}}</option>
+                        {{/each}}
+                    </select>
+                    <label for="input-monthlyUpkeep">Monthly Upkeep: </label>
+                    <input type="number" name="input-monthlyUpkeep" id="input-monthlyUpkeep" required>
+                    <label for="input-capacity">Capacity: </label>
+                    <input type="number" name="input-capacity" id="input-capacity" required>
+                    <label for="input-description">Description: </label>
+                    <input type="text" name="input-description" id="input-description">
+                    <input type="submit">
                 </form>
             </div>
 

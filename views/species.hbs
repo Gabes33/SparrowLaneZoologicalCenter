@@ -96,29 +96,18 @@
       <div>
         <h3>Edit a Species</h3>
         <form method="POST" id="editspecies">
-          <table>
-            <tbody>
-              <tr>
-                <td><label for="speciesid">Species ID:</label></td>
-                <td><select name="speciesid">
-                    <option value="1">1</option>
-                    <option value="2">2</option>
-                    <option value="3">3</option>
-                  </select></td>
-              </tr>
-              <tr>
-                <td><label for="speciesname">Species Name:</label></td>
-                <td><input type="text" name="speciesname" id="speciesname" /></td>
-              </tr>
-              <tr>
-                <td><label for="speciesdesc">Species Description:</label></td>
-                <td><input type="text" name="speciesdesc" id="speciesdesc" /></td>
-              </tr>
-              <tr>
-                <td><input type="submit" value="Edit" /></td>
-              </tr>
-            </tbody>
-          </table>
+          <label for="input-speciesID">Species ID: </label>
+          <select name="input-speciesID" id="input-speciesID-ajax">
+            <option value="">Select</option>
+            {{#each speciesIDs}}
+            <option value="{{this}}">{{this}}</option>
+            {{/each}}
+          </select>
+          <label for="input-speciesName">Species Name: </label>
+          <input type="text" name="input-speciesName" id="input-speciesName" required="">
+          <label for="input-speciesDescription">Species Description: </label>
+          <input type="text" name="input-speciesDescription" id="input-speciesDescription">
+          <input type="submit">
         </form>
       </div>
 
