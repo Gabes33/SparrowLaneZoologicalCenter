@@ -567,6 +567,7 @@ app.delete('/delete-species-ajax/', function(req,res,next){
               }
   })});
 
+function deleteRow(speciesID) {
 
 
   function deleteRow(speciesID) {
@@ -616,25 +617,24 @@ app.put('/update-employee-ajax/', function (req, res) {
     });
 });
 
-function deleteRow(employeeID) {
 
-    let table = document.getElementById("employee-table");
+    let table = document.getElementById("species-table");
     for (let i = 0, row; row = table.rows[i]; i++) {
         //iterate through rows
         //rows would be accessed using the "row" variable assigned in the for loop
-        if (table.rows[i].getAttribute("data-value") == employeeID) {
+        if (table.rows[i].getAttribute("data-value") == speciesID) {
             table.deleteRow(i);
-            deleteDropDownMenu(employeeID);
+            deleteDropDownMenu(speciesID);
             break;
         }
     }
 }
 
 
-function deleteDropDownMenu(employeeID) {
-    let selectMenu = document.getElementById("mySelect");
+function deleteDropDownMenu(speciesID) {
+    let selectMenu = document.getElementById("speciesid");
     for (let i = 0; i < selectMenu.length; i++) {
-        if (Number(selectMenu.options[i].value) === Number(employeeID)) {
+        if (Number(selectMenu.options[i].value) === Number(speciesID)) {
             selectMenu[i].remove();
             break;
         }
