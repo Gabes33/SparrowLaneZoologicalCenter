@@ -1,4 +1,9 @@
-
+/*
+    Citation for the following source code:
+    Date: 08/05/2023
+    Adapted from the code in the following GitHub repository (nodejs-starter-app)
+    Source URL - https://github.com/osu-cs340-ecampus/nodejs-starter-app/tree/main
+*/
 
 //-------------------------------------------------------------------------------------------------
 // SETUP
@@ -9,9 +14,7 @@ var app = express();            // We need to instantiate an express object to i
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 app.use(express.static('public'))
-
-
-PORT = 9450               // Set a port number at the top so it's easy to change in the future
+PORT = 9450                // Set a port number at the top so it's easy to change in the future
 
 // app.js
 
@@ -24,6 +27,7 @@ const { engine } = require('express-handlebars');
 var exphbs = require('express-handlebars');     // Import express-handlebars
 app.engine('.hbs', engine({ extname: ".hbs" }));  // Create an instance of the handlebars engine to process templates
 app.set('view engine', '.hbs');                 // Tell express to use the handlebars engine whenever it encounters a *.hbs file.
+
 
 //-------------------------------------------------------------------------------------------------
 // GET
@@ -49,17 +53,21 @@ app.get('/employees.hbs', function (req, res) {
     else {
         query1 = `SELECT * FROM Employees WHERE lastName LIKE "${req.query.lastName}%"`
     }
-
+    let query2 = "SELECT employeeID FROM Employees;";
 
     // Run the 1st query
     db.pool.query(query1, function (error, rows, fields) {
 
         // Save the people
-        let employee = rows;
+        let employees = rows;
 
+        db.pool.query(query2, function (error, rows, fields) {
+            // Save the employee IDs
+            let employeeIDs = rows.map(row => row.employeeID);
 
-        return res.render('employees.hbs', { data: employee });
-    })
+            return res.render('employees.hbs', { data: employees, employeeIDs: employeeIDs });
+        });
+    });
 });
 /////// Admissions
 app.get('/admissions.hbs', function (req, res) {
@@ -132,7 +140,8 @@ app.get('/animals.hbs', function (req, res) {
         WHERE animalName LIKE "${req.query.animalName}%";
         `;
     }
-
+    let query2 = "SELECT * FROM Species;";
+    let query3 = "SELECT * FROM Habitat_enclosures;";
     // Run the query
     db.pool.query(query, function (error, rows, fields) {
         if (error) throw error;
@@ -140,15 +149,27 @@ app.get('/animals.hbs', function (req, res) {
         // Save the animals
         let animals = rows;
 
-        return res.render('animals.hbs', { data: animals });
+        db.pool.query(query2, (error, rows, fields) => {
+
+            let species = rows;
+            species.sort((a, b) => a.speciesName - b.speciesName);   //Puts drop downs in order
+
+            db.pool.query(query3, (error, rows, fields) => {
+                // Save the habitat enclosures
+                let habitat = rows;
+                habitat.sort((a, b) => a.description - b.description);
+
+                return res.render('animals.hbs', { data: animals, species: species, habitat: habitat });
+            });
+        });
     });
 });
 
 
 
+
 ////// Display Budgets
 app.get('/budgets.hbs', function (req, res) {
-
     let query1;
 
     if (req.query.budgetAmount === undefined) {
@@ -170,14 +191,38 @@ app.get('/budgets.hbs', function (req, res) {
         `;
     }
 
-    // Run the query
+    let query2 = "SELECT * FROM Employees;";
+    let query3 = "SELECT * FROM Habitat_enclosures;";
+    let query4 = "SELECT * FROM Admissions;";
+
+    // Run the queries
     db.pool.query(query1, function (error, rows, fields) {
         // Save the budget data
         let budget = rows;
 
-        return res.render('budgets.hbs', { data: budget });
+        db.pool.query(query2, (error, rows, fields) => {
+            // Save the employees
+            let employee = rows;
+            employee.sort((a, b) => a.hourlyWage - b.hourlyWage);   //Puts drop downs in order
+
+            db.pool.query(query3, (error, rows, fields) => {
+                // Save the habitat enclosures
+                let habitat = rows;
+                habitat.sort((a, b) => a.monthlyUpkeep - b.monthlyUpkeep);
+
+
+                db.pool.query(query4, (error, rows, fields) => {
+                    // Save the admissions
+                    let admission = rows;
+                    admission.sort((a, b) => a.ticketPrice - b.ticketPrice);
+
+                    return res.render('budgets.hbs', { data: budget, employee: employee, habitat: habitat, admission: admission });
+                });
+            });
+        });
     });
 });
+
 
 
 
@@ -231,6 +276,7 @@ app.get('/foodsuppliesperanimal.hbs', function (req, res) {
         return res.render('foodsuppliesperanimal', { data: foodsuppliesperanimal });
     })
 });
+
 
 ////// Display Habitat
 app.get('/habitat.hbs', function (req, res) {
@@ -344,7 +390,7 @@ app.post('/add-species-ajax', function (req, res) {
                     res.send(rows);
                 }
             })
-        } 
+        }
     })
 });
 app.post('/add-admission-ajax', function (req, res) {
@@ -388,42 +434,79 @@ app.post('/add-admission-ajax', function (req, res) {
     });
 });
 
+// Add the following route to handle adding habitat enclosures
+app.post('/add-habitat-ajax', function (req, res) {
+    let data = req.body;
+
+    // Capture NULL values
+    let monthlyUpkeep = parseFloat(data.monthlyUpkeep);
+    if (isNaN(monthlyUpkeep)) {
+        monthlyUpkeep = null;
+    }
+
+    let capacity = parseInt(data.capacity);
+    if (isNaN(capacity)) {
+        capacity = null;
+    }
+
+    // Create the query and run it on the database
+    query = `INSERT INTO habitat_enclosures (monthly_upkeep, capacity, description) VALUES ('${monthlyUpkeep}', '${capacity}', '${data.description}')`;
+
+
+    db.pool.query(query, values, function (error, results) {
+        if (error) {
+            console.log(error);
+            res.sendStatus(400);
+        } else {
+            // If the insertion was successful, you can fetch the updated list of habitat enclosures
+            const selectQuery = `SELECT * FROM habitat_enclosures`;
+            db.pool.query(selectQuery, function (error, rows) {
+                if (error) {
+                    console.log(error);
+                    res.sendStatus(400);
+                } else {
+                    res.send(rows);
+                }
+            });
+        }
+    });
+});
 
 //-------------------------------------------------------------------------------------------------
 // DELETE
 //-------------------------------------------------------------------------------------------------
 
 // Delete an employee
-app.delete('/delete-employee-ajax/', function(req,res,next){
+app.delete('/delete-employee-ajax/', function (req, res, next) {
     let data = req.body;
     let employeeID = parseInt(data.id);
     let deleteBudget = `DELETE FROM Budgets WHERE employeeID = ?`;
     let deleteEmployee = `DELETE FROM Employees WHERE employeeID = ?`;
-  
-  
-          // Run the 1st query
-          db.pool.query(deleteBudget, [employeeID], function(error, rows, fields){
-              if (error) {
-  
-              // Log the error to the terminal so we know what went wrong, and send the visitor an HTTP response 400 indicating it was a bad request.
-              console.log(error);
-              res.sendStatus(400);
-              }
-  
-              else
-              {
-                  // Run the second query
-                  db.pool.query(deleteEmployee, [employeeID], function(error, rows, fields) {
-  
-                      if (error) {
-                          console.log(error);
-                          res.sendStatus(400);
-                      } else {
-                          res.sendStatus(204);
-                      }
-                  })
-              }
-  })});
+
+
+    // Run the 1st query
+    db.pool.query(deleteBudget, [employeeID], function (error, rows, fields) {
+        if (error) {
+
+            // Log the error to the terminal so we know what went wrong, and send the visitor an HTTP response 400 indicating it was a bad request.
+            console.log(error);
+            res.sendStatus(400);
+        }
+
+        else {
+            // Run the second query
+            db.pool.query(deleteEmployee, [employeeID], function (error, rows, fields) {
+
+                if (error) {
+                    console.log(error);
+                    res.sendStatus(400);
+                } else {
+                    res.sendStatus(204);
+                }
+            })
+        }
+    })
+});
 
 function deleteRow(employeeID) {
 
@@ -450,8 +533,6 @@ function deleteDropDownMenu(employeeID) {
 
     }
 }
-
-
 
 
 // Delete a Species
@@ -488,6 +569,55 @@ app.delete('/delete-species-ajax/', function(req,res,next){
 
 function deleteRow(speciesID) {
 
+
+  function deleteRow(speciesID) {
+
+    let table = document.getElementById("species-table");
+    for (let i = 0, row; row = table.rows[i]; i++) {
+        //iterate through rows
+        //rows would be accessed using the "row" variable assigned in the for loop
+        if (table.rows[i].getAttribute("data-value") == speciesID) {
+            table.deleteRow(i);
+            deleteDropDownMenu(speciesID);
+            break;
+        }
+    }
+}
+
+
+function deleteDropDownMenu(speciesID) {
+    let selectMenu = document.getElementById("input-species-ajax");
+    for (let i = 0; i < selectMenu.length; i++) {
+        if (Number(selectMenu.options[i].value) === Number(speciesID)) {
+            selectMenu[i].remove();
+            break;
+        }
+
+    }
+}
+
+
+//-------------------------------------------------------------------------------------------------
+// UPDATE
+//-------------------------------------------------------------------------------------------------
+
+
+app.put('/update-employee-ajax/', function (req, res) {
+    let employeeID = req.body.id;
+
+    let updateQuery = 'UPDATE Employees SET hourlyWage = ? WHERE employeeID = ?'
+
+    db.pool.query(updateQuery, [employeeID], function (error, result) {
+        if (error) {
+            console.log(error);
+            res.sendStatus(400);
+        } else {
+            res.sendStatus(204);
+        }
+    });
+});
+
+
     let table = document.getElementById("species-table");
     for (let i = 0, row; row = table.rows[i]; i++) {
         //iterate through rows
@@ -518,39 +648,41 @@ function deleteDropDownMenu(speciesID) {
 //-------------------------------------------------------------------------------------------------
 
 
-app.put('/put-employee-ajax', function(req,res,next){
+app.put('/put-employee-ajax', function (req, res, next) {
     let data = req.body;
-    
+
     let hourlyWage = parseInt(data.hourlyWage);
     let employee = parseInt(data.fullname);
-  
+
     let queryUpdateHourlyWage = `UPDATE Employees Set hourlywage = ? WHERE employeeID = ?`;
     let selectEmployee = `SELECT * FROM Employees WHERE employeeID = ?`
-  
-          // Run the 1st query
-          db.pool.query(queryUpdateHourlyWage, [hourlyWage, employee], function(error, rows, fields){
-              if (error) {
-  
-              // Log the error to the terminal so we know what went wrong, and send the visitor an HTTP response 400 indicating it was a bad request.
-              console.log(error);
-              res.sendStatus(400).send('The employee hourly wage cannot be updated.');
-              }
-  
-              // If there was no error, we run our second query and return that data so we can use it to update the people's
-              // table on the front-end
-              else
-              {
-                  // Run the second query
-                  db.pool.query(selectEmployee, [employee], function(error, rows, fields) {
-  
-                      if (error) {
-                          console.log(error);
-                          res.sendStatus(400);
-                      } else {
+
+    // Run the 1st query
+    db.pool.query(queryUpdateHourlyWage, [hourlyWage, employee], function (error, rows, fields) {
+        if (error) {
+
+            // Log the error to the terminal so we know what went wrong, and send the visitor an HTTP response 400 indicating it was a bad request.
+            console.log(error);
+            res.sendStatus(400).send('The employee hourly wage cannot be updated.');
+        }
+
+        // If there was no error, we run our second query and return that data so we can use it to update the people's
+        // table on the front-end
+        else {
+            // Run the second query
+            db.pool.query(selectEmployee, [employee], function (error, rows, fields) {
+
+                if (error) {
+                    console.log(error);
+                    res.sendStatus(400);
+                } else {
                     res.send(rows);
-                      }
-                  }
-              )}})});
+                }
+            }
+            )
+        }
+    })
+});
 
 
 

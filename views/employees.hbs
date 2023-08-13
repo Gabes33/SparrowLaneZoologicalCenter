@@ -7,8 +7,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Sparrow Lane Zoological Center</title>
-   <link rel="stylesheet" type="text/css" href="/css/app.css" />
-    <script src="/app.js" id="data" type ="application/json"></script>
+    <link rel="stylesheet" type="text/css" href="/css/app.css" />
+    <script src="/app.js" id="data" type="application/json"></script>
 </head>
 
 <body>
@@ -61,7 +61,8 @@
                         <td>{{this.phoneNum}}</td>
                         <td>{{this.hourlyWage}}</td>
                         <td>{{this.workEmail}}</td>
-                        <td><button onclick="deleteEmployee({{this.employeeID}})" href='/employees.hbs'>Delete</button></td>
+                        <td><button onclick="deleteEmployee({{this.employeeID}})" href='/employees.hbs'>Delete</button>
+                        </td>
                     </tr>
                     {{/each}}
                 </tbody>
@@ -83,22 +84,21 @@
 
             <div>
                 <h3>Add Employee</h3>
-                <p>To add a new employee, please enter their information below and click 'Submit'!</p>
-                <form id="add-employee-form-ajax" method="'POST'">
+                <form id="add-employee-form-ajax">
                     <label for="input-firstName">First Name: </label>
-                    <input type="text" name="input-firstName" id="input-firstName">
+                    <input type="text" name="input-firstName" id="input-firstName" required>
 
                     <label for="input-lastName">Last Name: </label>
-                    <input type="text" name="input-lastName" id="input-lastName">
+                    <input type="text" name="input-lastName" id="input-lastName" required>
 
                     <label for="input-phoneNum">Phone Number: </label>
-                    <input type="number" name="input-phoneNum" id="input-phoneNum">
+                    <input type="number" name="input-phoneNum" id="input-phoneNum" required>
 
                     <label for="input-hourlyWage">Hourly Wage: </label>
-                    <input type="money" name="input-hourlyWage" id="input-hourlyWage">
+                    <input type="money" name="input-hourlyWage" id="input-hourlyWage" required>
 
                     <label for="input-workEmail">Work Email: </label>
-                    <input type="text" name="input-workEmail" id="input-workEmail">
+                    <input type="text" name="input-workEmail" id="input-workEmail" required>
 
                     <a href='/employee.hbs'><button>Submit</button></a>
                 </form>
@@ -109,24 +109,33 @@
 
             <div>
                 <h3>Edit an Employee</h3>
-                <p>To update a specific user's Hourly Wage, select their name from the drop-down menu on the left and
-                    their desired
-                    hourly wage from the drop down menu on the right</p>
+                <p></p>
                 <form id="update-employee-form-ajax" method="PUT">
 
-                    <label for="input-fullname">Full name: </label>
-                    <select name="input-fullname" id="mySelect">
-                        <option value="test">Select an Employee</option>
-                        {{#each data}}
-                        <option value="{{this.EmployeeID}}">{{this.firstName}} {{this.lastName}}</option>
+                    <label for="input-employeeID">Employee ID: </label>
+                    <select name="input-employeeID" id="input-employeeID-ajax">
+                        <option value="">Select</option>
+                        {{#each employeeIDs}}
+                        <option value="{{this}}">{{this}}</option>
                         {{/each}}
                     </select>
 
+                    <label for="input-firstName">First Name: </label>
+                    <input type="text" name="input-firstName" id="input-firstName" required>
+
+                    <label for="input-lastName">Last Name: </label>
+                    <input type="text" name="input-lastName" id="input-lastName" required>
+
+                    <label for="input-phoneNum">Phone Number: </label>
+                    <input type="number" name="input-phoneNum" id="input-phoneNum" required>
+
                     <label for="input-hourlyWage">Hourly Wage: </label>
-                        <input type="number" min="1" step=".01" name="input-hourlyWage-update" id="input-hourlyWage-update">
-                     <input type="submit">
+                    <input type="money" name="input-hourlyWage" id="input-hourlyWage" required>
 
+                    <label for="input-workEmail">Work Email: </label>
+                    <input type="text" name="input-workEmail" id="input-workEmail" required>
 
+                    <a href='/employee.hbs'><button>Submit</button></a>
                 </form>
 
                 <script src="./js/update_employee.js"></script>

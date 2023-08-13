@@ -7,7 +7,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Sparrow Lane Zoological Center</title>
   <link rel="stylesheet" type="text/css" href="/css/app.css" />
-  <script src="/app.js" id="data" type ="application/json"></script>
+  <script src="/app.js" id="data" type="application/json"></script>
 </head>
 
 <body>
@@ -82,21 +82,39 @@
 
 
 
-<div>
-  <h3>Create a Budget</h3>
-  <form method="POST" id="createBudget">
-    <label for="input-budgetAmount">Budget Amount: </label>
-    <input type="text" name="input-budgetAmount" id="input-budgetAmount">
-    <label for="input-employeeWages">Employee Wages: </label>
-    <input type="text" name="input-employeeWages" id="input-employeeWages">
-    <label for="input-habitatUpkeep">Habitat Monthly Upkeep: </label>
-    <input type="text" name="input-habitatUpkeep" id="input-habitatUpkeep">
-    <label for="input-admissionPrice">Admission Price: </label>
-    <input type="text" name="input-admissionPrice" id="input-admissionPrice">
-    <input type="submit">
-  </form>
-  <script src="./js/create_budget.js"></script>
-</div>
+    <div>
+      <h3>Create a Budget</h3>
+      <form method="POST" id="createBudget">
+        <label for="input-budgetAmount">Budget Amount: </label>
+        <input type="text" name="input-budgetAmount" id="input-budgetAmount" required>
+
+        <label for="input-employeeWages">Employee Wages: </label>
+        <select name="input-employeeWages" id="input-employeeWages-ajax">
+          <option value="">Select Wage:</option>
+          {{#each employee}}
+          <option value="{{this.employeeID}}">{{this.hourlyWage}}</option>
+          {{/each}}
+        </select>
+
+        <label for="input-habitatUpkeep">Habitat Monthly Upkeep: </label>
+        <select name="input-habitatUpkeep" id="input-habitatUpkeep-ajax">
+          <option value="">Select:</option>
+          {{#each habitat}}
+          <option value="{{this.habitatID}}">{{this.monthlyUpkeep}}</option>
+          {{/each}}
+        </select>
+
+        <label for="input-admissionPrice">Admission Price: </label>
+        <select name="input-admissionPrice" id="input-admissionPrice-ajax">
+          <option value="">Select:</option>
+          {{#each admission}}
+          <option value="{{this.admissionID}}">{{this.ticketPrice}}</option>
+          {{/each}}
+        </select>
+        <input type="submit">
+      </form>
+      <script src="./js/add_budget.js"></script>
+    </div>
 
 
 
@@ -104,27 +122,44 @@
     <div>
       <h3>Edit a Budget</h3>
       <form method="POST" id="editBudget">
-        <table>
-          <tbody>
-            <tr>
-              <td><label for="budgetID">Budget ID:</label></td>
-              <td><select name="budgetID">
-                  <option value="1">1</option>
-                  <option value="2">2</option>
-                  <option value="3">3</option>
-                </select></td>
-            </tr>
-            <tr>
-              <td><label for="budgetAmount">Budget Amount:</label></td>
-              <td><input type="text" name="budgetAmount" id="budgetAmount" /></td>
-            </tr>
-            <tr>
-              <td><input type="submit" value="Edit" /></td>
-            </tr>
-          </tbody>
-        </table>
+        <label for="input-budgetID">Budget ID: </label>
+        <select name="input-budgetID" id="input-budgetID-ajax">
+          <option value="">Select</option>
+          {{#each budgetIDs}}
+          <option value="{{this}}">{{this}}</option>
+          {{/each}}
+        </select>
+        <label for="input-budgetAmount">Budget Amount: </label>
+        <input type="text" name="input-budgetAmount" id="input-budgetAmount" required>
+
+        <label for="input-employeeWages">Employee Wages: </label>
+        <select name="input-employeeWages" id="input-employeeWages-ajax">
+          <option value="">Select Wage:</option>
+          {{#each employee}}
+          <option value="{{this.employeeID}}">{{this.hourlyWage}}</option>
+          {{/each}}
+        </select>
+
+        <label for="input-habitatUpkeep">Habitat Monthly Upkeep: </label>
+        <select name="input-habitatUpkeep" id="input-habitatUpkeep-ajax">
+          <option value="">Select:</option>
+          {{#each habitat}}
+          <option value="{{this.habitatID}}">{{this.monthlyUpkeep}}</option>
+          {{/each}}
+        </select>
+
+        <label for="input-admissionPrice">Admission Price: </label>
+        <select name="input-admissionPrice" id="input-admissionPrice-ajax">
+          <option value="">Select:</option>
+          {{#each admission}}
+          <option value="{{this.admissionID}}">{{this.ticketPrice}}</option>
+          {{/each}}
+        </select>
+        <input type="submit">
       </form>
+      <script src="./js/add_budget.js"></script>
     </div>
+
     <div>
   </main>
   <footer>

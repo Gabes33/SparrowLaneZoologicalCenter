@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Sparrow Lane Zoological Center</title>
     <link rel="stylesheet" type="text/css" href="/css/app.css" />
-    <script src="/app.js" id="data" type ="application/json"></script>
+    <script src="/app.js" id="data" type="application/json"></script>
 
 <body>
     <header>
@@ -85,9 +85,9 @@
                 <h3>Add Admissions</h3>
                 <form method="POST" id="createAdmissions">
                     <label for="input-admissionTotal">Admission Total: </label>
-                    <input type="number" name="input-admissionTotal" id="input-admissionTotal">
+                    <input type="number" name="input-admissionTotal" id="input-admissionTotal" required>
                     <label for="input-ticketPrice">Ticket Price: </label>
-                    <input type="number" name="input-ticketPrice" id="input-ticketPrice">
+                    <input type="number" name="input-ticketPrice" id="input-ticketPrice" required>
                     <label for="input-description">Description: </label>
                     <input type="text" name="input-description" id="input-description">
                     <input type="submit">
@@ -110,10 +110,10 @@
                 </select>
 
                 <label for="admissionTotal">Admission Total: </label>
-                <input type="number" name="admissionTotal" id="admissionTotal">
+                <input type="number" name="admissionTotal" id="admissionTotal" required>
 
                 <label for="ticketPrice">Ticket Price: </label>
-                <input type="number" name="ticketPrice" id="ticketPrice">
+                <input type="number" name="ticketPrice" id="ticketPrice" required>
 
                 <label for="description">Description: </label>
                 <input type="text" name="description" id="description">

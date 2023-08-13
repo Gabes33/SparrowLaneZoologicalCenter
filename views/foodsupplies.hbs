@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Sparrow Lane Zoological Center</title>
     <link rel="stylesheet" type="text/css" href="/css/app.css" />
-    <script src="/app.js" id="data" type ="application/json"></script>
+    <script src="/app.js" id="data" type="application/json"></script>
 </head>
 
 <body>
@@ -82,46 +82,34 @@
                 <h3>Add Food and Supplies</h3>
                 <form method="POST" id="addFoodSupplies">
                     <label for="input-itemName">Item Name: </label>
-                    <input type="text" name="input-itemName" id="input-itemName">
+                    <input type="text" name="input-itemName" id="input-itemName" required>
                     <label for="input-quantity">Quantity: </label>
-                    <input type="text" name="input-quantity" id="input-quantity">
+                    <input type="text" name="input-quantity" id="input-quantity" required>
                     <label for="input-price">Price: </label>
-                    <input type="text" name="input-price" id="input-price">
+                    <input type="text" name="input-price" id="input-price" required>
                     <input type="submit">
                 </form>
-                <script src="./js/create_food_supplies.js"></script>
+                <script src="./js/add_food_supplies.js"></script>
             </div>
 
             <div>
                 <h3>Edit Food and Supplies</h3>
                 <form>
-                    <table>
-                        <tbody>
-                            <tr>
-                                <td>Item ID:</td>
-                                <td> <select name="itemID">
-                                        <option value="1">1</option>
-                                        <option value="2">2</option>
-                                        <option value="3" selected>3</option>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>Item Name:</td>
-                                <td><input type="text" name="itemName" /></td>
-                            </tr>
-                            <tr>
-                                <td>Quantity:</td>
-                                <td><input type="text" name="quantity" /></td>
-                            </tr>
-                            <tr>
-                                <td>Price:</td>
-                                <td><input type="text" name="price" /></td>
-                            </tr>
-                            <tr>
-                                <td><input type="submit" value="Edit" /></td>
-                            </tr>
-                        </tbody>
-                    </table>
+                    <label for="input-itemID">Item ID: </label>
+                    <select name="input-itemID" id="input-itemID-ajax">
+                        <option value="">Select</option>
+                        {{#each itemIDs}}
+                        <option value="{{this}}">{{this}}</option>
+                        {{/each}}
+                    </select>
+                    <label for="input-itemName">Item Name: </label>
+                    <input type="text" name="input-itemName" id="input-itemName" required>
+                    <label for="input-quantity">Quantity: </label>
+                    <input type="text" name="input-quantity" id="input-quantity" required>
+                    <label for="input-price">Price: </label>
+                    <input type="text" name="input-price" id="input-price" required>
+                    <input type="submit">
+                </form>
                 </form>
             </div>
         </section>

@@ -7,7 +7,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Sparrow Lane Zoological Center</title>
   <link rel="stylesheet" type="text/css" href="/css/app.css" />
-  <script src="/app.js" id="data" type ="application/json"></script>
+  <script src="/app.js" id="data" type="application/json"></script>
 </head>
 
 <body>
@@ -73,7 +73,7 @@
       <h3>Search Animals </h3>
       <form id="search-animal-html" method="GET">
         <label for="input-animalID">Name: </label>
-        <input type="text" name="animalName" id="input-animalName-html-search" required="">
+        <input type="text" name="animalName" id="input-animalName-html-search">
         <input type="submit">
         <a href='/animals.hbs'><button>Reset</button></a>
 
@@ -87,17 +87,26 @@
       <h3>Add Animals</h3>
       <form id="add-animal-form-ajax">
         <label for="input-animalName">Animal Name: </label>
-        <input type="text" name="input-animalName" id="input-animalName">
+        <input type="text" name="input-animalName" id="input-animalName" required>
 
         <label for="input-description">Description: </label>
         <input type="text" name="input-description" id="input-description">
 
         <label for="input-species">Species: </label>
-        <input type="text" name="input-species" id="input-species">
+        <select name="input-species" id="input-species" required>
+          <option value="">Select</option>
+          {{#each species}}
+          <option value="{{this.speciesID}}">{{this.speciesName}}</option>
+          {{/each}}
+        </select>
 
         <label for="input-habitat">Habitat: </label>
-        <input type="text" name="input-habitat" id="input-habitat">
-
+        <select name="input-habitat" id="input-habitat" required>
+          <option value="">Select</option>
+          {{#each habitat}}
+          <option value="{{this.habitatID}}">{{this.description}}</option>
+          {{/each}}
+        </select>
         <input type="submit">
       </form>
       <script src="./js/add_animal.js"></script>
@@ -108,46 +117,38 @@
     <div>
       <h3>Edit an Animal</h3>
       <form method="POST" id="editAnimal">
-        <table>
-          <tbody>
-            <tr>
-              <td><label for="animalID">Animal ID:</label></td>
-              <td><select name="animalID">
-                  <option value="1">1</option>
-                  <option value="2">2</option>
-                  <option value="3">3</option>
-                </select></td>
-            </tr>
-            <tr>
-              <td><label for="animalName">Animal Name:</label></td>
-              <td><input type="text" name="animalName" id="animalName" /></td>
-            </tr>
-            <tr>
-              <td><label for="animalDesc">Animal Description:</label></td>
-              <td><input type="text" name="animalDesc" id="animalDesc" /></td>
-            </tr>
-            <tr>
-              <td><label for="speciesID">Species ID:</label></td>
-              <td><select name="speciesID">
-                  <option value="1">1</option>
-                  <option value="2">2</option>
-                  <option value="3">3</option>
-                </select></td>
-            </tr>
-            <tr>
-              <td><label for="habiatId">Habitat ID:</label></td>
-              <td><select name="habitatID">
-                  <option value="1">1</option>
-                  <option value="2">2</option>
-                  <option value="3">3</option>
-                </select></td>
-            </tr>
-            <tr>
-              <td><input type="submit" value="Edit" /></td>
-            </tr>
-          </tbody>
-        </table>
+        <label for="input-animalID">Animal ID: </label>
+        <select name="input-animalID" id="input-animalID-ajax">
+          <option value="">Select</option>
+          {{#each animalIDs}}
+          <option value="{{this}}">{{this}}</option>
+          {{/each}}
+        </select>
+        <label for="input-animalName">Animal Name: </label>
+        <input type="text" name="input-animalName" id="input-animalName" required>
+
+        <label for="input-description">Description: </label>
+        <input type="text" name="input-description" id="input-description">
+
+        <label for="input-species">Species: </label>
+        <select name="input-species" id="input-species" required>
+          <option value="">Select</option>
+          {{#each species}}
+          <option value="{{this.speciesID}}">{{this.speciesName}}</option>
+          {{/each}}
+        </select>
+
+        <label for="input-habitat">Habitat: </label>
+        <select name="input-habitat" id="input-habitat" required>
+          <option value="">Select</option>
+          {{#each habitat}}
+          <option value="{{this.habitatID}}">{{this.description}}</option>
+          {{/each}}
+        </select>
+        <input type="submit">
       </form>
+      <script src="./js/add_animal.js"></script>
+
     </div>
   </main>
   <footer>
