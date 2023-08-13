@@ -14,7 +14,7 @@ var app = express();            // We need to instantiate an express object to i
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 app.use(express.static('public'))
-PORT = 9448                // Set a port number at the top so it's easy to change in the future
+PORT = 9450                // Set a port number at the top so it's easy to change in the future
 
 // app.js
 
@@ -527,6 +527,67 @@ function deleteDropDownMenu(employeeID) {
     let selectMenu = document.getElementById("mySelect");
     for (let i = 0; i < selectMenu.length; i++) {
         if (Number(selectMenu.options[i].value) === Number(employeeID)) {
+            selectMenu[i].remove();
+            break;
+        }
+
+    }
+}
+
+
+// Delete a Species
+app.delete('/delete-species-ajax/', function(req,res,next){
+    let data = req.body;
+    let speciesID = parseInt(data.id);
+    let updateAnimalSpecies = `UPDATE Animals SET speciesID = NULL WHERE speciesID = ?`;
+    let deleteSpecies = `DELETE FROM Species WHERE speciesID = ?`;
+  
+  
+          // Run the 1st query
+          db.pool.query(updateAnimalSpecies, [speciesID], function(error, rows, fields){
+              if (error) {
+  
+              // Log the error to the terminal so we know what went wrong, and send the visitor an HTTP response 400 indicating it was a bad request.
+              console.log(error);
+              res.sendStatus(400);
+              }
+  
+              else
+              {
+                  // Run the second query
+                  db.pool.query(deleteSpecies, [speciesID], function(error, rows, fields) {
+  
+                      if (error) {
+                          console.log(error);
+                          res.sendStatus(400);
+                      } else {
+                          res.sendStatus(204);
+                      }
+                  })
+              }
+  })});
+
+
+
+  function deleteRow(speciesID) {
+
+    let table = document.getElementById("species-table");
+    for (let i = 0, row; row = table.rows[i]; i++) {
+        //iterate through rows
+        //rows would be accessed using the "row" variable assigned in the for loop
+        if (table.rows[i].getAttribute("data-value") == speciesID) {
+            table.deleteRow(i);
+            deleteDropDownMenu(speciesID);
+            break;
+        }
+    }
+}
+
+
+function deleteDropDownMenu(speciesID) {
+    let selectMenu = document.getElementById("input-species-ajax");
+    for (let i = 0; i < selectMenu.length; i++) {
+        if (Number(selectMenu.options[i].value) === Number(speciesID)) {
             selectMenu[i].remove();
             break;
         }
