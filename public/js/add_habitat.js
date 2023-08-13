@@ -58,7 +58,7 @@ addHabitatForm.addEventListener("submit", function (e) {
     // Send the request and wait for the response
     xhttp.send(JSON.stringify(data));
 
-})
+});
 
 
 // Creates a single row from an Object representing a single record from 
@@ -77,14 +77,14 @@ addRowToTable = (data) => {
 
     // Create a row and 4 cells
     let row = document.createElement("TR");
-    let habitatidCell = document.createElement("TD");
+    let idCell = document.createElement("TD");
     let monthlyUpkeepCell = document.createElement("TD");
     let capacityCell = document.createElement("TD");
     let descriptionCell = document.createElement("TD");
 
 
     // Fill the cells with correct data
-    habitatidCell.innerText = newRow.habitatid;
+    idCell.innerText = newRow.habitatID;
     monthlyUpkeepCell.innerText = newRow.monthlyUpkeep;
     capacityCell.innerText = newRow.capacity;
     descriptionCell.innerText = newRow.description;
@@ -95,8 +95,7 @@ addRowToTable = (data) => {
     row.appendChild(monthlyUpkeepCell);
     row.appendChild(capacityCell);
     row.appendChild(descriptionCell);
-    row.appendChild(ageCell);
 
     // Add the row to the table
     currentTable.appendChild(row);
-}
+};

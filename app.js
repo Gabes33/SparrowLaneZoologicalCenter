@@ -241,15 +241,20 @@ app.get('/foodsupplies.hbs', function (req, res) {
         query1 = `SELECT * FROM Food_and_supplies WHERE itemName LIKE "${req.query.itemName}%"`
     }
 
-
+    let query2 = "SELECT itemID FROM Food_and_supplies_per_animal;";
     db.pool.query(query1, function (error, rows, fields) {
 
 
         let foodsupplies = rows;
 
 
-        return res.render('foodsupplies', { data: foodsupplies });
-    })
+        db.pool.query(query2, function (error, rows, fields) {
+            // Save the item IDs
+            let itemIDs = rows.map(row => row.itemID);
+
+            return res.render('foodsupplies.hbs', { data: foodsupplies, itemIDs: itemIDs });
+        });
+    });
 });
 
 ////// Display food and supplies per animal
@@ -450,17 +455,17 @@ app.post('/add-habitat-ajax', function (req, res) {
     }
 
     // Create the query and run it on the database
-    query = `INSERT INTO habitat_enclosures (monthly_upkeep, capacity, description) VALUES ('${monthlyUpkeep}', '${capacity}', '${data.description}')`;
+    query1 = `INSERT INTO Habitat_enclosures (monthlyUpkeep, capacity, description) VALUES (${monthlyUpkeep}, ${capacity}, '${data.description}')`;
 
 
-    db.pool.query(query, values, function (error, results) {
+    db.pool.query(query1, values, function (error, results) {
         if (error) {
             console.log(error);
             res.sendStatus(400);
         } else {
             // If the insertion was successful, you can fetch the updated list of habitat enclosures
-            const selectQuery = `SELECT * FROM habitat_enclosures`;
-            db.pool.query(selectQuery, function (error, rows) {
+            query2 = `SELECT * FROM Habitat_enclosures;`;
+            db.pool.query(Query2, function (error, rows) {
                 if (error) {
                     console.log(error);
                     res.sendStatus(400);
@@ -471,7 +476,42 @@ app.post('/add-habitat-ajax', function (req, res) {
         }
     });
 });
+app.post('/add-food-ajax', function (req, res) {
+    // Capture the incoming data and parse it back to a JS object
+    let data = req.body;
+    console.log(data);
 
+    // Create the query and run it on the database
+    query1 = `INSERT INTO Food_and_supplies (itemName, quantity, price) VALUES ('${data.itemName}','${data.quantity}', '${data.price}')`;
+    db.pool.query(query1, function (error, rows, fields) {
+
+        // Check to see if there was an error
+        if (error) {
+
+            // Log the error to the terminal so we know what went wrong, and send the visitor an HTTP response 400 indicating it was a bad request.
+            console.log(error)
+            res.sendStatus(400);
+        }
+        else {
+            // If there was no error, perform a SELECT * from Species
+            query2 = `SELECT * FROM Food_and_supplies;`;
+            db.pool.query(query2, function (error, rows, fields) {
+
+                // If there was an error on the second query, send a 400
+                if (error) {
+
+                    // Log the error to the terminal so we know what went wrong, and send the visitor an HTTP response 400 indicating it was a bad request.
+                    console.log(error);
+                    res.sendStatus(400);
+                }
+                // If all went well, send the results of the query back.
+                else {
+                    res.send(rows);
+                }
+            })
+        }
+    })
+});
 //-------------------------------------------------------------------------------------------------
 // DELETE
 //-------------------------------------------------------------------------------------------------
