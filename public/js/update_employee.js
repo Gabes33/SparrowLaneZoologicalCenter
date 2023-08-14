@@ -28,6 +28,10 @@ updateEmployeeForm.addEventListener("Submit", function (e) {
     let workEmailValue = inputWorkEmail.Value
 
 
+    if (isNaN(phoneNumValue, hourlyWageValue)) {
+        return;
+    }
+
 
     // Put our data we want to send in a javascript object
     let data = {
