@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Sparrow Lane Zoological Center</title>
     <link rel="stylesheet" type="text/css" href="/css/app.css" />
-    <script src="/app.js" id="data" type ="application/json"></script>
+    <script src="/app.js" id="data" type="application/json"></script>
 </head>
 
 <body>
@@ -43,8 +43,8 @@
                 <thread>
                     <tr>
                         <th>Animal Item ID</th>
-                        <th>Animal ID</th>
-                        <th>Item ID</th>
+                        <th>Animal Name</th>
+                        <th>Item Name</th>
                         <th>Delete Animal Item</th>
                     </tr>
 
@@ -54,7 +54,7 @@
                     <tr>
                         <td>{{this.animalItemListID}}</td>
                         <td>{{this.animalName}}</td>
-                        <td>{{this.itemID}}</td>
+                        <td>{{this.itemName}}</td>
 
                         <td><button onclick="deleteFoodsuppliesperanimal({{this.animalItemListID}})">Delete</button>
                         </td>

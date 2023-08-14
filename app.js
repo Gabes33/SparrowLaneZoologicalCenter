@@ -224,9 +224,6 @@ app.get('/budgets.hbs', function (req, res) {
 });
 
 
-
-
-
 ////// Display Food and Supplies
 app.get('/foodsupplies.hbs', function (req, res) {
 
@@ -262,24 +259,46 @@ app.get('/foodsuppliesperanimal.hbs', function (req, res) {
 
     let query1;
 
-
     if (req.query.animalItemListID === undefined) {
         query1 = "SELECT * FROM Food_and_supplies_per_animal;";
-    }
-
-    else {
+    } else {
         query1 = `SELECT * FROM Food_and_supplies_per_animal WHERE animalItemListID LIKE "${req.query.animalItemListID}%"`
     }
 
+    let query2 = "SELECT * FROM Animals;";
+    let query3 = "SELECT * FROM Food_and_supplies;"; // New query for fetching items
 
     db.pool.query(query1, function (error, rows, fields) {
-
-
         let foodsuppliesperanimal = rows;
 
+        db.pool.query(query2, (error, rows, fields) => {
+            let animals = rows;
+            let animalmap = {};
+            animals.map(animal => {
+                let animalID = parseInt(animal.animalID, 10);
+                animalmap[animalID] = animal["animalName"];
+            });
 
-        return res.render('foodsuppliesperanimal', { data: foodsuppliesperanimal });
-    })
+            foodsuppliesperanimal = foodsuppliesperanimal.map(foodsuppliesperanimals => {
+                return Object.assign(foodsuppliesperanimals, { animalName: animalmap[parseInt(foodsuppliesperanimals.animalID, 10)] });
+            });
+
+            db.pool.query(query3, (error, rows, fields) => {
+                let foodsupplies = rows;
+                let itemMap = {};
+                foodsupplies.map(item => {
+                    let itemID = parseInt(item.itemID, 10);
+                    itemMap[itemID] = item["itemName"];
+                });
+
+                foodsuppliesperanimal = foodsuppliesperanimal.map(foodsuppliesperanimals => {
+                    return Object.assign(foodsuppliesperanimals, { itemName: itemMap[parseInt(foodsuppliesperanimals.itemID, 10)] });
+                });
+
+                return res.render('foodsuppliesperanimal', { data: foodsuppliesperanimal, animals: animals, foodsupplies: foodsupplies });
+            });
+        });
+    });
 });
 
 
