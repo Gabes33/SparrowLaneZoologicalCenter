@@ -443,29 +443,28 @@ app.post('/add-admission-ajax', function (req, res) {
 app.post('/add-habitat-ajax', function (req, res) {
     let data = req.body;
 
-    // Capture NULL values
     let monthlyUpkeep = parseFloat(data.monthlyUpkeep);
-    if (isNaN(monthlyUpkeep)) {
-        monthlyUpkeep = null;
+    if (isNaN(monthlyUpkeep) || monthlyUpkeep < 0) {
+        monthlyUpkeep = 0; // Set a default value or any other desired behavior
     }
 
-    let capacity = parseInt(data.capacity);
-    if (isNaN(capacity)) {
-        capacity = null;
+    let capacity = parseFloat(data.capacity);
+    if (isNaN(capacity) || capacity < 0) {
+        capacity = 0; // Set a default value or any other desired behavior
     }
 
     // Create the query and run it on the database
     query1 = `INSERT INTO Habitat_enclosures (monthlyUpkeep, capacity, description) VALUES (${monthlyUpkeep}, ${capacity}, '${data.description}')`;
 
 
-    db.pool.query(query1, values, function (error, results) {
+    db.pool.query(query1, function (error, rows, fields) {
         if (error) {
             console.log(error);
             res.sendStatus(400);
         } else {
             // If the insertion was successful, you can fetch the updated list of habitat enclosures
             query2 = `SELECT * FROM Habitat_enclosures;`;
-            db.pool.query(Query2, function (error, rows) {
+            db.pool.query(query2, function (error, rows, fields) {
                 if (error) {
                     console.log(error);
                     res.sendStatus(400);
@@ -505,6 +504,51 @@ app.post('/add-food-ajax', function (req, res) {
                     res.sendStatus(400);
                 }
                 // If all went well, send the results of the query back.
+                else {
+                    res.send(rows);
+                }
+            })
+        }
+    })
+});
+app.post('/add-animal-ajax', function (req, res) {
+    // Capture the incoming data and parse it back to a JS object
+    let data = req.body;
+
+    // Capture NULL values
+    let description = parseInt(data.description);
+    if (isNaN(description)) {
+        description = 'NULL'
+    }
+
+    let habitatID = parseInt(data.habitatID);
+    if (isNaN(habitatID)) {
+        habitatID = 'NULL'
+    }
+
+    // Create the query and run it on the database
+    query1 = `INSERT INTO Animals (animalName, description, speciesName, habitatDescription) VALUES ('${data.animalName}', '${data.description}','${data.speciesName}', ${habitatDescription}`;
+    db.pool.query(query1, function (error, rows, fields) {
+
+        // Check to see if there was an error
+        if (error) {
+
+            // Log the error to the terminal so we know what went wrong, and send the visitor an HTTP response 400 indicating it was a bad request.
+            console.log(error)
+            res.sendStatus(400);
+        }
+        else {
+            // If there was no error, perform a SELECT * on Animals
+            query2 = `SELECT * FROM Animals;`;
+            db.pool.query(query2, function (error, rows, fields) {
+
+                // If there was an error on the second query, send a 400
+                if (error) {
+
+                    // Log the error to the terminal so we know what went wrong, and send the visitor an HTTP response 400 indicating it was a bad request.
+                    console.log(error);
+                    res.sendStatus(400);
+                }
                 else {
                     res.send(rows);
                 }

@@ -5,7 +5,7 @@
     Source URL: https://github.com/osu-cs340-ecampus/nodejs-starter-app/tree/main/Step%205%20-%20Adding%20New%20Data
 */
 // Get the objects we need to modify
-let addHabitatForm = document.getElementById("addHabitat");
+let addHabitatForm = document.getElementById('addHabitat');
 
 // Modify the objects we need
 addHabitatForm.addEventListener("submit", function (e) {
@@ -16,7 +16,7 @@ addHabitatForm.addEventListener("submit", function (e) {
     // Get form fields we need to get data from
     let inputMonthlyUpkeep = document.getElementById("input-monthlyUpkeep");
     let inputCapacity = document.getElementById("input-capacity");
-    let inputDescription = document.getElementById("input-description");
+    let inputDescription = document.getElementById("input-habitatdescription");
 
 
     // Get the values from the form fields
@@ -73,7 +73,7 @@ addRowToTable = (data) => {
 
     // Get a reference to the new row from the database query (last object)
     let parsedData = JSON.parse(data);
-    let newRow = parsedData[parsedData.length - 1]
+    let newRow = parsedData[parsedData.length - 1];
 
     // Create a row and 4 cells
     let row = document.createElement("TR");
