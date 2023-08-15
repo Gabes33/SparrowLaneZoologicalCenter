@@ -579,48 +579,42 @@ app.post('/add-budget-ajax', function (req, res) {
     // Capture the incoming data and parse it back to a JS object
     let data = req.body;
 
-    // Capture NULL values
-    let homeworld = parseInt(data.homeworld);
-    if (isNaN(homeworld)) {
-        homeworld = 'NULL'
+    // Parse INT values and handle NULL cases
+    let budgetAmount = parseFloat(data.budgetAmount);
+    let hourlyWage = parseFloat(data.hourlyWage);
+    let monthlyUpkeep = parseFloat(data.monthlyUpkeep);
+    let ticketPrice = parseFloat(data.ticketPrice);
+
+    if (isNaN(budgetAmount) || isNaN(hourlyWage) || isNaN(monthlyUpkeep) || isNaN(ticketPrice)) {
+        // If any of the values are not valid, send a 400 response
+        console.log("Invalid input data.");
+        res.sendStatus(400);
+    } else {
+        // Create the query and run it on the database
+        query1 = `INSERT INTO Budgets (budgetAmount, hourlyWage, monthlyUpkeep, ticketPrice) VALUES (${budgetAmount}, ${hourlyWage}, ${monthlyUpkeep}, ${ticketPrice})`;;
+        db.pool.query(query1, function (error, rows, fields) {
+            if (error) {
+                // Log the error and send a 400 response
+                console.log(error);
+                res.sendStatus(400);
+            } else {
+                // If there was no error, perform a SELECT * on Budgets
+                query2 = `SELECT * FROM Budgets;`;
+                db.pool.query(query2, function (error, rows, fields) {
+                    if (error) {
+                        // Log the error and send a 400 response
+                        console.log(error);
+                        res.sendStatus(400);
+                    } else {
+
+                        res.send(rows);
+                    }
+                });
+            }
+        });
     }
-
-    let age = parseInt(data.age);
-    if (isNaN(age)) {
-        age = 'NULL'
-    }
-
-    // Create the query and run it on the database
-    query1 = `INSERT INTO bsg_people (fname, lname, homeworld, age) VALUES ('${data.fname}', '${data.lname}', ${homeworld}, ${age})`;
-    db.pool.query(query1, function (error, rows, fields) {
-
-        // Check to see if there was an error
-        if (error) {
-
-            // Log the error to the terminal so we know what went wrong, and send the visitor an HTTP response 400 indicating it was a bad request.
-            console.log(error)
-            res.sendStatus(400);
-        }
-        else {
-            // If there was no error, perform a SELECT * on bsg_people
-            query2 = `SELECT * FROM bsg_people;`;
-            db.pool.query(query2, function (error, rows, fields) {
-
-                // If there was an error on the second query, send a 400
-                if (error) {
-
-                    // Log the error to the terminal so we know what went wrong, and send the visitor an HTTP response 400 indicating it was a bad request.
-                    console.log(error);
-                    res.sendStatus(400);
-                }
-                // If all went well, send the results of the query back.
-                else {
-                    res.send(rows);
-                }
-            })
-        }
-    })
 });
+
 //-------------------------------------------------------------------------------------------------
 // DELETE
 //-------------------------------------------------------------------------------------------------
@@ -629,8 +623,8 @@ app.post('/add-budget-ajax', function (req, res) {
 app.delete('/delete-employee-ajax/', function (req, res, next) {
     let data = req.body;
     let employeeID = parseInt(data.id);
-    let deleteBudget = `DELETE FROM Budgets WHERE employeeID = ?`;
-    let deleteEmployee = `DELETE FROM Employees WHERE employeeID = ?`;
+    let deleteBudget = `DELETE FROM Budgets WHERE employeeID = ? `;
+    let deleteEmployee = `DELETE FROM Employees WHERE employeeID = ? `;
 
 
     // Run the 1st query
@@ -731,36 +725,64 @@ function deleteRow(speciesID) {
 
 
 function deleteDropDownMenu(speciesID) {
-    let selectMenu = document.getElementById("input-species-ajax");
+
+    let selectMenu = document.getElementById("input-speciesID-ajax");
+
     for (let i = 0; i < selectMenu.length; i++) {
+
         if (Number(selectMenu.options[i].value) === Number(speciesID)) {
+
             selectMenu[i].remove();
+
             break;
+
         }
 
     }
+
 }
 app.delete('/delete-food-and-supply-animal-ajax/', function (req, res, next) {
+
     let data = req.body;
+
     let speciesID = parseInt(data.id);
 
-    let deleteFoodsuppliesperanimal = 'DELETE FROM Food_and_supplies_per_animal WHERE animalID = ? AND itemID = ?'
+
+
+    let deleteFoodsuppliesperanimal = 'DELETE FROM Food_and_supplies_per_animal WHERE animalItemListID = ?'
+
+
+
 
 
     // Run the 1st query
-    db.pool.query(deleteFoodsuppliesperanimal), [animalID], [itemID], function (error, rows, fields) {
+
+    db.pool.query(deleteFoodsuppliesperanimal), [animalItemListID], function (error, rows, fields) {
+
         if (error) {
 
+
+
             // Log the error to the terminal so we know what went wrong, and send the visitor an HTTP response 400 indicating it was a bad request.
+
             console.log(error);
+
             res.sendStatus(400);
+
         }
+
+
 
         else {
+
             res.sendStatus(204);
+
         }
 
+
+
     }
+
 });
 
 
@@ -784,7 +806,7 @@ function deleteRow(animalItemListID) {
 
 
 app.put('/update-employee-ajax/', function (req, res) {
-    let employeeID = req.body.id;
+    let employeeID = req.params.id;
 
     let updateQuery = 'UPDATE Employees SET hourlyWage = ? WHERE employeeID = ?'
 
@@ -836,8 +858,8 @@ app.put('/put-employee-ajax', function (req, res, next) {
     let hourlyWage = parseInt(data.hourlyWage);
     let employee = parseInt(data.fullname);
 
-    let queryUpdateHourlyWage = `UPDATE Employees Set hourlywage = ? WHERE employeeID = ?`;
-    let selectEmployee = `SELECT * FROM Employees WHERE employeeID = ?`
+    let queryUpdateHourlyWage = `UPDATE Employees Set hourlywage = ? WHERE employeeID = ? `;
+    let selectEmployee = `SELECT * FROM Employees WHERE employeeID = ? `
 
     // Run the 1st query
     db.pool.query(queryUpdateHourlyWage, [hourlyWage, employee], function (error, rows, fields) {

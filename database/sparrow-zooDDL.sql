@@ -1,8 +1,12 @@
-
+/* By Ashley Quarford and Tyler Gebel */
 
 SET FOREIGN_KEY_CHECKS = 0;
 SET AUTOCOMMIT = 0;
 
+
+/* 
+Employees table created
+ */
 CREATE OR REPLACE TABLE Employees (
   employeeID INT AUTO_INCREMENT PRIMARY KEY,
   firstName VARCHAR(45) NOT NULL,
@@ -12,11 +16,18 @@ CREATE OR REPLACE TABLE Employees (
   workEmail VARCHAR(45) UNIQUE
 );
 
+
+/* 
+Employees data inserted
+ */
 INSERT INTO Employees (firstName, lastName, phoneNum, hourlyWage, workEmail) VALUES
 ('Ashley', 'Quarford', '123456789', 15.5, 'ashley.quarford@gmail.com'),
 ('Tyler', 'Gebel', '987654321', 14.75, 'tyler.gebel@gmail.com'),
 ('Michael', 'Johnson', '456789123', 16.25, 'michael.johnson@gmail.com');
 
+/* 
+Habitat_enclosures table created
+ */
 CREATE OR REPLACE TABLE Habitat_enclosures (
   habitatID INT AUTO_INCREMENT PRIMARY KEY,
   monthlyUpkeep INT NOT NULL,
@@ -24,23 +35,36 @@ CREATE OR REPLACE TABLE Habitat_enclosures (
   description VARCHAR(100)
 );
 
+
+/* 
+Habitat_enclosures data inserted
+ */
 INSERT INTO Habitat_enclosures (habitatID, monthlyUpkeep, capacity, description) VALUES
 (1, 5000, 10, 'Treetop Habitat'),
 (2, 4000, 6, 'Arctic Habitat'),
 (3, 3000, 20, 'Farm Habitat');
 
+/* 
+Species table created
+ */
 CREATE OR REPLACE TABLE Species (
   speciesID INT AUTO_INCREMENT PRIMARY KEY,
   speciesName VARCHAR(45) NOT NULL,
   description VARCHAR(100)
 );
 
+
+/* 
+Species data inserted
+ */
 INSERT INTO Species (speciesID, speciesName, description) VALUES
 (1, 'Ringed Seal', 'Eats fish; active during day'),
 (2, 'Squirrel Monkey', 'Eats fruit and grains'),
 (3, 'Pygmy Goat', 'Eats grains');
 
-
+/* 
+Animals table created
+ */
 CREATE OR REPLACE TABLE Animals (
   animalID INT AUTO_INCREMENT PRIMARY KEY,
   animalName VARCHAR(45) NOT NULL,
@@ -51,13 +75,19 @@ CREATE OR REPLACE TABLE Animals (
   FOREIGN KEY (habitatID) REFERENCES Habitat_enclosures(habitatID)
   ON DELETE CASCADE);
 
+
+/* 
+Animals data inserted
+ */
 INSERT INTO Animals (animalID, animalName, description, speciesID, habitatID) VALUES
 (1, 'Alberto', 'Male Ringed Seal', 1, 2),
 (2, 'Peaches', 'Female Squirrel Monkey', 2, 1),
 (3, 'Leonardo', 'Male Pygmy Goat', 3, 3);
 
 
-
+/* 
+Admissions table created
+ */
 CREATE OR REPLACE TABLE Admissions (
   admissionID INT AUTO_INCREMENT PRIMARY KEY,
   admissionTotal INT(6) NOT NULL,
@@ -65,11 +95,18 @@ CREATE OR REPLACE TABLE Admissions (
   description VARCHAR(100)
 );
 
+
+/* 
+Admissions data inserted
+ */
 INSERT INTO Admissions (admissionID, admissionTotal, ticketPrice, description) VALUES
 (1, 500, 30, 'General Admission'),
 (2, 250, 15, 'Children under 12 Admission'),
 (3, 350, 20, 'Senior Citizen Discount Admission');
 
+/* 
+Budgets table created
+ */
 CREATE OR REPLACE TABLE Budgets (
   budgetID INT AUTO_INCREMENT PRIMARY KEY,
   budgetAmount INT NOT NULL,
@@ -82,11 +119,19 @@ CREATE OR REPLACE TABLE Budgets (
   ON DELETE CASCADE
 );
 
+
+/* 
+Budgets data inserted
+ */
 INSERT INTO Budgets (budgetID, budgetAmount, employeeID, habitatID, admissionID) VALUES
 (1, 10000, 1, 1, 1),
 (2, 15000, 2, 2, 2),
 (3, 20000, 3, 3, 3);
 
+
+/* 
+Food_and_supplies table created
+ */
 CREATE OR REPLACE TABLE Food_and_supplies (
   itemID INT AUTO_INCREMENT PRIMARY KEY,
   itemName VARCHAR(45) NOT NULL,
@@ -94,12 +139,19 @@ CREATE OR REPLACE TABLE Food_and_supplies (
   price DECIMAL(6, 2) NOT NULL
 );
 
+/* 
+Food_and_supplies data inserted
+ */
 INSERT INTO Food_and_supplies (itemID, itemName, quantity, price) 
 VALUES
 (1, 'Hay', 100, 10.5),
 (2, 'Fish', 200, 8.75),
 (3, 'Apples', 50, 5.25);
 
+
+/* 
+Food_and_supplies_per_animal table created
+ */
 CREATE OR REPLACE TABLE Food_and_supplies_per_animal (
   animalItemListID INT AUTO_INCREMENT PRIMARY KEY,
   animalID INT NOT NULL,
@@ -109,6 +161,10 @@ CREATE OR REPLACE TABLE Food_and_supplies_per_animal (
   ON DELETE CASCADE
 );
 
+
+/* 
+Food_and_supplies_per_animal data inserted
+ */
 INSERT INTO Food_and_supplies_per_animal (animalID, itemID) VALUES
 (1, 1),
 (1, 2),
