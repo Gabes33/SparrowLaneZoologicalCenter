@@ -539,8 +539,8 @@ function deleteDropDownMenu(employeeID) {
 app.delete('/delete-species-ajax/', function(req,res,next){
     let data = req.body;
     let speciesID = parseInt(data.id);
-    let updateAnimalSpecies = `UPDATE Animals SET speciesID = NULL WHERE speciesID = ?`;
-    let deleteSpecies = `DELETE FROM Species WHERE speciesID = ?`;
+    let updateAnimalSpecies = 'UPDATE Animals SET speciesID = NULL WHERE speciesID = ?';
+    let deleteSpecies = 'DELETE FROM Species WHERE speciesID = ?';
   
   
           // Run the 1st query
@@ -567,8 +567,6 @@ app.delete('/delete-species-ajax/', function(req,res,next){
               }
   })});
 
-function deleteRow(speciesID) {
-
 
   function deleteRow(speciesID) {
 
@@ -593,6 +591,47 @@ function deleteDropDownMenu(speciesID) {
             break;
         }
 
+    }
+}
+
+
+// Delete a food and supply item for a certain animal in intersection table
+app.delete('/delete-food-and-supply-animal-ajax/', function(req,res,next){
+    let data = req.body;
+    let speciesID = parseInt(data.id);
+    
+    let deleteFoodsuppliesperanimal = 'DELETE FROM Food_and_supplies_per_animal WHERE animalID = ? AND itemID = ?'
+  
+  
+          // Run the 1st query
+          db.pool.query(deleteFoodsuppliesperanimal), [animalID], [itemID], function(error, rows, fields){
+              if (error) {
+  
+              // Log the error to the terminal so we know what went wrong, and send the visitor an HTTP response 400 indicating it was a bad request.
+              console.log(error);
+              res.sendStatus(400);
+              }
+  
+              else
+              {
+                res.sendStatus(204);
+                      }
+
+                    }});
+
+
+
+  function deleteRow(animalItemListID) {
+
+    let table = document.getElementById("foodsuppliesperanimal-table");
+    for (let i = 0, row; row = table.rows[i]; i++) {
+        //iterate through rows
+        //rows would be accessed using the "row" variable assigned in the for loop
+        if (table.rows[i].getAttribute("data-value") == animalItemListID) {
+            table.deleteRow(i);
+            deleteDropDownMenu(animalItemListID);
+            break;
+        }
     }
 }
 
