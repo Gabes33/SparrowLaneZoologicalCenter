@@ -14,30 +14,37 @@ updateEmployeeForm.addEventListener("Submit", function (e) {
     e.preventDefault();
 
     // Get form fields we need to get data from
-    let inputFullName = document.getElementById("mySelect");
-    let inputHourlyWage = document.getElementById("input-hourlyWage-update");
+    let inputFirstName = document.getElementById("input-firstName");
+    let inputLastName = document.getElementById("input-lastName");
+    let inputPhoneNum = document.getElementById("input-phoneNum");
+    let inputHourlyWage = document.getElementById("input-hourlyWage");
+    let inputWorkEmail = document.getElementById("input-workEmail");
 
     // Get the values from the form fields
-    let fullNameValue = inputFullName.value;
-    let hourlyWageValue = inputHourlyWage.value;
+    let firstNameValue = inputFirstName.value
+    let lastNameValue = inputLastName.value;
+    let phoneNumValue = inputPhoneNum.value
+    let hourlyWageValue = inputHourlyWage.value
+    let workEmailValue = inputWorkEmail.Value
 
-    // currently the database table for bsg_people does not allow updating values to NULL
-    // so we must abort if being bassed NULL for homeworld
 
-    if (isNaN(hourlyWageValue)) {
+    if (isNaN(phoneNumValue, hourlyWageValue)) {
         return;
     }
 
 
     // Put our data we want to send in a javascript object
     let data = {
-        fullname: fullNameValue,
+        firstName: firstNameValue,
+        lastName: lastNameValue,
+        phoneNum: phoneNumValue,
         hourlyWage: hourlyWageValue,
+        workEmail: workEmailValue
     }
 
     // Setup our AJAX request
     var xhttp = new XMLHttpRequest();
-    xhttp.open("PUT", "/put-employee-ajax", true);
+    xhttp.open("PUT", "/", true);
     xhttp.setRequestHeader("Content-type", "application/json");
 
     // Tell our AJAX request how to resolve
@@ -45,7 +52,11 @@ updateEmployeeForm.addEventListener("Submit", function (e) {
         if (xhttp.readyState == 4 && xhttp.status == 200) {
 
             // Add the new data to the table
+            updateRow(xhttp.response, firstNameValue);
+            updateRow(xhttp.response, lastNameValue);
+            updateRow(xhttp.response, phoneNumValue);
             updateRow(xhttp.response, hourlyWageValue);
+            updateRow(xhttp.response, workEmailValue);
 
         }
         else if (xhttp.readyState == 4 && xhttp.status != 200) {

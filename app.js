@@ -540,13 +540,13 @@ app.post('/add-animal-ajax', function (req, res) {
         description = 'NULL'
     }
 
-    let habitatID = parseInt(data.habitatID);
-    if (isNaN(habitatID)) {
-        habitatID = 'NULL'
+    let habitatDescription = parseInt(data.habitatDescription);
+    if (isNaN(habitatDescription)) {
+        habitatDescription = 'NULL'
     }
 
     // Create the query and run it on the database
-    query1 = `INSERT INTO Animals (animalName, description, speciesName, habitatDescription) VALUES ('${data.animalName}', '${data.description}','${data.speciesName}', ${habitatDescription}`;
+    query1 = `INSERT INTO Animals (animalName, description, speciesName, habitatDescription) VALUES ('${data.animalName}', '${data.description}','${data.speciesName}', ${habitatDescription})`;
     db.pool.query(query1, function (error, rows, fields) {
 
         // Check to see if there was an error
@@ -568,6 +568,52 @@ app.post('/add-animal-ajax', function (req, res) {
                     console.log(error);
                     res.sendStatus(400);
                 }
+                else {
+                    res.send(rows);
+                }
+            })
+        }
+    })
+});
+app.post('/add-budget-ajax', function (req, res) {
+    // Capture the incoming data and parse it back to a JS object
+    let data = req.body;
+
+    // Capture NULL values
+    let homeworld = parseInt(data.homeworld);
+    if (isNaN(homeworld)) {
+        homeworld = 'NULL'
+    }
+
+    let age = parseInt(data.age);
+    if (isNaN(age)) {
+        age = 'NULL'
+    }
+
+    // Create the query and run it on the database
+    query1 = `INSERT INTO bsg_people (fname, lname, homeworld, age) VALUES ('${data.fname}', '${data.lname}', ${homeworld}, ${age})`;
+    db.pool.query(query1, function (error, rows, fields) {
+
+        // Check to see if there was an error
+        if (error) {
+
+            // Log the error to the terminal so we know what went wrong, and send the visitor an HTTP response 400 indicating it was a bad request.
+            console.log(error)
+            res.sendStatus(400);
+        }
+        else {
+            // If there was no error, perform a SELECT * on bsg_people
+            query2 = `SELECT * FROM bsg_people;`;
+            db.pool.query(query2, function (error, rows, fields) {
+
+                // If there was an error on the second query, send a 400
+                if (error) {
+
+                    // Log the error to the terminal so we know what went wrong, and send the visitor an HTTP response 400 indicating it was a bad request.
+                    console.log(error);
+                    res.sendStatus(400);
+                }
+                // If all went well, send the results of the query back.
                 else {
                     res.send(rows);
                 }
@@ -637,7 +683,101 @@ function deleteDropDownMenu(employeeID) {
     }
 }
 
+app.delete('/delete-species-ajax/', function (req, res, next) {
+    let data = req.body;
+    let speciesID = parseInt(data.id);
+    let updateAnimalSpecies = 'UPDATE Animals SET speciesID = NULL WHERE speciesID = ?';
+    let deleteSpecies = 'DELETE FROM Species WHERE speciesID = ?';
 
+
+    // Run the 1st query
+    db.pool.query(updateAnimalSpecies, [speciesID], function (error, rows, fields) {
+        if (error) {
+
+            // Log the error to the terminal so we know what went wrong, and send the visitor an HTTP response 400 indicating it was a bad request.
+            console.log(error);
+            res.sendStatus(400);
+        }
+
+        else {
+            // Run the second query
+            db.pool.query(deleteSpecies, [speciesID], function (error, rows, fields) {
+
+                if (error) {
+                    console.log(error);
+                    res.sendStatus(400);
+                } else {
+                    res.sendStatus(204);
+                }
+            })
+        }
+    })
+});
+
+
+function deleteRow(speciesID) {
+
+    let table = document.getElementById("species-table");
+    for (let i = 0, row; row = table.rows[i]; i++) {
+        //iterate through rows
+        //rows would be accessed using the "row" variable assigned in the for loop
+        if (table.rows[i].getAttribute("data-value") == speciesID) {
+            table.deleteRow(i);
+            deleteDropDownMenu(speciesID);
+            break;
+        }
+    }
+}
+
+
+function deleteDropDownMenu(speciesID) {
+    let selectMenu = document.getElementById("input-species-ajax");
+    for (let i = 0; i < selectMenu.length; i++) {
+        if (Number(selectMenu.options[i].value) === Number(speciesID)) {
+            selectMenu[i].remove();
+            break;
+        }
+
+    }
+}
+app.delete('/delete-food-and-supply-animal-ajax/', function (req, res, next) {
+    let data = req.body;
+    let speciesID = parseInt(data.id);
+
+    let deleteFoodsuppliesperanimal = 'DELETE FROM Food_and_supplies_per_animal WHERE animalID = ? AND itemID = ?'
+
+
+    // Run the 1st query
+    db.pool.query(deleteFoodsuppliesperanimal), [animalID], [itemID], function (error, rows, fields) {
+        if (error) {
+
+            // Log the error to the terminal so we know what went wrong, and send the visitor an HTTP response 400 indicating it was a bad request.
+            console.log(error);
+            res.sendStatus(400);
+        }
+
+        else {
+            res.sendStatus(204);
+        }
+
+    }
+});
+
+
+
+function deleteRow(animalItemListID) {
+
+    let table = document.getElementById("foodsuppliesperanimal-table");
+    for (let i = 0, row; row = table.rows[i]; i++) {
+        //iterate through rows
+        //rows would be accessed using the "row" variable assigned in the for loop
+        if (table.rows[i].getAttribute("data-value") == animalItemListID) {
+            table.deleteRow(i);
+            deleteDropDownMenu(animalItemListID);
+            break;
+        }
+    }
+}
 //-------------------------------------------------------------------------------------------------
 // UPDATE
 //-------------------------------------------------------------------------------------------------

@@ -84,12 +84,12 @@
 
     <div>
       <h3>Create a Budget</h3>
-      <form method="POST" id="createBudget">
+      <form method="POST" id="add-budget-form-ajax">
         <label for="input-budgetAmount">Budget Amount: </label>
-        <input type="text" name="input-budgetAmount" id="input-budgetAmount" required>
+        <input type="number" name="input-budgetAmount" id="input-budgetAmount" required>
 
         <label for="input-employeeWages">Employee Wages: </label>
-        <select name="input-employeeWages" id="input-employeeWages-ajax">
+        <select name="input-employeeWages" id="input-employeeWages-ajax" required>
           <option value="">Select Wage:</option>
           {{#each employee}}
           <option value="{{this.employeeID}}">{{this.hourlyWage}}</option>
@@ -97,7 +97,7 @@
         </select>
 
         <label for="input-habitatUpkeep">Habitat Monthly Upkeep: </label>
-        <select name="input-habitatUpkeep" id="input-habitatUpkeep-ajax">
+        <select name="input-habitatUpkeep" id="input-habitatUpkeep-ajax" required>
           <option value="">Select:</option>
           {{#each habitat}}
           <option value="{{this.habitatID}}">{{this.monthlyUpkeep}}</option>
@@ -105,7 +105,7 @@
         </select>
 
         <label for="input-admissionPrice">Admission Price: </label>
-        <select name="input-admissionPrice" id="input-admissionPrice-ajax">
+        <select name="input-admissionPrice" id="input-admissionPrice-ajax" required>
           <option value="">Select:</option>
           {{#each admission}}
           <option value="{{this.admissionID}}">{{this.ticketPrice}}</option>
@@ -157,7 +157,7 @@
         </select>
         <input type="submit">
       </form>
-      <script src="./js/add_budget.js"></script>
+
     </div>
 
     <div>

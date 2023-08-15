@@ -1,13 +1,7 @@
-/*
-    Citation for the following functions:
-    Date: 08/05/2023
-    Adapted from the code in the following GitHub repository (nodejs-starter-app) Step 5 - Adding New Data
-    Source URL: https://github.com/osu-cs340-ecampus/nodejs-starter-app/tree/main/Step%205%20-%20Adding%20New%20Data
-*/
-let addAnimalForm = document.getElementById('add-animal-form-ajax');
+let addAnimalsForm = document.getElementById('add-animal-form-ajax');
 
 // Modify the objects we need
-addAnimalForm.addEventListener("submit", function (e) {
+addAnimalsForm.addEventListener("submit", function (e) {
 
     // Prevent the form from submitting
     e.preventDefault();
@@ -29,7 +23,7 @@ addAnimalForm.addEventListener("submit", function (e) {
         animalName: animalNameValue,
         description: descriptionValue,
         speciesName: speciesNameValue,
-        habitatDescription: habitatDescriptionValue
+        description: habitatDescriptionValue
     }
 
     // Setup our AJAX request
@@ -80,12 +74,12 @@ addRowToTable = (data) => {
     let animalIDCell = document.createElement("TD");
     let animalNameCell = document.createElement("TD");
     let descriptionCell = document.createElement("TD");
-    let homeworldCell = document.createElement("TD");
-    let ageCell = document.createElement("TD");
+    let speciesNameCell = document.createElement("TD");
+    let habitatDescriptionCell = document.createElement("TD");
 
     // Fill the cells with correct data
-    animalIDCell.innerText = newRow.id;
-    animalNameCell.innerText = newRow.fname;
+    animalIDCell.innerText = newRow.animalID;
+    animalNameCell.innerText = newRow.animalName;
     descriptionCell.innerText = newRow.description;
     speciesNameCell.innerText = newRow.speciesName;
     habitatDescriptionCell.innerText = newRow.habitatDescription;
